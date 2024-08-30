@@ -2,6 +2,10 @@ const { Image } = require('node-webpmux');
 const sharp = require("sharp");
 const config = require("../../config.js");
 
+const packID = 'com.snowcorp.stickerly.android.stickercontentprovider b5e7275f-f1de-4137-961f-57becfad34f2'
+const playstore = 'https://play.google.com/store/apps/details?id=com.marsvard.stickermakerforwhatsapp'
+const itunes = 'https://itunes.apple.com/app/sticker-maker-studio/id1443326857'
+
 const stickerImage = async (imageBuffer, meta) => {
     try {
         const processedImage = await sharp(imageBuffer)
@@ -11,9 +15,11 @@ const stickerImage = async (imageBuffer, meta) => {
 
         const img = new Image();
         const json = {
-            "sticker-pack-id": `https://github.com/XinnChan`,
-            "sticker-pack-name": meta?.pack || config.STICKER_PACK,
-            "sticker-pack-publisher": meta?.author || config.STICKER_AUTHOR,
+            'sticker-pack-id': packID,
+            'sticker-pack-name': meta?.pack || config.STICKER_PACK,
+            'sticker-pack-publisher': meta?.author || config.STICKER_AUTHOR,
+            'android-app-store-link': playstore,
+			'ios-app-store-link': itunes
         };
 
         const exifAttr = Buffer.from([
