@@ -1,6 +1,7 @@
 const { Image } = require('node-webpmux');
 const sharp = require("sharp");
 const config = require("../../config.js");
+const { default: axios } = require('axios');
 
 const packID = 'com.snowcorp.stickerly.android.stickercontentprovider b5e7275f-f1de-4137-961f-57becfad34f2'
 const playstore = 'https://play.google.com/store/apps/details?id=com.marsvard.stickermakerforwhatsapp'
@@ -8,6 +9,10 @@ const itunes = 'https://itunes.apple.com/app/sticker-maker-studio/id1443326857'
 
 const stickerImage = async (imageBuffer, meta) => {
     try {
+        if(typeof imageBuffer === 'object') {
+            const response = await axios.get(imageBuffer.url, { responseType: 'arraybuffer' });
+            imageBuffer = Buffer.from(response.data, 'binary');
+        }
         const processedImage = await sharp(imageBuffer)
             .resize({ width: 512, height: 512 })
             .webp({ quality: 10 })

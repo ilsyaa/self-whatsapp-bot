@@ -1,4 +1,5 @@
 const { menuByLabel } = require("../utils/loadCommands.js")
+const timer2 = require("../utils/timer2.js")
 
 module.exports = {
     name : "menu",
@@ -6,17 +7,17 @@ module.exports = {
     cmd : ['help', 'menu'],
     run : async({ m, sock }) => {
         let text = ''
-        text += '*😺 Menu* ඞ\n\n'
+        text += `*😺 Menu* ඞ\n ${timer2()} \n\n`
         menuByLabel.forEach((val, key) => {
             text += `┌── ˗ˏˋ ★ ${key} ★ ˎˊ˗\n`
             val.forEach((v) => {
-                text += `» ${v.cmd[0]} ${v.example}\n`
+                text += `▷ ${v.cmd[0]} ${v.example}\n`
             })
             text += `└────────────\n\n`
         })
 
-        // text += `\n`
-        // text += `_👑 author: Ilsya_\n`
+        text += `\n`
+        text += `_👑 author: Ilsya_\n`
         await m._sendMessage(m.chat, { text: text }, { quoted: m })
     }
 }
