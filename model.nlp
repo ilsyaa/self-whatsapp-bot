@@ -1,0 +1,637 @@
+{
+  "settings": {
+    "languages": [
+      "id"
+    ],
+    "forceNER": true,
+    "tag": "nlp",
+    "threshold": 0.5,
+    "autoLoad": true,
+    "autoSave": true,
+    "modelFileName": "model.nlp",
+    "executeActionsBeforeAnswers": false,
+    "calculateSentiment": true
+  },
+  "nluManager": {
+    "settings": {
+      "tag": "nlu-manager"
+    },
+    "locales": [
+      "id"
+    ],
+    "languageNames": {},
+    "domainManagers": {
+      "id": {
+        "settings": {
+          "locale": "id",
+          "trainByDomain": false,
+          "tag": "domain-manager-id",
+          "nluByDomain": {
+            "default": {
+              "className": "NeuralNlu",
+              "settings": {}
+            }
+          },
+          "useStemDict": true
+        },
+        "stemDict": {
+          "buat,dari,gambar,ini,sticker": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "buatl,dari,gambar,ini,saya,sticker": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "convert,gambar,ini,jadi,sticker": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "jadi,sticker": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "make,sticker": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "buat,dari,gambar,ini,stiker": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "gambar,ini,ke,stiker,tambah": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "gambar,ini,jadi,stiker": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "gambar,ini,jadi,sebaga,stiker": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "gambar,ini,ke,konversi,stiker": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "buat,dari,foto,ini,stiker": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "gambar,ganti,ini,jadi,stiker": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "gambar,ini,sebaga,simpan,stiker": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "gambar,ini,jadi,stiker,ubah": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "buat,dari,foto,kirim,saya,stiker,yang": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "dari,gambar,hasil,ini,stiker": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "buat,dari,image,ini,stiker": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "buat,gambar,ini,stiker,tolong": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "gambar,ini,jadi,konversi,stiker": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "foto,ini,jadi,stiker": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "ada,buat,dari,gambar,stiker,yang": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "dari,gambar,ini,stiker,ya": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "gambar,ini,stiker,untuk": {
+            "intent": "/sticker",
+            "domain": "default"
+          },
+          "baru,gambar,ini,jadi,sebaga,stiker": {
+            "intent": "/sticker",
+            "domain": "default"
+          }
+        },
+        "intentDict": {
+          "/sticker": "default"
+        },
+        "sentences": [
+          {
+            "domain": "default",
+            "utterance": "buatkan sticker dari gambar ini",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "buatlan saya sticker dari gambar ini",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "convert gambar ini jadi sticker",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "jadikan sticker",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "make sticker",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "Buat stiker dari gambar ini",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tambahkan gambar ini ke stiker",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "Gambar ini jadi stiker",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "Jadikan gambar ini sebagai stiker",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "Konversi gambar ini ke stiker",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "Buatkan stiker dari foto ini",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ganti gambar ini jadi stiker",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "Simpan gambar ini sebagai stiker",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ubah gambar ini menjadi stiker",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "Buat stiker dari foto yang saya kirim",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "Hasilkan stiker dari gambar ini",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "Buatkan stiker dari image ini",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "Gambar ini, tolong buatkan stiker",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "Konversikan gambar ini jadi stiker",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "Jadikan foto ini stiker",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "Buat stiker dari gambar yang ada",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "Stiker dari gambar ini ya",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "Gambar ini untuk stiker",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "Jadikan gambar ini sebagai stiker baru",
+            "intent": "/sticker"
+          },
+          {
+            "domain": "default",
+            "utterance": "Buatkan stiker dari image ini",
+            "intent": "/sticker"
+          }
+        ],
+        "domains": {
+          "master_domain": {
+            "settings": {
+              "locale": "id",
+              "tag": "nlu-id",
+              "keepStopwords": true,
+              "nonefeatureValue": 1,
+              "nonedeltaMultiplier": 1.2,
+              "spellCheck": false,
+              "spellCheckDistance": 1,
+              "filterZeros": true,
+              "log": true
+            },
+            "features": {
+              "buat": 1,
+              "sticker": 1,
+              "dari": 1,
+              "gambar": 1,
+              "ini": 1,
+              "buatl": 1,
+              "saya": 1,
+              "convert": 1,
+              "jadi": 1,
+              "make": 1,
+              "stiker": 1,
+              "tambah": 1,
+              "ke": 1,
+              "sebaga": 1,
+              "konversi": 1,
+              "foto": 1,
+              "ganti": 1,
+              "simpan": 1,
+              "ubah": 1,
+              "yang": 1,
+              "kirim": 1,
+              "hasil": 1,
+              "image": 1,
+              "tolong": 1,
+              "ada": 1,
+              "ya": 1,
+              "untuk": 1,
+              "baru": 1
+            },
+            "intents": {
+              "/sticker": 1
+            },
+            "intentFeatures": {
+              "/sticker": {
+                "buat": 1,
+                "sticker": 1,
+                "dari": 1,
+                "gambar": 1,
+                "ini": 1,
+                "buatl": 1,
+                "saya": 1,
+                "convert": 1,
+                "jadi": 1,
+                "make": 1,
+                "stiker": 1,
+                "tambah": 1,
+                "ke": 1,
+                "sebaga": 1,
+                "konversi": 1,
+                "foto": 1,
+                "ganti": 1,
+                "simpan": 1,
+                "ubah": 1,
+                "yang": 1,
+                "kirim": 1,
+                "hasil": 1,
+                "image": 1,
+                "tolong": 1,
+                "ada": 1,
+                "ya": 1,
+                "untuk": 1,
+                "baru": 1
+              }
+            },
+            "featuresToIntent": {
+              "buat": [
+                "/sticker"
+              ],
+              "sticker": [
+                "/sticker"
+              ],
+              "dari": [
+                "/sticker"
+              ],
+              "gambar": [
+                "/sticker"
+              ],
+              "ini": [
+                "/sticker"
+              ],
+              "buatl": [
+                "/sticker"
+              ],
+              "saya": [
+                "/sticker"
+              ],
+              "convert": [
+                "/sticker"
+              ],
+              "jadi": [
+                "/sticker"
+              ],
+              "make": [
+                "/sticker"
+              ],
+              "stiker": [
+                "/sticker"
+              ],
+              "tambah": [
+                "/sticker"
+              ],
+              "ke": [
+                "/sticker"
+              ],
+              "sebaga": [
+                "/sticker"
+              ],
+              "konversi": [
+                "/sticker"
+              ],
+              "foto": [
+                "/sticker"
+              ],
+              "ganti": [
+                "/sticker"
+              ],
+              "simpan": [
+                "/sticker"
+              ],
+              "ubah": [
+                "/sticker"
+              ],
+              "yang": [
+                "/sticker"
+              ],
+              "kirim": [
+                "/sticker"
+              ],
+              "hasil": [
+                "/sticker"
+              ],
+              "image": [
+                "/sticker"
+              ],
+              "tolong": [
+                "/sticker"
+              ],
+              "ada": [
+                "/sticker"
+              ],
+              "ya": [
+                "/sticker"
+              ],
+              "untuk": [
+                "/sticker"
+              ],
+              "baru": [
+                "/sticker"
+              ]
+            },
+            "neuralNetwork": {
+              "settings": {
+                "locale": "id",
+                "tag": "nlu-id",
+                "keepStopwords": true,
+                "nonefeatureValue": 1,
+                "nonedeltaMultiplier": 1.2,
+                "spellCheck": false,
+                "spellCheckDistance": 1,
+                "filterZeros": true,
+                "log": true
+              },
+              "features": [
+                "buat",
+                "sticker",
+                "dari",
+                "gambar",
+                "ini",
+                "buatl",
+                "saya",
+                "convert",
+                "jadi",
+                "make",
+                "stiker",
+                "tambah",
+                "ke",
+                "sebaga",
+                "konversi",
+                "foto",
+                "ganti",
+                "simpan",
+                "ubah",
+                "yang",
+                "kirim",
+                "hasil",
+                "image",
+                "tolong",
+                "ada",
+                "ya",
+                "untuk",
+                "baru"
+              ],
+              "intents": [
+                "/sticker"
+              ],
+              "perceptrons": [
+                [
+                  0.6020373106002808,
+                  6.185892105102539,
+                  1.0756142139434814,
+                  0.21438142657279968,
+                  0.5033349990844727,
+                  0.1545218825340271,
+                  0.20255893468856812,
+                  -0.4992763102054596,
+                  1.911889672279358,
+                  2.1877362728118896,
+                  5.742636203765869,
+                  -0.02625342831015587,
+                  1.8870351314544678,
+                  -0.010326622985303402,
+                  -0.06395334005355835,
+                  0.2676536738872528,
+                  -0.09150782972574234,
+                  1.8142365217208862,
+                  -0.10883750766515732,
+                  0.3714989721775055,
+                  0.04708051308989525,
+                  0.744215190410614,
+                  0.396619975566864,
+                  1.2099014520645142,
+                  0.3266124427318573,
+                  0.7838346362113953,
+                  1.8455896377563477,
+                  -0.06267769634723663,
+                  5.965706376955088
+                ]
+              ]
+            }
+          }
+        }
+      }
+    },
+    "intentDomains": {},
+    "extraSentences": [
+      [
+        "id",
+        "buatkan sticker dari gambar ini"
+      ],
+      [
+        "id",
+        "buatlan saya sticker dari gambar ini"
+      ],
+      [
+        "id",
+        "convert gambar ini jadi sticker"
+      ],
+      [
+        "id",
+        "jadikan sticker"
+      ],
+      [
+        "id",
+        "make sticker"
+      ],
+      [
+        "id",
+        "Buat stiker dari gambar ini"
+      ],
+      [
+        "id",
+        "Tambahkan gambar ini ke stiker"
+      ],
+      [
+        "id",
+        "Gambar ini jadi stiker"
+      ],
+      [
+        "id",
+        "Jadikan gambar ini sebagai stiker"
+      ],
+      [
+        "id",
+        "Konversi gambar ini ke stiker"
+      ],
+      [
+        "id",
+        "Buatkan stiker dari foto ini"
+      ],
+      [
+        "id",
+        "Ganti gambar ini jadi stiker"
+      ],
+      [
+        "id",
+        "Simpan gambar ini sebagai stiker"
+      ],
+      [
+        "id",
+        "Ubah gambar ini menjadi stiker"
+      ],
+      [
+        "id",
+        "Buat stiker dari foto yang saya kirim"
+      ],
+      [
+        "id",
+        "Hasilkan stiker dari gambar ini"
+      ],
+      [
+        "id",
+        "Buatkan stiker dari image ini"
+      ],
+      [
+        "id",
+        "Gambar ini, tolong buatkan stiker"
+      ],
+      [
+        "id",
+        "Konversikan gambar ini jadi stiker"
+      ],
+      [
+        "id",
+        "Jadikan foto ini stiker"
+      ],
+      [
+        "id",
+        "Buat stiker dari gambar yang ada"
+      ],
+      [
+        "id",
+        "Stiker dari gambar ini ya"
+      ],
+      [
+        "id",
+        "Gambar ini untuk stiker"
+      ],
+      [
+        "id",
+        "Jadikan gambar ini sebagai stiker baru"
+      ],
+      [
+        "id",
+        "Buatkan stiker dari image ini"
+      ]
+    ]
+  },
+  "ner": {
+    "settings": {
+      "tag": "ner",
+      "entityPreffix": "%",
+      "entitySuffix": "%"
+    },
+    "rules": {}
+  },
+  "nlgManager": {
+    "settings": {
+      "tag": "nlg-manager"
+    },
+    "responses": {}
+  },
+  "actionManager": {
+    "settings": {
+      "tag": "action-manager"
+    },
+    "actions": {}
+  },
+  "slotManager": {}
+}
