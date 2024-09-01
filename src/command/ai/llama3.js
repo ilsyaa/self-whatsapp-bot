@@ -6,7 +6,7 @@ module.exports = {
     cmd : ['llm', 'llama3'],
     menu : {
         label : 'ai',
-        example : "_query_",
+        example : "_<query>_",
     },
     run : async({ m, sock }) => {
         try {

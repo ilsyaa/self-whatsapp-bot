@@ -3,7 +3,8 @@ module.exports = {
     description : "Kick Participant From Group",
     cmd : ['kick'],
     menu : {
-        label : 'group'
+        label : 'group',
+        example : '`reply or mention`'
     },
     run : async({ m, sock }) => {
         try {

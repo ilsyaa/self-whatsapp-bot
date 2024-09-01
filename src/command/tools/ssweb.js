@@ -7,7 +7,7 @@ module.exports = {
     cmd : ['ssweb'],
     menu : {
         label : 'tools',
-        example : 'ssweb <url>'
+        example : '_<url>_'
     },
     run : async({ m, sock }) => {
         if(!m.body.arg) return m._reply("Cara penggunaan: ssweb <url>")

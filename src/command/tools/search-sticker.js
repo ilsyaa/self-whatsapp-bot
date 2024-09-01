@@ -8,7 +8,7 @@ module.exports = {
     cmd : ['searchsticker', 'ss'],
     menu : {
         label : 'tools',
-        example : 'ss <url>'
+        example : '_<url>_'
     },
     run : async({ m, sock }) => {
         if(!m.body.arg) return m._reply("Cari sticker disini https://getstickerpack.com/stickers\nlalu pilih salah satu lalu kirim ss <url>\nContoh : _ss https://getstickerpack.com/stickers/dinonya-nrs_");

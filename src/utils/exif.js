@@ -7,16 +7,42 @@ const packID = 'com.snowcorp.stickerly.android.stickercontentprovider b5e7275f-f
 const playstore = 'https://play.google.com/store/apps/details?id=com.marsvard.stickermakerforwhatsapp'
 const itunes = 'https://itunes.apple.com/app/sticker-maker-studio/id1443326857'
 
-const stickerImage = async (imageBuffer, meta) => {
+const stickerImage = async (imageBuffer, meta, addons = {}) => {
     try {
-        if(typeof imageBuffer === 'object') {
+        let width = 512;
+        let height = 512;
+        let processedImage;
+        if(imageBuffer?.url) {
             const response = await axios.get(imageBuffer.url, { responseType: 'arraybuffer' });
             imageBuffer = Buffer.from(response.data, 'binary');
         }
-        const processedImage = await sharp(imageBuffer)
-            .resize({ width: 512, height: 512 })
+        
+        
+        if(addons?.text?.placement) {
+            const svgText = `
+            <svg width="${width}" height="${height}">
+                <style>
+                    .title { fill: #ffffff; font-size: ${addons?.text?.size || 80}; font-weight: bold; font-family: sans-serif; }
+                </style>
+                <text 
+                    x="${width / 2}" 
+                    y="${addons?.text?.placement.toLowerCase() === 'top' ? 40 : addons.text.placement.toLowerCase() === 'center' ? height / 2 : height - 20}"
+                    text-anchor="middle" 
+                    class="title"
+                >${addons?.text?.value}</text>
+            </svg>
+            `;
+            processedImage = await sharp(imageBuffer)
+                .resize({ width, height })
+                .composite([{ input: Buffer.from(svgText), top: 0, left: 0 }])
+                .webp({ quality: 10 })
+                .toBuffer();
+        } else {
+            processedImage = await sharp(imageBuffer)
+            .resize({ width, height })
             .webp({ quality: 10 })
             .toBuffer();
+        }
 
         const img = new Image();
         const json = {

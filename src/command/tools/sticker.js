@@ -5,7 +5,8 @@ module.exports = {
     description : "Sticker Maker",
     cmd : ['sticker', 's'],
     menu : {
-        label : 'tools'
+        label : 'tools',
+        example : '`reply or send image with caption s`'
     },
     run : async({ m, sock }) => {
         if(!['imageMessage', 'stickerMessage'].includes(m.quoted?.mtype || m.mtype)) return m._reply("Harus berupa gambar/sticker.");
