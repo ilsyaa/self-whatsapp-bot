@@ -13,13 +13,16 @@ module.exports = upsert = async (sock) => {
             if (m.message?.documentWithCaptionMessage) m.message = m.message.documentWithCaptionMessage.message;
             if (!m.message) return
             if (m.key && m.key.remoteJid == "status@broadcast") return
-            if (!sock.public && !m.key.fromMe && chatUpdate.type === 'notify') return
+            if (!m.key.fromMe && chatUpdate.type === 'notify') return
             if (m.key.id.startsWith('BAE5') && m.key.id.length === 16) return
             m = serialize(sock, m)
             await updateAdminStatus(sock, m);
 
             await _antilink(sock, m)
-            
+            if(!sock.public) {
+                if(!m.senderIsOwner) return
+                if(!m.fromMe) return
+            }
             const command = Array.from(commands.values()).find((v) => v.cmd.find((x) => x.toLowerCase() == m.body.first.toLowerCase()));
             if(!command) return
             await command.run({m , sock})
