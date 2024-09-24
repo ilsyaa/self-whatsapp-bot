@@ -1,5 +1,5 @@
 module.exports = async (sock) => {
-    sock.public = true
+    sock.public = false
     require('./onMessageUpsert.js')(sock)
     require('./onGroupParticipantUpdate.js')(sock)
 }
