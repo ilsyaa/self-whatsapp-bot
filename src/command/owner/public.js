@@ -8,7 +8,7 @@ module.exports = {
         if(!m.senderIsOwner) return
         if(!m.body.arg) return
         
-        if(m.body.arg == 'on') {
+        if(m.body.arg == '0') {
             sock.public = true
         } else {
             sock.public = false
