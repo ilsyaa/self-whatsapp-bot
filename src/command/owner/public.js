@@ -10,9 +10,10 @@ module.exports = {
         
         if(m.body.arg == '0') {
             sock.public = true
+            await m._reply(`self off`)
         } else {
             sock.public = false
+            await m._reply(`self on`)
         }
-        await m._reply(`self ${!sock.public ? 'on' : 'off'}`)
     }
 }
