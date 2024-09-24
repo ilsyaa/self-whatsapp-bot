@@ -121,9 +121,14 @@ const downloadMedia = async (m, quoted = false) => {
     if (!mediaKey) {
         throw new Error('Media key is missing');
     }
-
+    
     try {
-        const stream = await downloadContentFromMessage(quoted ? m.quoted : m.message[messageType], messageType.replace('Message', ''));
+        const stream = await downloadContentFromMessage({
+            mediaKey : quoted ? m.quoted.mediaKey : m.message[messageType].mediaKey,
+            directPath : quoted ? m.quoted.directPath : m.message[messageType].directPath,
+            url : quoted ? m.quoted.url : m.message[messageType].url,
+        }, messageType.replace('Message', ''));
+        
         let buffer = Buffer.from([]);
         for await (const chunk of stream) {
             buffer = Buffer.concat([buffer, chunk]);
@@ -143,7 +148,8 @@ const downloadMedia = async (m, quoted = false) => {
 
 const saveMedia = async (m, customPath = '', quoted = false) => {
     try {
-        const buffer = await downloadMedia(m, quoted);
+        const media = await downloadMedia(m, quoted);
+        
         const mtype = quoted ? m.quoted.mtype : m.mtype;
         const mediaTypes = {
             'imageMessage': '.jpg',
@@ -165,7 +171,7 @@ const saveMedia = async (m, customPath = '', quoted = false) => {
         
         const filePath = path.join(customPath || 'media', `${fileName}${fileExt}`);
         
-        await writeFile(filePath, buffer);
+        await writeFile(filePath, media.buffer);
         return filePath;
     } catch (error) {
         throw error;

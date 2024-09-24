@@ -1,27 +1,36 @@
 const config = require("../../config.js");
 const log = require("../utils/log.js")
-const { default:makeWASocket,
+const { default: makeWASocket,
     DisconnectReason,
     useMultiFileAuthState,
+    makeCacheableSignalKeyStore,
+    PHONENUMBER_MCC
 } = require("@whiskeysockets/baileys")
+const NodeCache = require("node-cache")
 const pino = require("pino")
 const path = require("path");
 
 const startSocket = async () => {
     let retryCount = 0;
+    const msgRetryCounterCache = new NodeCache()
     const { state, saveCreds } = await useMultiFileAuthState(path.join(config.STORAGE_SESSION, config.SESSION_NAME));
     const sock = makeWASocket({
         printQRInTerminal: true,
-        auth: state,
+        auth: {
+            creds: state.creds,
+            keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "silent" }).child({ level: "silent" }))
+        },
         logger: pino({ level: "silent" }),
+        browser: ['VelixS', 'Safari', '3.0'],
         markOnlineOnConnect: true,
         generateHighQualityLinkPreview: true,
-        browser: ['VelixS', 'Safari', '3.0']
+        msgRetryCounterCache,
+        defaultQueryTimeoutMs: undefined,
     });
 
     require('./event')(sock)
 
-    try{
+    try {
         sock.ev.on('connection.update', (update) => {
             const { connection, lastDisconnect } = update
             if (connection == "connecting") {
@@ -55,8 +64,8 @@ const startSocket = async () => {
         sock.ev.on("creds.update", async () => {
             await saveCreds();
         })
-    }catch(e){
-        log.error("SOCKET : "+e)
+    } catch (e) {
+        log.error("SOCKET : " + e)
     }
 }
 
