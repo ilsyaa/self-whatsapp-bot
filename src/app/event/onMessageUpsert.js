@@ -1,6 +1,8 @@
 const { serialize, updateAdminStatus, isMedia } = require('../../utils/serialize.js');
 const log = require('../../utils/log.js');
 const { commands } = require('../../utils/loadCommands.js')
+const config = require('../../../config.js');
+const db = require('../../utils/db.js')
 
 module.exports = upsert = async (sock) => {
     sock.ev.on('messages.upsert', async (update) => {
@@ -17,18 +19,23 @@ module.exports = upsert = async (sock) => {
             if (m.key.id.startsWith('BAE5') && m.key.id.length === 16) return
             m = serialize(sock, m)
             await updateAdminStatus(sock, m);
-
-            await _antilink(sock, m)
-            
-            if(!sock.public) {
-                if (!m.fromMe) {
-                    if(!m.senderIsOwner) return
-                }
+            const dbGroupData = await _dbGroupHandler(sock, m)
+            m.db = {
+                group: dbGroupData,
+                bot: db.bot.get('settings'),
             }
-
+            console.log(m.db);
+            
+            await _antilink(sock, m)
+            if(!m.senderIsOwner) {
+                if(m.db.bot.mode == 'private') return
+            }
             const command = Array.from(commands.values()).find((v) => v.cmd.find((x) => x.toLowerCase() == m.body.first.toLowerCase()));
             if(!command) return
+            m.db.user = await _autoRegisterUser(sock, m)
             await command.run({m , sock})
+            console.log(m.db);
+            
         } catch (error) {
             log.error("onMessageUpsert :" + error.message);
         }    
@@ -38,10 +45,45 @@ module.exports = upsert = async (sock) => {
 const _antilink = async (sock, m) => {
     if(m.fromMe) return
     if(!m.isGroup) return
+    if(!m.db?.group?.antilink) return
     if(!m.isGroup.botIsAdmin) return
     if(m.isGroup.senderIsAdmin) return
     if(!m.body.full.match(`chat.whatsapp.com`)) return
     const currentGroupLink = (`https://chat.whatsapp.com/` + await sock.groupInviteCode(m.chat))
     if(m.body.full.match(currentGroupLink)) return
     await sock.sendMessage(m.chat, { delete: m.key })
-}   
+}
+
+const _autoRegisterUser = async (sock, m) => {
+    let dbUserData = null;
+    dbUserData = await db.user.get(m.sender)
+    if(!dbUserData) {
+        await db.user.put(m.sender, {
+            ...config.USER_DEFAULT,
+            blacklist: false, // false = not in blacklist, true = in blacklist permanently, timestamp = in blacklist for some time
+            blacklist_reason: '', // reason for blacklist
+            updated_at: Date.now(), // update every time using bot
+            created_at: Date.now(),
+        })
+        dbUserData = await db.user.get(m.sender)
+    }
+    return dbUserData
+}
+
+const _dbGroupHandler = async (sock, m) => {
+    let dbGroupData = null;
+    if(m.isGroup) {
+        const group = m.isGroup.groupMetadata
+        dbGroupData = await db.group.get(group.id)
+        if(!dbGroupData) {
+            await db.group.put(group.id, {
+                name: group.subject,
+                respon: 'admin-only', // admin-only or all
+                antilink: false,
+                welcome: false,
+            })
+            dbGroupData = await db.group.get(group.id)
+        }
+    }
+    return dbGroupData
+}
