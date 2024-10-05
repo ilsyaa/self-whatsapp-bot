@@ -95,16 +95,16 @@ const extractQuotedMessage = (conn, m) => {
     m.quoted.ephemeral = m.quoted?.contextInfo?.expiration || false;
     m.quoted.download = () => downloadMedia(m, true);
     m.quoted.saveMedia = (filePath) => saveMedia(m, filePath, true);
-    // let vM = m.quoted.fakeObj = M.fromObject({
-    //     key: {
-    //         remoteJid: m.quoted.chat,
-    //         fromMe: m.quoted.fromMe,
-    //         id: m.quoted.id
-    //     },
-    //     message: quoted,
-    //     ...(m.isGroup ? { participant: m.quoted.sender } : {})
-    // })
-    // m.quoted.delete = () => conn.sendMessage(m.quoted.chat, { delete: vM.key })
+    let vM = m.quoted.fakeObj = M.fromObject({
+        key: {
+            remoteJid: m.quoted.chat,
+            fromMe: m.quoted.fromMe,
+            id: m.quoted.id
+        },
+        // message: m.quoted,
+        ...(m.isGroup ? { participant: m.quoted.sender } : {})
+    })
+    m.quoted.delete = () => conn.sendMessage(m.quoted.chat, { delete: vM.key })
 
     return m.quoted;
 };

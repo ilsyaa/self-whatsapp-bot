@@ -6,7 +6,7 @@ module.exports = {
     description : "Screenshot Website",
     cmd : ['ssweb'],
     menu : {
-        label : 'tools',
+        label : 'internet',
         example : '_<url>_'
     },
     run : async({ m, sock }) => {

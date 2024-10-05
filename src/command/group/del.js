@@ -1,10 +1,10 @@
 module.exports = {
-    name : "group-kick",
-    description : "Kick Participant From Group",
-    cmd : ['kick'],
+    name : "group-del-message",
+    description : "Delete message from group",
+    cmd : ['del', 'delete'],
     menu : {
         label : 'group',
-        example : '`reply or mention`'
+        example : '`reply`'
     },
     run : async({ m, sock }) => {
         try {
@@ -12,11 +12,7 @@ module.exports = {
             if(!m.isGroup.botIsAdmin) return
             if(!m.isGroup.senderIsAdmin) return
             if(!m.quoted) return m._reply('reply to a message')
-
-            if(m.quoted) await sock.groupParticipantsUpdate(m.chat, [m.quoted.sender], "remove")
-            for (let i of m?.mentionedJid || []) {
-                await sock.groupParticipantsUpdate(m.chat, [i], "remove")
-            }
+            m.quoted.delete()
         } catch(error) {
             await m._reply(error.message)
         }
