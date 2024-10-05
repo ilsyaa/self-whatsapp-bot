@@ -11,7 +11,6 @@ module.exports = {
             if(!m.isGroup) return
             if(!m.isGroup.botIsAdmin) return
             if(!m.isGroup.senderIsAdmin) return
-            if(!m.quoted) return m._reply('reply to a message')
 
             if(m.quoted) await sock.groupParticipantsUpdate(m.chat, [m.quoted.sender], "remove")
             for (let i of m?.mentionedJid || []) {
