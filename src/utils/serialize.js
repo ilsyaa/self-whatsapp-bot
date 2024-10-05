@@ -57,6 +57,7 @@ const serialize = (conn, m) => {
 }
 
 const messageWrapper = (conn, m) => {
+    m.ephemeral = false
     m._reply = (text) => {
         return conn.sendMessage(m.chat, typeof text === 'string' ? { text: text } : text, { quoted: m, ephemeralExpiration: m.ephemeral })
     }
