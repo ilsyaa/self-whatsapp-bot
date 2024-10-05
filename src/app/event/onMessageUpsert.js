@@ -21,21 +21,18 @@ module.exports = upsert = async (sock) => {
             await updateAdminStatus(sock, m);
             const dbGroupData = await _dbGroupHandler(sock, m)
             m.db = {
+                user: null,
                 group: dbGroupData,
                 bot: db.bot.get('settings'),
             }
-            console.log(m.db);
-            
             await _antilink(sock, m)
-            if(!m.senderIsOwner) {
-                if(m.db.bot.mode == 'private') return
-            }
+            if(!m.senderIsOwner && m.db.bot.mode == 'private') return
+            if (m.isGroup && !m.senderIsOwner && m.db.group.mode === 'admin-only' && !m.isGroup.senderIsAdmin) return
             const command = Array.from(commands.values()).find((v) => v.cmd.find((x) => x.toLowerCase() == m.body.first.toLowerCase()));
             if(!command) return
             m.db.user = await _autoRegisterUser(sock, m)
             await command.run({m , sock})
             console.log(m.db);
-            
         } catch (error) {
             log.error("onMessageUpsert :" + error.message);
         }    
@@ -78,7 +75,7 @@ const _dbGroupHandler = async (sock, m) => {
         if(!dbGroupData) {
             await db.group.put(group.id, {
                 name: group.subject,
-                respon: 'admin-only', // admin-only or all
+                mode: 'admin-only', // admin-only or all
                 antilink: false,
                 welcome: false,
             })
