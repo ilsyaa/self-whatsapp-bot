@@ -78,6 +78,8 @@ const _dbGroupHandler = async (sock, m) => {
                 mode: 'admin-only', // admin-only or all
                 antilink: false,
                 welcome: false,
+                welcome_message: null,
+                welcome_background: null,
             })
             dbGroupData = await db.group.get(group.id)
         }

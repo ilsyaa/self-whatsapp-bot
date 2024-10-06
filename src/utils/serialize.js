@@ -29,6 +29,7 @@ const serialize = (conn, m) => {
         m.mtype = getContentType(m.message);
         m.msg = (m.mtype == 'viewOnceMessage' ? m.message[m.mtype].message[getContentType(m.message[m.mtype].message)] : m.message[m.mtype]);
         m.ephemeral = m.msg?.contextInfo?.expiration || false
+        
         m.text = m.message?.conversation || m.message?.[m.mtype]?.text || m.message?.[m.mtype]?.caption || m.message?.[m.mtype]?.contentText || m.message?.[m.mtype]?.selectedDisplayText || m.message?.[m.mtype]?.title || ""
         m.mentionedJid = m.msg.contextInfo ? m.msg.contextInfo.mentionedJid : [];
 
@@ -57,7 +58,7 @@ const serialize = (conn, m) => {
 }
 
 const messageWrapper = (conn, m) => {
-    m.ephemeral = false
+    // m.ephemeral = false
     m._reply = (text) => {
         return conn.sendMessage(m.chat, typeof text === 'string' ? { text: text } : text, { quoted: m, ephemeralExpiration: m.ephemeral })
     }

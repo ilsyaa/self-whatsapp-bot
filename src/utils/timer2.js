@@ -1,4 +1,4 @@
-const moment = require('moment-timezone')
+const moment = require('./moment.js');
 
 module.exports = time2 = () => {
     const time2 = moment().tz('Asia/Jakarta').format('HH:mm:ss')

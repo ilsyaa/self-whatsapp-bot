@@ -1,5 +1,4 @@
 const { default: axios } = require("axios");
-const { stickerImage } = require("../../utils/exif.js");
 
 module.exports = {
     name : "ssweb",
