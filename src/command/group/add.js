@@ -12,11 +12,8 @@ module.exports = {
             if(!m.isGroup.botIsAdmin) return
             if(!m.isGroup.senderIsAdmin) return
             if(!m.body.arg) return m._reply("penggunaan: add `<number>`")
-
-            let numbers = m.body.arg.split('|')
-            for (let i of numbers) {
-                await sock.groupParticipantsUpdate(m.chat, [i + "@s.whatsapp.net"], "add")
-            }
+            let number = m.body.arg
+            await sock.groupParticipantsUpdate(m.chat, [`${number}@s.whatsapp.net`], "add")
         } catch(error) {
             await m._reply(error.message)
         }
