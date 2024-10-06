@@ -5,7 +5,7 @@ module.exports = {
     description : "Mengatur respon bot di group",
     cmd : ['gmode'],
     menu : {
-        label : 'gmode',
+        label : 'group',
         example : '_<admin-only/all>_'
     },
     run : async({ m, sock }) => {
@@ -16,10 +16,10 @@ module.exports = {
             if(!m.body.arg) return m._reply("penggunaan: gmode `<admin/all>`")
 
             if(m.body.arg == 'adminonly' || m.body.arg == 'admin') {
-                await db.group.put(m.isGroup.groupMetadata.id, { mode: 'admin-only' })
+                await db.update(db.group, m.isGroup.groupMetadata.id, { mode: 'admin-only' })
                 await m._reply('`Bot berhasil di setting hanya merespon kepada admin saja.`')
             } else if(m.body.arg == 'all') {
-                await db.group.put(m.isGroup.groupMetadata.id, { mode: 'all' })
+                await db.update(db.group, m.isGroup.groupMetadata.id, { mode: 'all' })
                 await m._reply('`Bot berhasil di setting untuk bisa merespon ke semua member.`')
             }
         } catch(error) {

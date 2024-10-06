@@ -6,10 +6,10 @@ module.exports = {
     name : "search-sticker",
     description : "Search Sticker",
     cmd : ['searchsticker', 'ss'],
-    menu : {
-        label : 'tools',
-        example : '_<url>_'
-    },
+    // menu : {
+    //     label : 'tools',
+    //     example : '_<url>_'
+    // },
     run : async({ m, sock }) => {
         if(!m.body.arg) return m._reply("Cari sticker disini https://getstickerpack.com/stickers\nlalu pilih salah satu lalu kirim ss <url>\nContoh : _ss https://getstickerpack.com/stickers/dinonya-nrs_");
         if(!m.body.arg.match('https://getstickerpack.com')) return m._reply("Hanya link dari getstickerpack.com");

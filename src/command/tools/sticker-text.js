@@ -6,10 +6,10 @@ module.exports = {
     name : "sticker-text",
     description : "Sticker Text Maker",
     cmd : ['st', 'stickertext'],
-    menu : {
-        label : 'tools',
-        example : '_<placement>|<text>_ `placement: top, center, bottom`'
-    },
+    // menu : {
+    //     label : 'tools',
+    //     example : '_<placement>|<text>_ `placement: top, center, bottom`'
+    // },
     run : async({ m, sock }) => {
         if(!['imageMessage', 'stickerMessage'].includes(m.quoted?.mtype || m.mtype)) return m._reply("Harus berupa gambar/sticker.");
         const [placement, text, size] = m.body.arg.trim().split('|')

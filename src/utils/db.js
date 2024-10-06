@@ -36,6 +36,17 @@ class DatabaseManager {
         }
     }
 
+    async update(db, key, value) {
+        try {
+            await db.put(key, {
+                ...db.get(key),
+                ...value,
+            });
+        } catch (error) {
+            console.error('Error updating database:', error);
+            throw error;
+        }
+    }
     async close() {
         try {
             if (this.user) await this.user.close();
