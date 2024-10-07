@@ -24,6 +24,7 @@ const _welcome = async (sock, update) => {
         let avatar = "https://i.pinimg.com/originals/e8/12/c9/e812c98063195ab81dfd288e76be2dd1.jpg";
         const text = `${dbgroup.welcome_message ? dbgroup.welcome_message.replace(/{group\.name}/g, dbgroup.name) : 'Welcome to ' + dbgroup.name}`;
         const heading = participant.replace('@s.whatsapp.net', '');
+        let caption = `Selamat datang @${participant.replace('@s.whatsapp.net', '')}`
         try{
             avatar = await sock.profilePictureUrl(participant, 'image');
         } catch {
@@ -59,7 +60,7 @@ const _welcome = async (sock, update) => {
                 ctx.drawImage(await loadImage(avatar), 384, 62, 257, 257)
                 const buffer = canvas.toBuffer('image/jpeg')
                 // const leaveApiUrl = 'https://i.ibb.co.com/HrxxcJV/trol.png'
-                sock.sendMessage(update.id, { image : buffer }, { ephemeralExpiration: true })
+                sock.sendMessage(update.id, { image : buffer, caption }, { mentions: [participant], ephemeralExpiration: true })
                 // sock.sendMessage(update.id, {
                 //     text: '',
                 //     contextInfo: {
