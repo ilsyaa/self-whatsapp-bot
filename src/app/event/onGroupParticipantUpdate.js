@@ -60,7 +60,7 @@ const _welcome = async (sock, update) => {
                 ctx.drawImage(await loadImage(avatar), 384, 62, 257, 257)
                 const buffer = canvas.toBuffer('image/jpeg')
                 // const leaveApiUrl = 'https://i.ibb.co.com/HrxxcJV/trol.png'
-                sock.sendMessage(update.id, { image : buffer, caption }, { mentions: [participant], ephemeralExpiration: true })
+                sock.sendMessage(update.id, { image : buffer, caption, mentions: [participant] }, { ephemeralExpiration: true })
                 // sock.sendMessage(update.id, {
                 //     text: '',
                 //     contextInfo: {
