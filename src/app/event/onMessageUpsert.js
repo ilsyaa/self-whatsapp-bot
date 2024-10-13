@@ -36,7 +36,7 @@ module.exports = upsert = async (sock) => {
             if(!command?.withoutPrefix && !m.body.prefix) return
             m.db.user = await _autoRegisterUser(sock, m)
             await command.run({m , sock})
-            console.log(m);
+            // console.log(m);
         } catch (error) {
             log.error("onMessageUpsert :" + error.message);
         }    

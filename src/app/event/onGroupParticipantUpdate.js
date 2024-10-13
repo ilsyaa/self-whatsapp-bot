@@ -16,7 +16,6 @@ module.exports = groupParticipant = async (sock) => {
 
 const _welcome = async (sock, update) => {
     const dbgroup = await db.group.get(update.id)
-    console.log(dbgroup);
     if(!dbgroup) return
     if(!dbgroup.welcome) return
     // const group = await sock.groupMetadata(update.id) || (sock.chats[id] || {}).metadata
@@ -28,7 +27,6 @@ const _welcome = async (sock, update) => {
         try{
             avatar = await sock.profilePictureUrl(participant, 'image');
         } catch {
-            console.log('error');
         } finally {
             try {
                 const canvas = createCanvas(1024, 500);

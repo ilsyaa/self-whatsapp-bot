@@ -1,11 +1,12 @@
 const fs = require('fs')
 const config = require("../../../config.js")
 const path = require("path")
+const { webpToVideo } = require('../../utils/ffmpeg.js')
 
 module.exports = {
-    name : "toimg",
-    description : "Sticker To Image",
-    cmd : ['toimg'],
+    name : "tovid",
+    description : "Sticker To Video",
+    cmd : ['tovid', 'tovideo'],
     menu : {
         label : 'tools',
         example : '`reply sticker`'
@@ -13,10 +14,10 @@ module.exports = {
     run : async({ m, sock }) => {
         if(!['stickerMessage'].includes(m.quoted?.mtype)) return m._reply("`reply sticker.`");
         try {
-            let image = await m.quoted.download()
-            await m._sendMessage(m.chat, { image: image.buffer }, { quoted: m })
+            let media = await m.quoted.saveMedia(path.join(config.STORAGE_PATH, 'temp'))
+            let video = await webpToVideo(media)
+            await m._sendMessage(m.chat, { video }, { quoted: m })
         } catch (error) {
-            console.log(error)
             await m._reply('`Sticker tidak jelas sumbernya.`')
         }
     }
