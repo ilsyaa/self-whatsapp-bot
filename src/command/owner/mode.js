@@ -6,7 +6,7 @@ module.exports = {
     cmd: ['mode'],
     run: async ({ m, sock }) => {
         if(!m.senderIsOwner) return
-        if(!m.body.arg) return
+        if(!m.body.arg) return m._reply("penggunaan: mode <public/private>")
         
         if(m.body.arg == 'public' || m.body.arg == 'pb') {
             await db.bot.put('settings', { mode: 'public' })
@@ -14,6 +14,8 @@ module.exports = {
         } else if(m.body.arg == 'private' || m.body.arg == 'pv') {
             await db.bot.put('settings', { mode: 'private' })
             await m._reply('`bot mode private`')
+        } else {
+            await m._reply("penggunaan: mode <public/private>")
         }
     }
 }

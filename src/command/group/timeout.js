@@ -4,9 +4,9 @@ module.exports = {
     name : "group-timeout",
     description : "Timeout member nakal",
     cmd : ['timeout', 'to'],
-    menu : {
-        label : 'timeout',
-    },
+    // menu : {
+    //     label : 'timeout',
+    // },
     run : async({ m, sock }) => {
         // try {
         //     // if(!m.isGroup) return

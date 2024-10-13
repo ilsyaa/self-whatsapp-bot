@@ -21,6 +21,8 @@ module.exports = {
             } else if(m.body.arg == 'disable' || m.body.arg == 'off' || m.body.arg == 'false') {
                 await db.update(db.group, m.isGroup.groupMetadata.id, { antilink: false })
                 await m._reply('`Antilink dinonaktifkan untuk semua member.`')
+            } else {
+                await m._reply("penggunaan: antilink `<enable/disable>`")
             }
         } catch(error) {
             await m._reply(error.message)

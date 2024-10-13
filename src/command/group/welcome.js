@@ -19,6 +19,8 @@ module.exports = {
             } else if(m.body.arg == 'disable' || m.body.arg == 'off' || m.body.arg == 'false') {
                 await db.update(db.group, m.isGroup.groupMetadata.id, { welcome: false })
                 await m._reply('`Fitur welcome dinonaktifkan untuk semua member.`')
+            } else {
+                await m._reply("penggunaan: set-welcome <enable/disable>")
             }
         } catch(error) {
             await m._reply(error.message)

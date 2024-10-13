@@ -1,4 +1,4 @@
-const { downloadContentFromMessage } = require("@whiskeysockets/baileys");
+const fs = require('fs')
 const config = require("../../../config.js")
 const path = require("path")
 
@@ -12,8 +12,12 @@ module.exports = {
     },
     run : async({ m, sock }) => {
         if(!['stickerMessage'].includes(m.quoted?.mtype)) return m._reply("`reply sticker.`");
-        
-        let media = await m.quoted.saveMedia(path.join(config.STORAGE_PATH, 'temp'))
-        await m._sendMessage(m.chat, media, { quoted: m })
+        try {
+            let media = await m.quoted.saveMedia(path.join(config.STORAGE_PATH, 'temp'))
+            await m._sendMessage(m.chat, { image: { url: media } }, { quoted: m })
+            fs.unlinkSync(media)
+        } catch (error) {
+            await m._reply('`Sticker tidak jelas sumbernya.`')
+        }
     }
 }

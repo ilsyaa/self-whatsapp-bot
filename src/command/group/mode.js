@@ -21,6 +21,8 @@ module.exports = {
             } else if(m.body.arg == 'all') {
                 await db.update(db.group, m.isGroup.groupMetadata.id, { mode: 'all' })
                 await m._reply('`Bot berhasil di setting untuk bisa merespon ke semua member.`')
+            } else {
+                await m._reply("penggunaan: gmode `<admin/all>`")
             }
         } catch(error) {
             await m._reply(error.message)
