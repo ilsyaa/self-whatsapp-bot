@@ -18,6 +18,8 @@ module.exports = upsert = async (sock) => {
             if (!m.key.fromMe && !type === 'notify') return
             if (m.key.id.startsWith('BAE5') && m.key.id.length === 16) return
             m = serialize(sock, m)
+            // read message
+            await sock.readMessages([m.key])
             await updateAdminStatus(sock, m);
             const dbGroupData = await _dbGroupHandler(sock, m)
             m.db = {
@@ -34,7 +36,7 @@ module.exports = upsert = async (sock) => {
             if(!command?.withoutPrefix && !m.body.prefix) return
             m.db.user = await _autoRegisterUser(sock, m)
             await command.run({m , sock})
-            // console.log(m.db);
+            console.log(m);
         } catch (error) {
             log.error("onMessageUpsert :" + error.message);
         }    
