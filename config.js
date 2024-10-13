@@ -19,4 +19,6 @@ module.exports = {
         limit: 10, // false -> unlimited
         exp: 0,
     },
+
+    prefix: ['/', '.', '!'],
 }

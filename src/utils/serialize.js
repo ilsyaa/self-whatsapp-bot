@@ -42,8 +42,10 @@ const serialize = (conn, m) => {
     m.senderIsOwner = config.OWNER_NUMBER.includes(m.sender.split('@')[0]);
     
     m.body = {
+        prefix : config.prefix.find(v => m.text.startsWith(v)) || null,
         full : m.text.trim(),
-        first : m.text.split(' ')[0].trim(),
+        command : m.text.split(' ')[0].trim(),
+        commandWithoutPrefix : m.text.split(' ')[0].replace(new RegExp(`^[${config.prefix.join('')}]`), ''),
         arg : m.text.slice(m.text.split(' ')[0].length).trim(),
     }
     

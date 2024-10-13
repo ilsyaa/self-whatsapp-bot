@@ -25,18 +25,32 @@ module.exports = upsert = async (sock) => {
                 group: dbGroupData,
                 bot: db.bot.get('settings'),
             }
+            await _timeout(sock, m)
             await _antilink(sock, m)
             if(!m.senderIsOwner && m.db.bot.mode == 'private') return
             if (m.isGroup && !m.senderIsOwner && m.db.group.mode === 'admin-only' && !m.isGroup.senderIsAdmin) return
-            const command = Array.from(commands.values()).find((v) => v.cmd.find((x) => x.toLowerCase() == m.body.first.toLowerCase()));
+            const command = Array.from(commands.values()).find((v) => v.cmd.find((x) => x.toLowerCase() == m.body.commandWithoutPrefix.toLowerCase()));
             if(!command) return
+            if(!command?.withoutPrefix && !m.body.prefix) return
             m.db.user = await _autoRegisterUser(sock, m)
             await command.run({m , sock})
-            console.log(m.db);
+            // console.log(m.db);
         } catch (error) {
             log.error("onMessageUpsert :" + error.message);
         }    
     })
+}
+
+const _timeout = async (sock, m) => {
+    if(m.fromMe) return
+    if(!m.isGroup) return
+    if(!m.db?.group?.timeouts) return
+    if(!m.isGroup.botIsAdmin) return
+    if(m.isGroup.senderIsAdmin) return
+
+    if(m.db.group.timeouts.include(m.sender)) {
+        await sock.sendMessage(m.chat, { delete: m.key })
+    }
 }
 
 const _antilink = async (sock, m) => {
@@ -80,6 +94,7 @@ const _dbGroupHandler = async (sock, m) => {
                 welcome: false,
                 welcome_message: null,
                 welcome_background: null,
+                timeouts: [],
             })
             dbGroupData = await db.group.get(group.id)
         }
