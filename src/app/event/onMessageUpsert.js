@@ -52,7 +52,7 @@ const _middleware = async (sock, m, middlewares, withoutMiddleware) => {
                 await middleware.handdler(sock, m, true)
             }
         } catch (error) {
-            if(!error?.hideLogs) console.log({...error, ...{ sender: m.sender } });
+            if(!error?.hideLogs) console.log(error);
             $next = error
             if(error?.break) break
         }
