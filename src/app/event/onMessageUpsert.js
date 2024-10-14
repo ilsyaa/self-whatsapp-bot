@@ -37,7 +37,7 @@ module.exports = upsert = async (sock) => {
             await command.run({m , sock})
             // console.log(m.db);
         } catch (error) {
-            log.error("onMessageUpsert :" + error.message);
+            log.error("onMessageUpsert :" + error);
         }    
     })
 }
