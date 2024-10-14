@@ -12,7 +12,7 @@ module.exports = {
             if(!m.isGroup) return
             if(!m.isGroup.botIsAdmin) return
             if(!m.isGroup.senderIsAdmin) return
-            if(!m.body.arg) return m._reply("penggunaan: set-welcome <enable/disable>")
+            if(!m.body.arg) return m._reply("penggunaan: "+m.body.prefix+"set-welcome `<enable/disable>`")
             if(m.body.arg == 'enable' || m.body.arg == 'on' || m.body.arg == 'true') {
                 await db.update(db.group, m.isGroup.groupMetadata.id, { welcome: true })
                 await m._reply('`Fitur welcome diaktifkan di group ini.`')

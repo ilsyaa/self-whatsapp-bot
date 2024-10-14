@@ -1,3 +1,4 @@
+const db = require('../../utils/db');
 const moment = require('../../utils/moment');
 
 module.exports = {
@@ -9,7 +10,15 @@ module.exports = {
     },
     withoutMiddleware: ['timeout.js'],
     run: async ({ m, sock }) => {
-        const avatar = await sock.profilePictureUrl(m.sender, 'image')
+        let dbuser = null, avatar = null
+        if(m.quoted) {
+            dbuser = db.user.get(m.quoted.sender)
+            avatar = await sock.profilePictureUrl(m.quoted.sender, 'image')
+        } else {
+            dbuser = db.user.get(m.sender)
+            avatar = await sock.profilePictureUrl(m.sender, 'image')
+        }
+
         let timeoutGroup = Object.keys(m.db.group.timeouts).find(x => x == m.sender)
         timeoutGroup = timeoutGroup ? `${moment(m.db.group.timeouts[timeoutGroup]).diff(moment(), 'minutes')} minutes ${moment(m.db.group.timeouts[timeoutGroup]).diff(moment(), 'seconds') % 60} seconds` : '-';
         let caption = `*Informasi tentang profilemu*\n\n`

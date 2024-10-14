@@ -15,6 +15,7 @@ module.exports = {
             if(!m.isGroup.botIsAdmin) return
             if(!m.isGroup.senderIsAdmin) return
             if(!m.body.arg) return m._reply("*Cara penggunaan*: "+m.body.prefix+"timeout `<duration>` `@mentions`\n*Contoh*: "+m.body.prefix+"timeout 10 @user1 @user2\n_Duration in minutes_")
+            if(!m.mentionedJid.length) return m._reply("Tidak ada member yang di mention.")
             const durationInMinutes = m.body.arg.split(' ')[0]
             if(isNaN(durationInMinutes)) return m._reply("Durasi waktu harus berupa angka.")
             const timeoutEnd = moment().add(durationInMinutes, 'minutes').valueOf()

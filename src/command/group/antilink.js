@@ -13,7 +13,7 @@ module.exports = {
             if(!m.isGroup) return
             if(!m.isGroup.botIsAdmin) return
             if(!m.isGroup.senderIsAdmin) return
-            if(!m.body.arg) return m._reply("penggunaan: antilink `<enable/disable>`")
+            if(!m.body.arg) return m._reply("penggunaan: "+m.body.prefix+"antilink `<enable/disable>`")
 
             if(m.body.arg == 'enable' || m.body.arg == 'on' || m.body.arg == 'true') {
                 await db.update(db.group, m.isGroup.groupMetadata.id, { antilink: true })
@@ -22,7 +22,7 @@ module.exports = {
                 await db.update(db.group, m.isGroup.groupMetadata.id, { antilink: false })
                 await m._reply('`Antilink dinonaktifkan untuk semua member.`')
             } else {
-                await m._reply("penggunaan: antilink `<enable/disable>`")
+                await m._reply("penggunaan: "+m.body.prefix+"antilink `<enable/disable>`")
             }
         } catch(error) {
             await m._reply(error.message)

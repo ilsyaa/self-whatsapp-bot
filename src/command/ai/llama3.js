@@ -10,7 +10,7 @@ module.exports = {
     },
     run : async({ m, sock }) => {
         try {
-            if(!m.body.arg) return m._reply("penggunaan: llm <teks>")
+            if(!m.body.arg) return m._reply("penggunaan: "+m.body.prefix+"llm `<teks>`")
             let json = {
                 model: "meta-llama/Meta-Llama-3.1-405B-Instruct",
                 messages: [

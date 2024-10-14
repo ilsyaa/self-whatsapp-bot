@@ -11,7 +11,7 @@ module.exports = {
         menuByLabel.forEach((val, key) => {
             text += `┌── ˗ˏˋ ★ ${key} ★ ˎˊ˗\n`
             val.forEach((v) => {
-                text += `▷ ${v.cmd[0]} ${v.example || ''}\n`
+                text += `▷ ${m.body.prefix + v.cmd[0]} ${v.example || ''}\n`
             })
             text += `└────────────\n\n`
         })

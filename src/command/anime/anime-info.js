@@ -10,7 +10,7 @@ module.exports = {
     },
     run : async({ m, sock }) => {
         try {
-            if(!m.body.arg) return m._reply("Cara penggunaan: animeinfo <teks>")
+            if(!m.body.arg) return m._reply("Cara penggunaan: "+m.body.prefix+"animeinfo `judul anime`")
             const res = await axios.get(`https://api.jikan.moe/v4/anime?q=${encodeURIComponent(m.body.arg)}`)
             if(res.data.data.length == 0) return m._reply("Anime Tidak ditemukan")
             let anime = res.data.data[0]

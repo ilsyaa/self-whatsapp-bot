@@ -4,7 +4,7 @@ module.exports = {
     cmd: ['join'],
     run: async ({ m, sock }) => {
         if(!m.senderIsOwner) return
-        if(!m.body.arg) return m._reply("Cara penggunaan: join <link>")
+        if(!m.body.arg) return m._reply("Cara penggunaan: "+m.body.prefix+"join `<link>`")
         try {
             const codelink = m.body.arg.replace('https://chat.whatsapp.com/', '')
             const info = await sock.groupGetInviteInfo(codelink)

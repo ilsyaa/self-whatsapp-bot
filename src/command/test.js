@@ -8,6 +8,7 @@ module.exports = {
     withoutPrefix: true,
     cmd : ['test'],
     run : async({ m, sock }) => {
+        return;
         m._reply(JSON.stringify(db.group.get(m.isGroup.groupMetadata.id)))
         
         try {

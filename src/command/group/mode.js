@@ -13,7 +13,7 @@ module.exports = {
             if(!m.isGroup) return
             if(!m.isGroup.botIsAdmin) return
             if(!m.isGroup.senderIsAdmin) return
-            if(!m.body.arg) return m._reply("penggunaan: gmode `<admin/all>`")
+            if(!m.body.arg) return m._reply("penggunaan: "+m.body.prefix+"gmode `<admin/all>`")
 
             if(m.body.arg == 'adminonly' || m.body.arg == 'admin') {
                 await db.update(db.group, m.isGroup.groupMetadata.id, { mode: 'admin-only' })
@@ -22,7 +22,7 @@ module.exports = {
                 await db.update(db.group, m.isGroup.groupMetadata.id, { mode: 'all' })
                 await m._reply('`Bot berhasil di setting untuk bisa merespon ke semua member.`')
             } else {
-                await m._reply("penggunaan: gmode `<admin/all>`")
+                await m._reply("penggunaan: "+m.body.prefix+"gmode `<admin/all>`")
             }
         } catch(error) {
             await m._reply(error.message)

@@ -4,7 +4,7 @@ module.exports = {
     cmd: ['block'],
     run: async ({ m, sock }) => {
         if(!m.senderIsOwner) return
-        if(m.mentionedJid && m.mentionedJid.length == 0) return m._reply("@mentions orang yang ingin diblokir.")
+        if(!m.mentionedJid.length && !m.quoted) return m._reply("Mention atau reply pesan badut yang ingin diblokir.")
 
         try {
             if(m.quoted) await sock.updateBlockStatus(m.quoted.sender, "block")

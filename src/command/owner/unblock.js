@@ -4,7 +4,7 @@ module.exports = {
     cmd: ['unblock'],
     run: async ({ m, sock }) => {
         if(!m.senderIsOwner) return
-        if(m.mentionedJid && m.mentionedJid.length == 0) return m._reply("@mentions orang yang ingin di unblokir.")
+        if(!m.mentionedJid.length && !m.quoted) return m._reply("Mention atau reply pesan orang yang ingin di unblokir.")
 
         try {
             if(m.quoted) await sock.updateBlockStatus(m.quoted.sender, "unblock")

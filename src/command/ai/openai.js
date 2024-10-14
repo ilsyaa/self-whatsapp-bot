@@ -10,7 +10,7 @@ module.exports = {
     },
     run : async({ m, sock }) => {
         try {
-            if(!m.body.arg) return m._reply("penggunaan: gpt <teks>")
+            if(!m.body.arg) return m._reply("penggunaan: "+m.body.prefix+"gpt `<query>`")
             const res = await axios.get(`https://widipe.com/openai?text=${m.body.arg}`)
             await m._sendMessage(m.chat, { text: res.data.result }, { quoted: m })
         } catch(error) {
