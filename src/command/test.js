@@ -1,5 +1,6 @@
 const { createCanvas, loadImage } = require('canvas');
-const { jidDecode, downloadContentFromMessage } = require('@whiskeysockets/baileys')
+const { jidDecode, downloadContentFromMessage } = require('@whiskeysockets/baileys');
+const db = require('../utils/db');
 
 module.exports = {
     name : "test",
@@ -7,6 +8,8 @@ module.exports = {
     withoutPrefix: true,
     cmd : ['test'],
     run : async({ m, sock }) => {
+        m._reply(JSON.stringify(db.group.get(m.isGroup.groupMetadata.id)))
+        
         try {
             const stream = await downloadContentFromMessage({
                 mediaKey : m.quoted.mediaKey,

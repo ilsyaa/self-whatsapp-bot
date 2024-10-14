@@ -1,6 +1,7 @@
 const config = require('../../config.js');
 const path = require('path');
 const { open } = require('lmdb');
+const log = require('./log.js')
 
 class DatabaseManager {
     constructor() {
@@ -28,10 +29,9 @@ class DatabaseManager {
                     mode: 'public', // public or private
                 })
             }
-
-            console.log('Databases initialized successfully');
+            log.info(`Databases initialized successfully.`)
         } catch (error) {
-            console.error('Failed to initialize databases:', error);
+            log.error(`Error initializing databases = ${error}.`)
             throw error;
         }
     }

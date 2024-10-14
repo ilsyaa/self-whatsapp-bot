@@ -1,3 +1,6 @@
+const db = require('../../utils/db.js')
+const moment = require('../../utils/moment.js')
+
 module.exports = async (sock) => {
     sock.public = false
     require('./onMessageUpsert.js')(sock)
@@ -14,6 +17,14 @@ module.exports = async (sock) => {
     }
 
     sock.ev.on('contacts.upsert', updateName)
-    sock.ev.on('groups.update', updateName)
     sock.ev.on('contacts.set', updateName)
+    
+    sock.ev.on('groups.update', async (update) => {
+        for (const group of update) {
+            await db.update(db.group, group.id, {
+                name: group.subject,
+                updated_at: moment()
+            })
+        }
+    })
 }

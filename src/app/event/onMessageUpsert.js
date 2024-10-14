@@ -3,6 +3,8 @@ const log = require('../../utils/log.js');
 const { commands } = require('../../utils/loadCommands.js')
 const config = require('../../../config.js');
 const db = require('../../utils/db.js')
+const moment = require('../../utils/moment.js')
+const middleware = require('../../middleware/app.js')
 
 module.exports = upsert = async (sock) => {
     sock.ev.on('messages.upsert', async (update) => {
@@ -18,7 +20,6 @@ module.exports = upsert = async (sock) => {
             if (!m.key.fromMe && !type === 'notify') return
             if (m.key.id.startsWith('BAE5') && m.key.id.length === 16) return
             m = serialize(sock, m)
-            // read message
             await sock.readMessages([m.key])
             await updateAdminStatus(sock, m);
             const dbGroupData = await _dbGroupHandler(sock, m)
@@ -27,44 +28,36 @@ module.exports = upsert = async (sock) => {
                 group: dbGroupData,
                 bot: db.bot.get('settings'),
             }
-            await _timeout(sock, m)
-            await _antilink(sock, m)
-            if(!m.senderIsOwner && m.db.bot.mode == 'private') return
-            if (m.isGroup && !m.senderIsOwner && m.db.group.mode === 'admin-only' && !m.isGroup.senderIsAdmin) return
             const command = Array.from(commands.values()).find((v) => v.cmd.find((x) => x.toLowerCase() == m.body.commandWithoutPrefix.toLowerCase()));
+            const $next = await _middleware(sock, m, middleware, command?.withoutMiddleware)
             if(!command) return
+            if(typeof $next == 'object' && !$next.continueCommand) return
             if(!command?.withoutPrefix && !m.body.prefix) return
             m.db.user = await _autoRegisterUser(sock, m)
             await command.run({m , sock})
-            // console.log(m);
+            // console.log(m.db);
         } catch (error) {
             log.error("onMessageUpsert :" + error.message);
         }    
     })
 }
 
-const _timeout = async (sock, m) => {
-    if(m.fromMe) return
-    if(!m.isGroup) return
-    if(!m.db?.group?.timeouts) return
-    if(!m.isGroup.botIsAdmin) return
-    if(m.isGroup.senderIsAdmin) return
-
-    if(m.db.group.timeouts.include(m.sender)) {
-        await sock.sendMessage(m.chat, { delete: m.key })
+const _middleware = async (sock, m, middlewares, withoutMiddleware) => {
+    let $next = true
+    for (let [key, middleware] of middlewares.entries()) {
+        try {
+            if(!withoutMiddleware) {
+                await middleware.handdler(sock, m, true)
+            } else if (!withoutMiddleware.includes(key)) {
+                await middleware.handdler(sock, m, true)
+            }
+        } catch (error) {
+            if(!error?.hideLogs) console.log({...error, ...{ sender: m.sender } });
+            $next = error
+            if(error?.break) break
+        }
     }
-}
-
-const _antilink = async (sock, m) => {
-    if(m.fromMe) return
-    if(!m.isGroup) return
-    if(!m.db?.group?.antilink) return
-    if(!m.isGroup.botIsAdmin) return
-    if(m.isGroup.senderIsAdmin) return
-    if(!m.body.full.match(`chat.whatsapp.com`)) return
-    const currentGroupLink = (`https://chat.whatsapp.com/` + await sock.groupInviteCode(m.chat))
-    if(m.body.full.match(currentGroupLink)) return
-    await sock.sendMessage(m.chat, { delete: m.key })
+    return $next
 }
 
 const _autoRegisterUser = async (sock, m) => {
@@ -75,10 +68,14 @@ const _autoRegisterUser = async (sock, m) => {
             ...config.USER_DEFAULT,
             blacklist: false, // false = not in blacklist, true = in blacklist permanently, timestamp = in blacklist for some time
             blacklist_reason: '', // reason for blacklist
-            updated_at: Date.now(), // update every time using bot
-            created_at: Date.now(),
+            updated_at: moment(), // update every time using bot
+            created_at: moment(), // create time
         })
         dbUserData = await db.user.get(m.sender)
+    } else {
+        db.update(db.user, m.sender, {
+            updated_at: moment(),
+        })
     }
     return dbUserData
 }
@@ -96,7 +93,9 @@ const _dbGroupHandler = async (sock, m) => {
                 welcome: false,
                 welcome_message: null,
                 welcome_background: null,
-                timeouts: [],
+                timeouts: {},
+                updated_at: moment(),
+                created_at: moment(),
             })
             dbGroupData = await db.group.get(group.id)
         }
