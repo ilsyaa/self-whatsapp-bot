@@ -1,11 +1,25 @@
 const { createCanvas, loadImage } = require('canvas');
-const { jidDecode } = require('@whiskeysockets/baileys')
+const { jidDecode, downloadContentFromMessage } = require('@whiskeysockets/baileys')
 
 module.exports = {
     name : "test",
     description : "-",
+    withoutPrefix: true,
     cmd : ['test'],
     run : async({ m, sock }) => {
+        try {
+            const stream = await downloadContentFromMessage({
+                mediaKey : m.quoted.mediaKey,
+                directPath : m.quoted.directPath,
+                url : m.quoted.url,
+            }, 'sticker', {});
+
+            console.log(stream)
+        } catch (error) {
+            console.log(error)
+        }
+
+
         // if(!m.isGroup) return
         // const sentMsg  = await m._sendMessage(
         //     m.chat, 

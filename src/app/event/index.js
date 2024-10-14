@@ -8,4 +8,12 @@ module.exports = async (sock) => {
             await sock.rejectCall(call.id, call.from);
         }
     });
+
+    const updateName = async (update) => {
+        console.log(update)
+    }
+
+    sock.ev.on('contacts.upsert', updateName)
+    sock.ev.on('groups.update', updateName)
+    sock.ev.on('contacts.set', updateName)
 }

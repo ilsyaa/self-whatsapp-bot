@@ -66,6 +66,45 @@ async function videoToWebp(media) {
     return buff
 }
 
+/**
+ * Convert image to webp, adding meme text on top and bottom
+ * @param {Buffer} media The image buffer
+ * @param {string} textTop The text to add on top
+ * @param {string} textBottom The text to add on bottom
+ * @return {Promise<Buffer>} The webp buffer
+ */
+async function imageToWebpMeme(media, textTop, textBottom) {
+    const tmpFileOut = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.webp`);
+    const tmpFileIn = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.jpg`);
+    fs.writeFileSync(tmpFileIn, media);
+
+    const escapeText = (text) => text.replace(/:/g, '\\:').replace(/'/g, "\\'");
+    const topText = escapeText(textTop);
+    const bottomText = escapeText(textBottom);
+
+    await new Promise((resolve, reject) => {
+        ff(tmpFileIn)
+            .on("error", reject)
+            .on("end", () => resolve(true))
+            .addOutputOptions([
+                "-vcodec",
+                "libwebp",
+                "-vf",
+                `scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, crop=min(iw\\,ih):min(iw\\,ih), scale=320:320, pad=320:320:-1:-1:color=white@0.0, ` +
+                `drawtext=fontsize=24:fontcolor=white:x=(w-tw)/2:y=10:text='${topText}':box=1:boxcolor=black@0.5:boxborderw=5, ` +
+                `drawtext=fontsize=24:fontcolor=white:x=(w-tw)/2:y=h-th-10:text='${bottomText}':box=1:boxcolor=black@0.5:boxborderw=5, ` +
+                `split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`
+            ])
+            .toFormat("webp")
+            .save(tmpFileOut)
+    });
+
+    const buff = fs.readFileSync(tmpFileOut);
+    fs.unlinkSync(tmpFileOut);
+    fs.unlinkSync(tmpFileIn);
+    return buff;
+}
+
 async function writeExifImg(media, metadata) {
     const tmpFileIn = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.webp`)
     const tmpFileOut = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.webp`)
@@ -109,4 +148,4 @@ async function writeExifVid(media, metadata) {
     }
 }
 
-module.exports = { imageToWebp, videoToWebp, writeExifImg, writeExifVid }
+module.exports = { imageToWebp, videoToWebp, imageToWebpMeme ,writeExifImg, writeExifVid }

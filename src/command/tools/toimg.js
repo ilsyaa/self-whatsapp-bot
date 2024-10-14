@@ -16,7 +16,6 @@ module.exports = {
             let image = await m.quoted.download()
             await m._sendMessage(m.chat, { image: image.buffer }, { quoted: m })
         } catch (error) {
-            console.log(error)
             await m._reply('`Sticker tidak jelas sumbernya.`')
         }
     }
