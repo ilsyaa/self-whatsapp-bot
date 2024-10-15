@@ -1,5 +1,4 @@
-const { serialize, updateAdminStatus, isMedia } = require('../../utils/serialize.js');
-const log = require('../../utils/log.js');
+const { serialize, updateAdminStatus } = require('../../utils/serialize.js');
 const { commands } = require('../../utils/loadCommands.js')
 const config = require('../../../config.js');
 const db = require('../../utils/db.js')
@@ -23,6 +22,7 @@ module.exports = upsert = async (sock) => {
             await sock.readMessages([m.key])
             await updateAdminStatus(sock, m);
             m.db.group = await _dbGroupHandler(sock, m)
+            m.lang = (msg) => _lang(msg, m);
             const command = Array.from(commands.values()).find((v) => v.cmd.find((x) => x.toLowerCase() == m.body.commandWithoutPrefix.toLowerCase()));
             const $next = await _middleware(sock, m, middleware, command?.withoutMiddleware)
             if(!command) return
@@ -83,4 +83,27 @@ const _dbGroupHandler = async (sock, m) => {
         }
     }
     return dbGroupData
+}
+
+const _lang = (msg, m) => {
+    let lang = 'id', res = msg
+    
+    if(m.isGroup && m.db.group?.lang) {
+        lang = m.db.group.lang
+    } else if(m.db.bot.lang) {
+        lang = m.db.bot.lang
+    }
+
+    // copy object
+    res = { ...res[lang] }
+    for (const [key, value] of Object.entries(res)) {
+        if (typeof value === 'object') {
+            for (let i = 0; i < value.length; i++) {
+                res[key][i] = value[i].replaceAll('{prefix}', m.body.prefix)
+            }
+        } else {
+            res[key] = value.replaceAll('{prefix}', m.body.prefix)
+        }
+    }
+    return res
 }

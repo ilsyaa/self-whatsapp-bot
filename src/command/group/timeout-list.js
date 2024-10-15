@@ -15,7 +15,7 @@ module.exports = {
             
             const timeouts = db.group.get(m.isGroup.groupMetadata.id).timeouts
             
-            let text = `Member yang kena timeout di ${m.isGroup.groupMetadata.subject}\n\n`
+            let text = `${m.lang(msg).desc} ${m.isGroup.groupMetadata.subject}\n\n`
             for (const [key, value] of Object.entries(timeouts)) {
                 text += `*${key}*\n`
                 text += `▷ Date Expired: _${moment(value).format('DD-MM-YYYY HH:mm:ss')}_\n`
@@ -26,5 +26,14 @@ module.exports = {
         } catch(error) {
             await m._reply(error.message)
         }
+    }
+}
+
+const msg = {
+    id: {
+        desc: 'Menampilkan member yang timeout di',
+    },
+    en: {
+        desc: 'List of members who have been timed out in',
     }
 }

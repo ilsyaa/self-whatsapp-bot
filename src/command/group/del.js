@@ -11,10 +11,19 @@ module.exports = {
             if(!m.isGroup) return
             if(!m.isGroup.botIsAdmin) return
             if(!m.isGroup.senderIsAdmin) return
-            if(!m.quoted) return m._reply('reply to a message')
+            if(!m.quoted) return m._reply(m.lang(msg).ex)
             m.quoted.delete()
         } catch(error) {
             await m._reply(error.message)
         }
+    }
+}
+
+const msg = {
+    id: {
+        ex: 'reply message yang ingin di hapus'
+    },
+    en: {
+        ex: 'reply message you want to delete'
     }
 }

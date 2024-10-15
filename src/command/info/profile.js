@@ -27,7 +27,7 @@ module.exports = {
             avatar = await sock.profilePictureUrl(id, 'image')
         } catch {} finally {
             dbuser = db.user.get(id)
-            if(!dbuser) return m._reply('User tidak terdaftar.')
+            if(!dbuser) return m._reply(m.lang(msg).userNotFound)
                 
             timeoutGroup = m.isGroup ? Object.keys(m.db.group.timeouts).find(x => x == id) : null
 
@@ -45,5 +45,14 @@ module.exports = {
     
             await m._sendMessage(m.chat, { image: { url: avatar }, caption }, { quoted: m })
         }
+    }
+}
+
+const msg = {
+    id: {
+        userNotFound: 'User tidak terdaftar.',
+    },
+    en: {
+        userNotFound: 'User not found.',
     }
 }

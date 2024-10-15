@@ -10,7 +10,7 @@ module.exports = {
     },
     run : async({ m, sock }) => {
         try {
-            if(!m.body.arg) return m._reply("penggunaan: "+m.body.prefix+"llm `<teks>`")
+            if(!m.body.arg) return m._reply(m.lang(msg).ex)
             let json = {
                 model: "meta-llama/Meta-Llama-3.1-405B-Instruct",
                 messages: [
@@ -35,5 +35,14 @@ module.exports = {
         } catch(error) {
             await m._reply(error.message)
         }
+    }
+}
+
+const msg = {
+    id: {
+        ex: 'penggunaan: {prefix}llm `<query>`'
+    },
+    en: {
+        ex: 'usage: {prefix}llm `<query>`'
     }
 }

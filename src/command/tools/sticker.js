@@ -9,7 +9,7 @@ module.exports = {
         example : '`reply or send image with caption s`'
     },
     run : async({ m, sock }) => {
-        if(!['imageMessage', 'stickerMessage', 'videoMessage'].includes(m.quoted?.mtype || m.mtype)) return m._reply("Harus berupa gambar/sticker/video.");
+        if(!['imageMessage', 'stickerMessage', 'videoMessage'].includes(m.quoted?.mtype || m.mtype)) return m._reply(m.lang(msg).req);
 
         const [pack, author] = m.body.arg.trim().split('|')
         
@@ -24,5 +24,14 @@ module.exports = {
             sticker = await writeExifVid(sticker, { packname : pack || m.db.bot.exif.pack || '-', author : author || m.db.bot.exif.author || '-' })
             await m._sendMessage(m.chat, { sticker : sticker }, { quoted: m })
         }
+    }
+}
+
+const msg = {
+    id: {
+        req: 'Format yang diperbolehkan: gambar, stiker, atau video.',
+    },
+    en: {
+        req: 'Must be in the format: image, sticker, or video.'
     }
 }

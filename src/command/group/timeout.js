@@ -14,10 +14,10 @@ module.exports = {
             if(!m.isGroup) return
             if(!m.isGroup.botIsAdmin) return
             if(!m.isGroup.senderIsAdmin) return
-            if(!m.body.arg) return m._reply("*Cara penggunaan*: "+m.body.prefix+"timeout `<duration>` `@mentions`\n*Contoh*: "+m.body.prefix+"timeout 10 @user1 @user2\n_Duration in minutes_")
-            if(!m.mentionedJid.length) return m._reply("Tidak ada member yang di mention.")
+            if(!m.body.arg) return m._reply(m.lang(msg).ex)
+            if(!m.mentionedJid.length) return m._reply(m.lang(msg).noMention)
             const durationInMinutes = m.body.arg.split(' ')[0]
-            if(isNaN(durationInMinutes)) return m._reply("Durasi waktu harus berupa angka.")
+            if(isNaN(durationInMinutes)) return m._reply(m.lang(msg).noDuration)
             const timeoutEnd = moment().add(durationInMinutes, 'minutes').valueOf()
             const users = {};
             for(mention of m.mentionedJid) {
@@ -35,10 +35,27 @@ module.exports = {
                 }
             )
 
-            if(durationInMinutes == 0) return m._reply(`${m.mentionedJid.length} member telah di nyatakan sehat.`)
-            await m._reply(`${m.mentionedJid.length} member di timeout selama ${durationInMinutes} menit.`)
+            if(durationInMinutes == 0) return m._reply(`${m.mentionedJid.length} ${m.lang(msg).zero}`)
+            await m._reply(`${m.mentionedJid.length} ${m.lang(msg).success[0]} ${durationInMinutes} ${m.lang(msg).success[1]}`)
         } catch(error) {
             await m._reply(error.message)
         }
+    }
+}
+
+const msg = {
+    id: {
+        ex: 'Penggunaan: {prefix}timeout `<durasi>` `@mentions`\n\n*Keterangan:*\n- *durasi*: Waktu yang diberikan kepada member yang di-mention dalam satuan menit.\n- *@mentions*: Sebut anggota yang ingin dikenakan timeout.',
+        noMention: 'Tidak ada member yang di-mention. Silakan sebut anggota yang ingin dikenakan timeout.',
+        noDuration: 'Durasi waktu harus berupa angka yang menunjukkan menit.',
+        success: ['Member telah di timeout selama', 'menit.'],
+        zero: 'member telah di nyatakan sehat.'
+    },
+    en: {
+        ex: 'Usage: {prefix}timeout `<duration>` `@mentions`\n\n*Description:*\n- *duration*: The time to give to the mentioned members in minutes.\n- *@mentions*: Mention the members you want to apply the timeout to.',
+        noMention: 'No member mentioned. Please mention the members to apply timeout.',
+        noDuration: 'Duration must be a number indicating minutes.',
+        success: ['Members have been timed out for', 'minutes.'],
+        zero: 'Members have been declared healthy.'
     }
 }
