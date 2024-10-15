@@ -5,10 +5,10 @@ const {
     extractMessageContent,
     jidNormalizedUser
 } = require('@whiskeysockets/baileys');
-const config = require('../../config.js');
 const { Boom } = require('@hapi/boom');
 const path = require('path');
 const { writeFile } = require('fs/promises');
+const db = require('./db.js');
 const mediaTypes = ['imageMessage', 'videoMessage', 'audioMessage', 'stickerMessage', 'documentMessage'];
 let M = proto.WebMessageInfo;
 
@@ -39,13 +39,18 @@ const serialize = (conn, m) => {
         }
     }
 
-    m.senderIsOwner = config.OWNER_NUMBER.includes(m.sender.split('@')[0]);
+    m.db = {
+        user: null,
+        group: null,
+        bot: db.bot.get('settings'),
+    }
+    m.senderIsOwner = Object.keys(m.db.bot.owners).includes(m.sender.split('@')[0]) ? true : false
     
     m.body = {
-        prefix : config.prefix.find(v => m.text.startsWith(v)) || null,
+        prefix : m.db.bot.prefix.find(v => m.text.startsWith(v)) || null,
         full : m.text.trim(),
         command : m.text.split(' ')[0].trim(),
-        commandWithoutPrefix : m.text.split(' ')[0].replace(new RegExp(`^[${config.prefix.join('')}]`), ''),
+        commandWithoutPrefix : m.text.split(' ')[0].replace(new RegExp(`^[${m.db.bot.prefix.join('')}]`), ''),
         arg : m.text.slice(m.text.split(' ')[0].length).trim(),
     }
     

@@ -22,12 +22,7 @@ module.exports = upsert = async (sock) => {
             m = serialize(sock, m)
             await sock.readMessages([m.key])
             await updateAdminStatus(sock, m);
-            const dbGroupData = await _dbGroupHandler(sock, m)
-            m.db = {
-                user: null,
-                group: dbGroupData,
-                bot: db.bot.get('settings'),
-            }
+            m.db.group = await _dbGroupHandler(sock, m)
             const command = Array.from(commands.values()).find((v) => v.cmd.find((x) => x.toLowerCase() == m.body.commandWithoutPrefix.toLowerCase()));
             const $next = await _middleware(sock, m, middleware, command?.withoutMiddleware)
             if(!command) return
@@ -37,7 +32,7 @@ module.exports = upsert = async (sock) => {
             await command.run({m , sock})
             // console.log(m.db);
         } catch (error) {
-            log.error("onMessageUpsert :" + error);
+            console.error(error);
         }    
     })
 }
@@ -64,13 +59,7 @@ const _autoRegisterUser = async (sock, m) => {
     let dbUserData = null;
     dbUserData = await db.user.get(m.sender)
     if(!dbUserData) {
-        await db.user.put(m.sender, {
-            ...config.USER_DEFAULT,
-            blacklist: false, // false = not in blacklist, true = in blacklist permanently, timestamp = in blacklist for some time
-            blacklist_reason: '', // reason for blacklist
-            updated_at: moment(), // update every time using bot
-            created_at: moment(), // create time
-        })
+        await db.user.put(m.sender, config.DATABASE_SCHEMA.user)
         dbUserData = await db.user.get(m.sender)
     } else {
         db.update(db.user, m.sender, {
@@ -87,15 +76,8 @@ const _dbGroupHandler = async (sock, m) => {
         dbGroupData = await db.group.get(group.id)
         if(!dbGroupData) {
             await db.group.put(group.id, {
-                name: group.subject,
-                mode: 'admin-only', // admin-only or all
-                antilink: false,
-                welcome: false,
-                welcome_message: null,
-                welcome_background: null,
-                timeouts: {},
-                updated_at: moment(),
-                created_at: moment(),
+                ...{ name: group.subject },
+                ...config.DATABASE_SCHEMA.group
             })
             dbGroupData = await db.group.get(group.id)
         }

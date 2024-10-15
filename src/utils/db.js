@@ -2,6 +2,7 @@ const config = require('../../config.js');
 const path = require('path');
 const { open } = require('lmdb');
 const log = require('./log.js')
+const moment = require('../utils/moment.js')
 
 class DatabaseManager {
     constructor() {
@@ -25,10 +26,9 @@ class DatabaseManager {
             });
 
             if(!this.bot.get('settings')) {
-                await this.bot.put('settings', {
-                    mode: 'public', // public or private
-                })
+                await this.bot.put('settings', config.DATABASE_SCHEMA.bot)
             }
+
             log.info(`Databases initialized successfully.`)
         } catch (error) {
             log.error(`Error initializing databases = ${error}.`)
@@ -47,6 +47,7 @@ class DatabaseManager {
             throw error;
         }
     }
+
     async close() {
         try {
             if (this.user) await this.user.close();

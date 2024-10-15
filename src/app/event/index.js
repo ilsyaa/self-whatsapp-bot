@@ -13,7 +13,7 @@ module.exports = async (sock) => {
     });
 
     const updateName = async (update) => {
-        console.log(update)
+        //  { id: 'abc@s.whatsapp.net', name: 'name' },
     }
 
     sock.ev.on('contacts.upsert', updateName)
