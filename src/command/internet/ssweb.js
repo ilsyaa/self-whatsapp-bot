@@ -10,9 +10,21 @@ module.exports = {
     },
     run : async({ m, sock }) => {
         if(!m.body.arg) return m._reply(m.lang(msg).ex)
-        
-        const res = await axios.get(`https://api.screenshotmachine.com/?key=f74eca&url=${m.body.arg}&dimension=1920x1080`, { responseType: 'arraybuffer' }).catch(e => console.log(e))
-        await m._sendMessage(m.chat, { image : res.data }, { quoted : m })
+        let res = null
+        try {
+            try {
+                res = await axios.get(`https://api.screenshotmachine.com/?key=f74eca&url=${m.body.arg}&dimension=1920x1080`, { responseType: 'arraybuffer' })
+            } catch {
+                try {
+                    res = await axios.get(`https://image.thum.io/get/fullpage/${m.body.arg}`, { responseType: 'arraybuffer' })
+                } catch {
+                    res = await axios.get(`https://api.screenshotmachine.com/?key=c04d3a&url=${m.body.arg}&screenshotmachine.com&dimension=720x720`, { responseType: 'arraybuffer' })
+                }
+            }
+            await m._sendMessage(m.chat, { image : res.data }, { quoted : m })
+        } catch (error) {
+            await m._reply(error.message)
+        }
     }
 }
 
