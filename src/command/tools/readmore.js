@@ -4,7 +4,7 @@ module.exports = {
     cmd : ['readmore', 'spoiler'],
     menu : {
         label : 'tools',
-        example : '`<text>|<text>`'
+        example : '_<text>|<text>_'
     },
     run : async({ m, sock }) => {
         let [l, r] = m.body.arg.split('|');
