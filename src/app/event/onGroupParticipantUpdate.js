@@ -20,7 +20,7 @@ const _welcome = async (sock, update) => {
     if(!dbgroup.welcome) return
     // const group = await sock.groupMetadata(update.id) || (sock.chats[id] || {}).metadata
     for (const participant of update.participants) {
-        let avatar = "https://i.pinimg.com/originals/e8/12/c9/e812c98063195ab81dfd288e76be2dd1.jpg";
+        let avatar = "https://i.ibb.co.com/1QRWZTd/146de169d3133554a6d907b837d31377.jpg";
         const text = `${dbgroup.welcome_message ? dbgroup.welcome_message.replace(/{group\.name}/g, dbgroup.name) : 'Welcome to ' + dbgroup.name}`;
         const heading = participant.replace('@s.whatsapp.net', '');
         let caption = `Selamat datang @${participant.replace('@s.whatsapp.net', '')}`

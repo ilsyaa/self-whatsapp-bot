@@ -1,6 +1,7 @@
 const { createCanvas, loadImage } = require('canvas');
 const { jidDecode, downloadContentFromMessage } = require('@whiskeysockets/baileys');
 const db = require('../utils/db');
+const { default: axios } = require('axios');
 
 module.exports = {
     name : "test",
