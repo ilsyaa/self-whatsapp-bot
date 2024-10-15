@@ -6,7 +6,7 @@ module.exports = {
         if(m.fromMe) return $next;
         if(!m.isGroup) return $next;
 
-        let timeouts = { ...m.db.group.timeouts }
+        let timeouts = { ...m.db.group?.timeouts || {} };
         let hasExpired = false;
         
         for (const [key, value] of Object.entries(timeouts)) {

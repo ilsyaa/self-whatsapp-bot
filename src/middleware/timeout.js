@@ -6,7 +6,7 @@ module.exports = {
         if(!m.isGroup.botIsAdmin) return $next
         if(m.isGroup.senderIsAdmin) return $next
     
-        if(Object.keys(m.db.group.timeouts).find(x => x == m.sender)) {
+        if(Object.keys(m.db.group?.timeouts || {}).find(x => x == m.sender)) {
             await sock.sendMessage(m.chat, { delete: m.key })
             throw {
                 break: false,
