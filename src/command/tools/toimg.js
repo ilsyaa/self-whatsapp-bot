@@ -1,7 +1,3 @@
-const fs = require('fs')
-const config = require("../../../config.js")
-const path = require("path")
-
 module.exports = {
     name : "toimg",
     description : "Sticker To Image",

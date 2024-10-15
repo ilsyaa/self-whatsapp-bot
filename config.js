@@ -3,7 +3,6 @@ const moment = require('./src/utils/moment.js')
 
 module.exports = {
     SESSION_NAME : "cihuy",
-
     STORAGE_PATH : __dirname + "/storage",
     STORAGE_SESSION : __dirname + "/storage/session",
     STORAGE_DB : __dirname + "/storage/databases",
@@ -22,7 +21,7 @@ module.exports = {
             lang: 'id',
             prefix: ['/', '.', '!'],
             owners: {
-                '6285731618404': 'Ilsya',
+                '6285174902345': 'Ilsya',
                 // '628xxx': 'Name',
             },
             exif: {

@@ -1,5 +1,3 @@
-const config = require("../../../config.js")
-
 module.exports = {
     name: "info-owner",
     description: "Show Contact Owner",
@@ -8,18 +6,18 @@ module.exports = {
         label: 'info'
     },
     run: async ({ m, sock }) => {
-        // send a contact!
+        const [ number, name ] = Object.entries(m.db.bot.owners)[0]
         const vcard = 'BEGIN:VCARD\n' // metadata of the contact card
             + 'VERSION:3.0\n'
-            + `FN:${config.OWNER_NAME[0]}\n` // full name
-            + `ORG:${config.OWNER_NAME[0]};\n` // the organization of the contact
-            + `TEL;type=CELL;type=VOICE;waid=${config.OWNER_NUMBER[0]}:+${config.OWNER_NUMBER[0]}\n` // WhatsApp ID + phone number
+            + `FN:${name}\n` // full name
+            + `ORG:${name};\n` // the organization of the contact
+            + `TEL;type=CELL;type=VOICE;waid=${number}:+${number}\n` // WhatsApp ID + phone number
             + 'END:VCARD'
         await sock.sendMessage(
             m.chat,
             {
                 contacts: {
-                    displayName: `${config.OWNER_NAME[0]}`,
+                    displayName: `${name}`,
                     contacts: [{ vcard }]
                 }
             }

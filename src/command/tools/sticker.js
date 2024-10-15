@@ -1,5 +1,4 @@
 const { imageToWebp, writeExifImg, videoToWebp, writeExifVid } = require("../../utils/stickerMaker");
-const config = require("../../../config.js");
 
 module.exports = {
     name : "sticker",
@@ -18,11 +17,11 @@ module.exports = {
 
         if(image.mtype === 'imageMessage' || image.mtype === 'stickerMessage') {
             let sticker = await imageToWebp(image.buffer)
-            sticker = await writeExifImg(sticker, { packname : pack || config.STICKER_PACK, author : author || config.STICKER_AUTHOR })
+            sticker = await writeExifImg(sticker, { packname : pack || m.db.bot.exif.pack || '-', author : author || m.db.bot.exif.author || '-' })
             await m._sendMessage(m.chat, { sticker : sticker }, { quoted: m })
         } else if(image.mtype === 'videoMessage') {
             let sticker = await videoToWebp(image.buffer)
-            sticker = await writeExifVid(sticker, { packname : pack || config.STICKER_PACK, author : author || config.STICKER_AUTHOR })
+            sticker = await writeExifVid(sticker, { packname : pack || m.db.bot.exif.pack || '-', author : author || m.db.bot.exif.author || '-' })
             await m._sendMessage(m.chat, { sticker : sticker }, { quoted: m })
         }
     }

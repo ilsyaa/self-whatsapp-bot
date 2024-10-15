@@ -1,4 +1,3 @@
-const fs = require('fs')
 const config = require("../../../config.js")
 const path = require("path")
 const { webpToVideo } = require('../../utils/ffmpeg.js')
