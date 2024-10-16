@@ -2,21 +2,45 @@ const { createCanvas, loadImage } = require('canvas');
 const { jidDecode, downloadContentFromMessage } = require('@whiskeysockets/baileys');
 const db = require('../utils/db');
 const { default: axios } = require('axios');
+const fs = require('fs');
 
 module.exports = {
-    name : "test",
-    description : "-",
+    name: "test",
+    description: "-",
     withoutPrefix: true,
-    cmd : ['test'],
-    run : async({ m, sock }) => {
+    cmd: ['test'],
+    run: async ({ m, sock }) => {
+        console.log(m);
+
+        return;
+        await sock.sendMessage(m.chat, {
+            document: fs.readFileSync('./package.json'),
+            thumbnailUrl: 'https://telegra.ph/file/14f21fc7574b00a753376.jpg',
+            mimetype: 'application/pdf',
+            fileLength: 99999,
+            pageCount: '100',
+            fileName: `𝑨𝒓𝒄𝒉 𝑴𝒅 𝑨𝒊 ☘`,
+            caption: 'testcaption',
+            contextInfo: {
+                externalAdReply: {
+                    showAdAttribution: false,
+                    title: `© Welcome Message`,
+                    body: `testd`,
+                    thumbnailUrl: 'https://telegra.ph/file/14f21fc7574b00a753376.jpg',
+                    sourceUrl: 'https://chat.whatsapp.com/HO2JGN8YHr9IOf4XOSRhGe',
+                    mediaType: 1,
+                    renderLargerThumbnail: true
+                }
+            }
+        });
         return;
         m._reply(JSON.stringify(db.group.get(m.isGroup.groupMetadata.id)))
-        
+
         try {
             const stream = await downloadContentFromMessage({
-                mediaKey : m.quoted.mediaKey,
-                directPath : m.quoted.directPath,
-                url : m.quoted.url,
+                mediaKey: m.quoted.mediaKey,
+                directPath: m.quoted.directPath,
+                url: m.quoted.url,
             }, 'sticker', {});
 
             console.log(stream)

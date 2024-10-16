@@ -98,6 +98,12 @@ const extractQuotedMessage = (conn, m) => {
     m.quoted.isBaileys = m.quoted.id ? m.quoted.id.startsWith('BAE5') && m.quoted.id.length === 16 : false;
     m.quoted.sender = jidNormalizedUser(m.msg.contextInfo.participant);
     m.quoted.fromMe = m.quoted.sender === (conn.user && conn.user.id);
+    m.quoted.key = {
+        id:  m.quoted.id,
+        fromMe: m.quoted.fromMe,
+        remoteJid: m.chat,
+        ...(m.isGroup ? { participant: m.msg.contextInfo?.participant } : {}),
+    };
     m.quoted.text = m.quoted.text || m.quoted.caption || m.quoted.conversation || m.quoted.contentText || m.quoted.selectedDisplayText || m.quoted.title || '';
     m.quoted.mentionedJid = m.msg.contextInfo ? m.msg.contextInfo.mentionedJid : [];
     m.quoted.ephemeral = m.quoted?.contextInfo?.expiration || false;

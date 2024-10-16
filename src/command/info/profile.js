@@ -36,6 +36,7 @@ module.exports = {
             caption += `Plan : ${dbuser.plan.charAt(0).toUpperCase() + m.db.user.plan.slice(1)}\n`
             if(m.db.user.plan != 'free') caption += `Expired : ${dbuser.plan_expire}\n`
             caption += `Exp : ${dbuser.exp}\n`
+            caption += `Coin : ${dbuser.coin}\n`
             caption += `Limit : ${dbuser.limit || 'Unlimited'}\n`
             caption += `Blacklist : ${dbuser.blacklist ? 'Yes' : 'No'}\n`
             caption += `Blacklist Reason : ${dbuser.blacklist_reason || '-'}\n`
