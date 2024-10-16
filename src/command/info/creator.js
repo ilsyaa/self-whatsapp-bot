@@ -1,7 +1,7 @@
 module.exports = {
-    name: "info-owner",
-    description: "Show Contact Owner",
-    cmd: ['owner'],
+    name: "info-creater",
+    description: "Show Contact Creator",
+    cmd: ['creator', 'author'],
     menu: {
         label: 'info'
     },

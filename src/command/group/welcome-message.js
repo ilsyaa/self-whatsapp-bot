@@ -1,4 +1,5 @@
 const db = require('../../utils/db.js')
+const moment = require('../../utils/moment.js')
 
 module.exports = {
     name : "group-welcome-message",
@@ -15,10 +16,10 @@ module.exports = {
             if(!m.isGroup.senderIsAdmin) return
 
             if(m.body.arg) {
-                await db.update(db.group, m.isGroup.groupMetadata.id, { welcome_message: m.body.arg })
+                await db.update(db.group, m.isGroup.groupMetadata.id, { welcome_message: m.body.arg, updated_at: moment() })
                 await m._reply(m.lang(msg).custom)
             } else {
-                await db.update(db.group, m.isGroup.groupMetadata.id, { welcome_message: null })
+                await db.update(db.group, m.isGroup.groupMetadata.id, { welcome_message: null, updated_at: moment() })
                 await m._reply(m.lang(msg).default)
             }
         } catch(error) {

@@ -10,9 +10,9 @@ module.exports = {
     withoutPrefix: true,
     cmd: ['test'],
     run: async ({ m, sock }) => {
+        return;
         console.log(m);
 
-        return;
         await sock.sendMessage(m.chat, {
             document: fs.readFileSync('./package.json'),
             thumbnailUrl: 'https://telegra.ph/file/14f21fc7574b00a753376.jpg',

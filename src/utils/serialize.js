@@ -31,9 +31,9 @@ const serialize = (conn, m) => {
         m.ephemeral = m.msg?.contextInfo?.expiration || false
         
         m.text = m.message?.conversation || m.message?.[m.mtype]?.text || m.message?.[m.mtype]?.caption || m.message?.[m.mtype]?.contentText || m.message?.[m.mtype]?.selectedDisplayText || m.message?.[m.mtype]?.title || ""
-        m.mentionedJid = m.msg.contextInfo ? m.msg.contextInfo.mentionedJid : [];
+        m.mentionedJid = m.msg?.contextInfo ? m.msg.contextInfo.mentionedJid : [];
 
-        m.quoted = m.msg.contextInfo ? m.msg.contextInfo.quotedMessage : null;
+        m.quoted = m.msg?.contextInfo ? m.msg.contextInfo.quotedMessage : null;
         if (m.quoted) {
             m.quoted = extractQuotedMessage(conn, m);
         }
