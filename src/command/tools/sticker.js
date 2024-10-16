@@ -8,7 +8,6 @@ module.exports = {
     cmd : ['sticker', 's'],
     menu : {
         label : 'tools',
-        example : '`reply or send image with caption s`'
     },
     run : async({ m, sock }) => {
         let url = validateUrl(m.body.arg) ? m.body.arg : false
