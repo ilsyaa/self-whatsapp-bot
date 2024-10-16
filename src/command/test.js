@@ -12,7 +12,12 @@ module.exports = {
     withoutPrefix: true,
     cmd: ['test'],
     run: async ({ m, sock }) => {
-        console.log(m.db.bot);
+        // const res = await axios.get('https://v1.pinimg.com/videos/mc/expMp4/11/a9/b4/11a9b42d71ac3a5de05d45eda5d6c2a3_t1.mp4', { responseType: 'arraybuffer' });
+
+        // console.log({
+        //     ext: res.headers.get('content-type')
+        // });
+        
         
         // await sock.sendMessage(m.chat, {
         //     text: 'Done',
