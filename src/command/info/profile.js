@@ -31,8 +31,7 @@ module.exports = {
                 
             timeoutGroup = m.isGroup ? Object.keys(m.db.group.timeouts).find(x => x == id) : null
 
-            let caption = `*Informasi*\n\n`
-            caption += `ID : ${id}\n`
+            let caption = '';
             caption += `Plan : ${dbuser.plan.charAt(0).toUpperCase() + m.db.user.plan.slice(1)}\n`
             if(m.db.user.plan != 'free') caption += `Expired : ${dbuser.plan_expire}\n`
             caption += `Exp : ${dbuser.exp}\n`
@@ -44,7 +43,18 @@ module.exports = {
             caption += `Last Online : ${moment(dbuser.updated_at).fromNow()}\n`
             caption += `Registered : ${moment(dbuser.created_at).fromNow()}\n`
     
-            await m._sendMessage(m.chat, { image: { url: avatar }, caption }, { quoted: m })
+            await m._sendMessage(m.chat, {
+                text : caption,
+                contextInfo: {
+                    externalAdReply: {
+                        title: 'Profile User',
+                        body: id,
+                        mediaType: 2,
+                        thumbnailUrl: avatar,
+                        sourceUrl: 'https://velixs.com', 
+                    }
+                }
+            }, { quoted: m });
         }
     }
 }

@@ -1,4 +1,7 @@
 const timer2 = require("../utils/timer2.js")
+const fs = require('fs');
+const path = require('path');
+const config = require("../../config.js");
 
 module.exports = {
     name : "menu-owner",
@@ -24,6 +27,17 @@ module.exports = {
 
         text += `\n`
         text += `_👑 author: Ilsya_\n`
-        await m._sendMessage(m.chat, { text: text }, { quoted: m })
+        await m._sendMessage(m.chat, {
+            text,
+            contextInfo: {
+                externalAdReply: {
+                    title: 'Nakiri Whatsapp BOT',
+                    body: '- Menu -',
+                    mediaType: 2,
+                    thumbnail: fs.readFileSync(path.join(config.STORAGE_PATH, 'assets/icon-message.jpg')),
+                    sourceUrl: 'https://velixs.com', 
+                }
+            }
+        }, { quoted: m });
     }
 }

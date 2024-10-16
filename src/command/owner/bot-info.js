@@ -7,8 +7,8 @@ module.exports = {
     run : async({ m, sock }) => {
         try {
             if(!m.senderIsOwner) return
-            let text = `*Bot Status*\n`
-            text += `*Group*: ${db.group.getCount()} Total\n\n*`
+            let text = `*Bot Status*\n\n`
+            text += `*Group*: ${db.group.getCount()} Total\n*`
             text += `User*: ${db.user.getCount()} Registered\n\n*`
             text += String.fromCharCode(8206).repeat(4001)
             text += `Bot Settings*\n`
