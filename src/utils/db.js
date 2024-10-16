@@ -1,4 +1,5 @@
 const config = require('../../config.js');
+const { default: axios } = require('axios')
 const path = require('path');
 const { open } = require('lmdb');
 const log = require('./log.js')
@@ -16,7 +17,7 @@ class DatabaseManager {
             this.user = open({
                 path: path.join(config.STORAGE_DB, 'user'),
             });
-
+            
             this.group = open({
                 path: path.join(config.STORAGE_DB, 'group'),
             });
@@ -24,9 +25,10 @@ class DatabaseManager {
             this.bot = open({
                 path: path.join(config.STORAGE_DB, 'bot'),
             });
-
+            
             if(!this.bot.get('settings')) {
-                await this.bot.put('settings', config.DATABASE_SCHEMA.bot)
+                const icon = await axios.get('https://i.pinimg.com/enabled_hi/1200x/6b/e2/b3/6be2b369fd5bca46e103af8f99263962.jpg', { responseType: 'arraybuffer' }).then(res => res.data)
+                await this.bot.put('settings', { ...config.DATABASE_SCHEMA.bot, ...{ icon } })
             }
 
             log.info(`Databases initialized successfully.`)

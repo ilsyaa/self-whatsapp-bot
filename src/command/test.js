@@ -12,18 +12,20 @@ module.exports = {
     withoutPrefix: true,
     cmd: ['test'],
     run: async ({ m, sock }) => {
-        await sock.sendMessage(m.chat, {
-            text: 'Done',
-            contextInfo: {
-                externalAdReply: {
-                    title: 'Nakiri Whatsapp BOT',
-                    body: '- Menu -',
-                    mediaType: 2,
-                    thumbnail: fs.readFileSync(path.join(config.STORAGE_PATH, 'assets/icon-message.jpg')),
-                    sourceUrl: 'https://velixs.com', 
-                }
-            }
-        }, { quoted: m });
+        console.log(m.db.bot);
+        
+        // await sock.sendMessage(m.chat, {
+        //     text: 'Done',
+        //     contextInfo: {
+        //         externalAdReply: {
+        //             title: 'Nakiri Whatsapp BOT',
+        //             body: '- Menu -',
+        //             mediaType: 2,
+        //             thumbnail: fs.readFileSync(path.join(config.STORAGE_PATH, 'assets/icon-message-default.jpg')),
+        //             sourceUrl: 'https://velixs.com', 
+        //         }
+        //     }
+        // }, { quoted: m });
 
         return;
 

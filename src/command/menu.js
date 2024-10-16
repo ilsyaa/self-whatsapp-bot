@@ -30,7 +30,7 @@ module.exports = {
                     title: 'Nakiri Whatsapp BOT',
                     body: '- Menu -',
                     mediaType: 2,
-                    thumbnail: fs.readFileSync(path.join(config.STORAGE_PATH, 'assets/icon-message.jpg')),
+                    thumbnail: m.db.bot.icon,
                     sourceUrl: 'https://velixs.com', 
                 }
             }

@@ -1,4 +1,3 @@
-const path = require('path')
 const moment = require('./src/utils/moment.js')
 
 module.exports = {
