@@ -19,6 +19,7 @@ module.exports = {
         text += `▷ ${m.body.prefix}lang <id/en> \n`
         text += `▷ ${m.body.prefix}prefix\n`
         text += `▷ ${m.body.prefix}owner\n`
+        text += `▷ ${m.body.prefix}exif\n`
         text += `└────────────\n\n`
 
         text += `\n`
