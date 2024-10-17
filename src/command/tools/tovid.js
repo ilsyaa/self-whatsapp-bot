@@ -1,6 +1,6 @@
 const config = require("../../../config.js")
 const path = require("path")
-const { webpToVideo } = require('../../utils/ffmpeg.js')
+const { webpToVideo } = require('../../utils/stickerMaker.js')
 
 module.exports = {
     name : "tovid",
