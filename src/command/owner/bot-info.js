@@ -14,6 +14,7 @@ module.exports = {
             text += `Bot Settings*\n`
             text += '{\n'
             for (const [key, value] of Object.entries(m.db.bot)) {
+                if(key == 'icon') continue
                 if(typeof value == 'object') {
                     text += `  ${key}: ${JSON.stringify(value)},\n`
                 } else {
