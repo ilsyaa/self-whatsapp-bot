@@ -3,7 +3,8 @@ const {
     downloadContentFromMessage,
     getContentType,
     extractMessageContent,
-    jidNormalizedUser
+    jidNormalizedUser,
+    delay
 } = require('@whiskeysockets/baileys');
 const { Boom } = require('@hapi/boom');
 const path = require('path');
@@ -66,13 +67,25 @@ const serialize = (conn, m) => {
 
 const messageWrapper = (conn, m) => {
     // m.ephemeral = false
-    m._reply = (text) => {
-        return conn.sendMessage(m.chat, typeof text === 'string' ? { text: text } : text, { quoted: m, ephemeralExpiration: m.ephemeral })
+    m._reply = async (text) => {
+        await conn.presenceSubscribe(m.chat)
+		await delay(500)
+		await conn.sendPresenceUpdate('composing', m.chat)
+		await delay(1000)
+		await conn.sendPresenceUpdate('paused', m.chat)
+        
+        return await conn.sendMessage(m.chat, typeof text === 'string' ? { text: text } : text, { quoted: m, ephemeralExpiration: m.ephemeral })
     }
 
-    m._sendMessage = (jid, content, options) => {
+    m._sendMessage = async (jid, content, options) => {
+        await conn.presenceSubscribe(jid)
+		await delay(500)
+		await conn.sendPresenceUpdate('composing', jid)
+		await delay(1000)
+		await conn.sendPresenceUpdate('paused', jid)
+
         if (m.ephemeral) options = { ...options, ...{ ephemeralExpiration: m.ephemeral } };
-        return conn.sendMessage(jid, content, options)
+        return await conn.sendMessage(jid, content, options)
     }
     return m;
 }
