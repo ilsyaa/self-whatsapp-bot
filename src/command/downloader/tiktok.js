@@ -3,14 +3,14 @@ const { ttdl } = require('../../utils/scraper.js')
 module.exports = {
     name: "downloader-tiktok",
     description: "Download Video From Tiktok",
-    cmd: ['ttdl', 'tiktok'],
+    cmd: ['ttdl', 'tiktok', 'tt'],
     menu: {
         label: 'downloader'
     },
     run: async ({ m, sock }) => {
         if (!m.body.arg) return m._reply(m.lang(msg).ex)
         const url = m.body.arg;
-        if (!/^https?:\/\/(?:www\.)?(tiktok)\.com\/.+$/.test(url)) return m._reply(m.lang(msg).urlInvalid)
+        if (!/^https?:\/\/(?:[a-z]+\.)?(tiktok)\.com\/.+$/.test(url)) return m._reply(m.lang(msg).urlInvalid);
         try {
             const res = await ttdl(url);
             const caption = `*Title*: ${res.title}\n*Views*: ${res.views}\n*Like*: ${res.like}\n*Resolution*: HD No Watermark`
