@@ -1,7 +1,7 @@
 const { default: axios } = require("axios");
 
 module.exports = {
-    handdler : async (sock, m, $next) => {
+    handler : async (sock, m, $next) => {
         try {
             return $next;
             if(!m.isGroup) return $next

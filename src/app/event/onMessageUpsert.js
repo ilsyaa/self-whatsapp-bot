@@ -42,9 +42,9 @@ const _middleware = async (sock, m, middlewares, withoutMiddleware) => {
     for (let [key, middleware] of middlewares.entries()) {
         try {
             if(!withoutMiddleware) {
-                await middleware.handdler(sock, m, true)
+                await middleware.handler(sock, m, true)
             } else if (!withoutMiddleware.includes(key)) {
-                await middleware.handdler(sock, m, true)
+                await middleware.handler(sock, m, true)
             }
         } catch (error) {
             if(!error?.hideLogs) console.log(error);

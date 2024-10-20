@@ -2,7 +2,7 @@ const db = require('../utils/db.js');
 const moment = require('../utils/moment.js');
 
 module.exports = {
-    handdler : async (sock, m, $next) => {
+    handler : async (sock, m, $next) => {
         if(m.fromMe) return $next;
         if(!m.isGroup) return $next;
 

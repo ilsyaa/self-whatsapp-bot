@@ -1,5 +1,5 @@
 module.exports = {
-    handdler : async (sock, m, $next) => {
+    handler : async (sock, m, $next) => {
         if(!m.senderIsOwner && m.db.bot.mode == 'private') {
             throw {
                 break: true, 

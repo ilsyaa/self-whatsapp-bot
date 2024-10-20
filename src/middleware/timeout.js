@@ -1,5 +1,5 @@
 module.exports = {
-    handdler : async (sock, m, $next) => {
+    handler : async (sock, m, $next) => {
         if(m.fromMe) return $next
         if(!m.isGroup) return $next
         if(!m.db?.group?.timeouts) return $next

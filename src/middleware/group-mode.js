@@ -1,5 +1,5 @@
 module.exports = {
-    handdler : async (sock, m, $next) => {
+    handler : async (sock, m, $next) => {
         if (m.isGroup && !m.senderIsOwner && m.db.group.mode === 'admin-only' && !m.isGroup.senderIsAdmin) {
             throw {
                 break: true, 
