@@ -3,7 +3,7 @@ const { fbdl } = require('../../utils/scraper.js')
 module.exports = {
     name: "downloader-facebook",
     description: "Download Video From Facebook",
-    cmd: ['fbdl', 'facebook'],
+    cmd: ['fb', 'facebook', 'fbdl'],
     menu: {
         label: 'downloader'
     },
@@ -28,12 +28,12 @@ module.exports = {
 
 const msg = {
     id: {
-        ex: '*Penggunaan*: {prefix}fbdl `<url>`',
+        ex: '*Penggunaan*: {prefix}fb `<url>`',
         urlInvalid: 'URL tidak valid',
         failed: 'Gagal mengunduh video.'
     },
     en: {
-        ex: '*Usage*: {prefix}fbdl `<url>`',
+        ex: '*Usage*: {prefix}fb `<url>`',
         urlInvalid: 'URL not valid',
         failed: 'Failed to download video.'
     }

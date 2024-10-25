@@ -1,9 +1,9 @@
 const { default: axios } = require('axios');
 
 module.exports = {
-    name: "downloader-yt",
-    description: "Youtube Downloader",
-    cmd: ['yt', 'ytdl'],
+    name: "downloader-ytmp3",
+    description: "Youtube Downloader Mp3",
+    cmd: ['ytmp3'],
     menu: {
         label: 'downloader'
     },
@@ -14,11 +14,12 @@ module.exports = {
     
         try {
             axios.get('https://api.nyxs.pw/dl/yt-direct?url='+ encodeURIComponent(url)).then((res) => {
-                if(!res?.data?.result?.urlVideo) throw new Error(m.lang(msg).failed)
+                if(!res?.data?.result?.urlAudio) throw new Error(m.lang(msg).failed)
                 m._sendMessage(m.chat, {    
-                    video: {
-                        url: res.data.result.urlVideo
-                    }
+                    audio: {
+                        url: res.data.result.urlAudio
+                    },
+                    mimetype: 'audio/mp4'
                 }, { quoted: m })
             })
         }catch (error) {
@@ -28,16 +29,15 @@ module.exports = {
     }
 }
 
-
 const msg = {
     id: {
-        ex: 'penggunaan: {prefix}yt `url`',
+        ex: 'penggunaan: {prefix}ytmp3 `url`',
         urlInvalid: 'URL tidak valid',
-        failed: 'Gagal mengunduh video.'
+        failed: 'Gagal mengunduh audio.'
     },
     en: {
-        ex: 'usage: {prefix}yt `url`',
+        ex: 'usage: {prefix}ytmp3 `url`',
         urlInvalid: 'URL not valid',
-        failed: 'Failed to download video.'
+        failed: 'Failed to download audio.'
     }
 }

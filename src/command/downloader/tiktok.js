@@ -3,7 +3,7 @@ const { ttdl } = require('../../utils/scraper.js')
 module.exports = {
     name: "downloader-tiktok",
     description: "Download Video From Tiktok",
-    cmd: ['ttdl', 'tiktok', 'tt'],
+    cmd: ['tt', 'tiktok', 'ttdl'],
     menu: {
         label: 'downloader'
     },
