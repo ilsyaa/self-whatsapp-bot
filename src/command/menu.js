@@ -13,7 +13,8 @@ module.exports = {
         text += `*😺 Menu* ඞ\n ${timer2()} \n\n`
         text += String.fromCharCode(8206).repeat(4001)
         menuByLabel.forEach((val, key) => {
-            text += `┌── ˗ˏˋ ★ ${key.toUpperCase()} ★ ˎˊ˗\n`
+            // first
+            text += `┌── ˗ˏˋ ★ ${key.charAt(0).toUpperCase() + key.slice(1)} ★ ˎˊ˗\n`
             val.forEach((v) => {
                 text += `▷ ${m.body.prefix + v.cmd[0]} ${v.example || ''}\n`
             })
