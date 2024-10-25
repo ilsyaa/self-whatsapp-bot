@@ -10,15 +10,15 @@ module.exports = {
     cmd : ['help', 'menu'],
     run : async({ m, sock }) => {
         let text = ''
-        text += `*😺 Menu* ඞ\n ${timer2()} \n\n`
+        text += `*\`MENU BOT\`* ඞ\n ${timer2()} \n\n`
         text += String.fromCharCode(8206).repeat(4001)
         menuByLabel.forEach((val, key) => {
             // first
-            text += `┌── ˗ˏˋ ★ ${key.charAt(0).toUpperCase() + key.slice(1)} ★ ˎˊ˗\n`
+            text += `\`❖ ${key.toUpperCase()}\`\n`
             val.forEach((v) => {
-                text += `▷ ${m.body.prefix + v.cmd[0]} ${v.example || ''}\n`
+                text += `▷  ${m.body.prefix + v.cmd[0]} ${v.example || ''}\n`
             })
-            text += `└────────────\n\n`
+            text += `\n\n`
         })
 
         text += `\n`
