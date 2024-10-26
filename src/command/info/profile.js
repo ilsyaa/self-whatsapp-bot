@@ -22,6 +22,14 @@ module.exports = {
         } else {
             id = m.sender
         }
+        const leaderboard = Object.entries(m.db?.group?.member_activity)
+            .sort(([, a], [, b]) => b - a)
+            .slice(0, 10)
+            .map(([member, activity], index) => ({
+                rank: index + 1,
+                member,
+                activity
+            }));
         
         try {
             avatar = await sock.profilePictureUrl(id, 'image')
@@ -31,17 +39,21 @@ module.exports = {
                 
             timeoutGroup = m.isGroup ? Object.keys(m.db.group.timeouts).find(x => x == id) : null
 
-            let caption = '';
-            caption += `Plan : ${dbuser.plan.charAt(0).toUpperCase() + m.db.user.plan.slice(1)}\n`
+            let caption = `\`❖ PERSONAL\`\n`;
+            caption += `▷ Plan : ${dbuser.plan.charAt(0).toUpperCase() + m.db.user.plan.slice(1)}\n`
             if(m.db.user.plan != 'free') caption += `Expired : ${dbuser.plan_expire}\n`
-            caption += `Exp : ${dbuser.exp}\n`
-            caption += `Coin : ${dbuser.coin}\n`
-            caption += `Limit : ${dbuser.limit || 'Unlimited'}\n`
-            caption += `Blacklist : ${dbuser.blacklist ? 'Yes' : 'No'}\n`
-            caption += `Blacklist Reason : ${dbuser.blacklist_reason || '-'}\n`
-            if(m.isGroup) (caption += `Timeout Group : ${timeoutGroup ? `${moment(m.db.group.timeouts[timeoutGroup]).diff(moment(), 'minutes')} minutes ${moment(m.db.group.timeouts[timeoutGroup]).diff(moment(), 'seconds') % 60} seconds` : '-'}\n`)
-            caption += `Last Online : ${moment(dbuser.updated_at).fromNow()}\n`
-            caption += `Registered : ${moment(dbuser.created_at).fromNow()}\n`
+            caption += `▷ Exp : ${dbuser.exp}\n`
+            caption += `▷ Coin : ${dbuser.coin}\n`
+            caption += `▷ Limit : ${dbuser.limit || 'Unlimited'}\n`
+            caption += `▷ Blacklist : ${dbuser.blacklist_reason || '-'}\n\n`
+            if(m.isGroup) {
+                caption += `\`❖ GROUP ID\`\n`
+                caption += `▷ Timeout Group : ${timeoutGroup ? `${moment(m.db.group.timeouts[timeoutGroup]).diff(moment(), 'minutes')} minutes ${moment(m.db.group.timeouts[timeoutGroup]).diff(moment(), 'seconds') % 60} seconds` : '-'}\n`
+                caption += `▷ Leaderboard : ${leaderboard.find(({member}) => member == m.sender).rank} of ${m.isGroup.size}\n`
+                caption += `\n`
+            }
+            caption += `▷ Last Online : ${moment(dbuser.updated_at).fromNow()}\n`
+            caption += `▷ Registered : ${moment(dbuser.created_at).fromNow()}\n`
     
             await m._sendMessage(m.chat, {
                 text : caption,

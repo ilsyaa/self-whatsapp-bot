@@ -1,6 +1,7 @@
 const middleware = new Map();
 
 middleware.set('antilink.js', require('./antilink.js'))
+middleware.set('activity-record.js', require('./activity-record.js'))
 middleware.set('timeout-expired.js', require('./timeout-expired.js'))
 middleware.set('timeout.js', require('./timeout.js'))
 middleware.set('bot-mode.js', require('./bot-mode.js'))

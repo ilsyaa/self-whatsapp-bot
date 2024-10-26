@@ -12,7 +12,7 @@ module.exports = {
     withoutPrefix: true,
     cmd: ['test'],
     run: async ({ m, sock }) => {
-
+        return;
         // await sock.sendMessage(m.chat, {
         //     text: 'Done',
         //     contextInfo: {
