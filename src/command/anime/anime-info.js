@@ -6,7 +6,7 @@ module.exports = {
     cmd : ['animeinfo'],
     menu : {
         label : 'anime',
-        example : "_<text>_",
+        example : "text",
     },
     run : async({ m, sock }) => {
         try {

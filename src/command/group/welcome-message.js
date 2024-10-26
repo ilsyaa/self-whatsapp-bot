@@ -7,7 +7,7 @@ module.exports = {
     cmd : ['set-welcome-msg', 'set-welcome-message'],
     menu : {
         label : 'group',
-        example : '_<text>_'
+        example : 'text'
     },
     run : async({ m, sock }) => {
         try {

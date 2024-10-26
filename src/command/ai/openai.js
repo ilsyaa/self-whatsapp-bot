@@ -6,7 +6,7 @@ module.exports = {
     cmd : ['gpt', 'openai'],
     menu : {
         label : 'ai',
-        example : "_<query>_",
+        example : "text",
     },
     run : async({ m, sock }) => {
         try {
@@ -21,9 +21,9 @@ module.exports = {
 
 const msg = {
     id: {
-        ex: 'penggunaan: {prefix}gpt `<query>`'
+        ex: 'penggunaan: {prefix}gpt `text`'
     },
     en: {
-        ex: 'usage: {prefix}gpt `<query>`'
+        ex: 'usage: {prefix}gpt `text`'
     }
 }

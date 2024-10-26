@@ -49,6 +49,7 @@ module.exports = {
             welcome_message: null,
             welcome_background: null,
             timeouts: {},
+            member_activity: {},
             updated_at: moment(),
             created_at: moment(),
         },

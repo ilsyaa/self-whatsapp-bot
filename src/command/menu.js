@@ -16,7 +16,7 @@ module.exports = {
             // first
             text += `\`❖ ${key.toUpperCase()}\`\n`
             val.forEach((v) => {
-                text += `▷  ${m.body.prefix + v.cmd[0]} ${v.example || ''}\n`
+                text += `▷  ${m.body.prefix + v.cmd[0]} _\`${v.example || ''}\`_\n`
             })
             text += `\n\n`
         })
@@ -32,7 +32,7 @@ module.exports = {
                     body: '- Menu -',
                     mediaType: 2,
                     thumbnail: m.db.bot.icon,
-                    sourceUrl: 'https://velixs.com', 
+                    sourceUrl: 'https://velixs.com',
                 }
             }
         }, { quoted: m });

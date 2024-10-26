@@ -6,7 +6,7 @@ module.exports = {
     cmd : ['llm', 'llama3'],
     menu : {
         label : 'ai',
-        example : "_<query>_",
+        example : "text",
     },
     run : async({ m, sock }) => {
         try {
@@ -40,9 +40,9 @@ module.exports = {
 
 const msg = {
     id: {
-        ex: 'penggunaan: {prefix}llm `<query>`'
+        ex: 'penggunaan: {prefix}llm `text`'
     },
     en: {
-        ex: 'usage: {prefix}llm `<query>`'
+        ex: 'usage: {prefix}llm `text`'
     }
 }

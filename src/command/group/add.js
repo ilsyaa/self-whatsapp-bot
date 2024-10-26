@@ -4,7 +4,7 @@ module.exports = {
     cmd : ['add'],
     menu : {
         label : 'group',
-        example : '_<number>_'
+        example : 'number'
     },
     run : async({ m, sock }) => {
         try {
@@ -22,9 +22,9 @@ module.exports = {
 
 const msg = {
     id: {
-        ex: 'penggunaan: {prefix}add `<nomor>`'
+        ex: 'penggunaan: {prefix}add `nomor`'
     },
     en: {
-        ex: 'usage: {prefix}add `<number>`'
+        ex: 'usage: {prefix}add `number`'
     }
 }

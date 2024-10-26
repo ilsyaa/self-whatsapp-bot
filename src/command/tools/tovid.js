@@ -8,7 +8,7 @@ module.exports = {
     cmd : ['tovid', 'tovideo'],
     menu : {
         label : 'tools',
-        example : '`reply sticker`'
+        example : 'reply sticker'
     },
     run : async({ m, sock }) => {
         if(!['stickerMessage'].includes(m.quoted?.mtype)) return m._reply(m.lang(msg).ex);

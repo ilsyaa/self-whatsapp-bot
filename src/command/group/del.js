@@ -4,7 +4,7 @@ module.exports = {
     cmd : ['del', 'delete'],
     menu : {
         label : 'group',
-        example : '`reply`'
+        example : 'reply'
     },
     run : async({ m, sock }) => {
         try {

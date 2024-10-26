@@ -6,7 +6,7 @@ module.exports = {
     cmd : ['ai', 'nakiri'],
     menu : {
         label : 'ai',
-        example : "_<query>_",
+        example : "text",
     },
     run : async({ m, sock }) => {
         try {
@@ -23,9 +23,9 @@ module.exports = {
 
 const msg = {
     id: {
-        ex: 'penggunaan: {prefix}ai `<query>`'
+        ex: 'penggunaan: {prefix}ai `text`'
     },
     en: {
-        ex: 'usage: {prefix}ai `<query>`'
+        ex: 'usage: {prefix}ai `text`'
     }
 }

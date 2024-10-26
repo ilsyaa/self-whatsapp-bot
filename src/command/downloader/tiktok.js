@@ -5,7 +5,8 @@ module.exports = {
     description: "Download Video From Tiktok",
     cmd: ['tt', 'tiktok', 'ttdl'],
     menu: {
-        label: 'downloader'
+        label: 'downloader',
+        example: 'url'
     },
     run: async ({ m, sock }) => {
         if (!m.body.arg) return m._reply(m.lang(msg).ex)

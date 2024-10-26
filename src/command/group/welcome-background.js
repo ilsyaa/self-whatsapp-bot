@@ -6,7 +6,7 @@ module.exports = {
     cmd : ['set-welcome-bg', 'set-welcome-background'],
     menu : {
         label : 'group',
-        example : '_<url>_'
+        example : 'url'
     },
     run : async({ m, sock }) => {
         try {

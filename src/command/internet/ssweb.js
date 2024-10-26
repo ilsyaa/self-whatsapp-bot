@@ -6,7 +6,7 @@ module.exports = {
     cmd : ['ssweb'],
     menu : {
         label : 'internet',
-        example : '_<url>_'
+        example : 'url'
     },
     run : async({ m, sock }) => {
         if(!m.body.arg) return m._reply(m.lang(msg).ex)

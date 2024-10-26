@@ -6,7 +6,7 @@ module.exports = {
     cmd : ['gmode'],
     menu : {
         label : 'group',
-        example : '_<admin-only/all>_'
+        example : '<admin-only/all>'
     },
     run : async({ m, sock }) => {
         try {

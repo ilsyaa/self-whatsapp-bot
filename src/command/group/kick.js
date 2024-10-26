@@ -4,7 +4,7 @@ module.exports = {
     cmd : ['kick'],
     menu : {
         label : 'group',
-        example : '`reply or mention`'
+        example : 'reply or mention'
     },
     run : async({ m, sock }) => {
         try {

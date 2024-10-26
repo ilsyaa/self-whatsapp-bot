@@ -6,7 +6,8 @@ module.exports = {
     description: "Git Clone Repo Github",
     cmd: ['git', 'gitclone'],
     menu: {
-        label: 'downloader'
+        label: 'downloader',
+        example: 'url'
     },
     run: async ({ m, sock }) => {
         if (!m.body.arg) return m._reply(m.lang(msg).ex)

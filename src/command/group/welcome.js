@@ -6,6 +6,7 @@ module.exports = {
     cmd : ['set-welcome'],
     menu : {
         label : 'group',
+        example : '<enable/disable>'
     },
     run : async({ m, sock }) => {
         try {

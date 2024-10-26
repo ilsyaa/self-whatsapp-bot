@@ -6,7 +6,7 @@ module.exports = {
     cmd : ['antilink'],
     menu : {
         label : 'group',
-        example : '_<enable/disable>_'
+        example : '<enable/disable>'
     },
     run : async({ m, sock }) => {
         try {

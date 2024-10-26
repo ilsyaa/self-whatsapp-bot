@@ -5,7 +5,8 @@ module.exports = {
     description: "Youtube Downloader",
     cmd: ['yt', 'ytdl'],
     menu: {
-        label: 'downloader'
+        label: 'downloader',
+        example: 'url'
     },
     run: async ({ m, sock }) => {
         if (!m.body.arg) return m._reply(m.lang(msg).ex)

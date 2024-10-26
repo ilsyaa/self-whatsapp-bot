@@ -7,7 +7,7 @@ module.exports = {
     cmd : ['timeout', 'to', 'bungkam'],
     menu : {
         label : 'group',
-        example : '_<duration> @mentions_'
+        example : '<duration> @mentions'
     },
     run : async({ m, sock }) => {
         try {

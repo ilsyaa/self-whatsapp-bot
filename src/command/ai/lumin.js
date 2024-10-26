@@ -6,7 +6,7 @@ module.exports = {
     cmd : ['lumin', 'identifer'],
     menu : {
         label : 'ai',
-        example : "_<text>_",
+        example : "text",
     },
     run : async({ m, sock }) => {
         try {
