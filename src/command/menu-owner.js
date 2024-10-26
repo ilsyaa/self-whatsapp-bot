@@ -13,6 +13,7 @@ module.exports = {
         text += `*😺 Menu* ඞ\n ${timer2()} \n\n`
         text += `┌── ˗ˏˋ ★ Owner Menu ★ ˎˊ˗\n`
         text += `▷ ${m.body.prefix}bot \n`
+        text += `▷ ${m.body.prefix}clear \n`
         text += `▷ ${m.body.prefix}block \n`
         text += `▷ ${m.body.prefix}unblock \n`
         text += `▷ ${m.body.prefix}$ \n`
