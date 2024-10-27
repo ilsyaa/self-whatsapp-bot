@@ -2,6 +2,11 @@ const util = require("util");
 const {
     exec
 } = require("child_process");
+const axios = require("axios");
+const db = require("../../utils/db.js");
+const moment = require("../../utils/moment.js");
+const fs = require("fs");
+const cheerio = require("cheerio");
 
 module.exports = {
     name: "exc",

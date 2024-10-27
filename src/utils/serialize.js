@@ -31,7 +31,7 @@ const serialize = (conn, m) => {
         m.msg = (m.mtype == 'viewOnceMessage' ? m.message[m.mtype].message[getContentType(m.message[m.mtype].message)] : m.message[m.mtype]);
         m.ephemeral = m.msg?.contextInfo?.expiration || false
         
-        m.text = m.message?.conversation || m.message?.[m.mtype]?.text || m.message?.[m.mtype]?.caption || m.message?.[m.mtype]?.contentText || m.message?.[m.mtype]?.selectedDisplayText || m.message?.[m.mtype]?.title || ""
+        m.text = extractText(m)
         m.mentionedJid = m.msg?.contextInfo ? m.msg.contextInfo.mentionedJid : [];
 
         m.quoted = m.msg?.contextInfo ? m.msg.contextInfo.quotedMessage : null;
@@ -63,6 +63,18 @@ const serialize = (conn, m) => {
 
     m = messageWrapper(conn, m);
     return m;
+}
+
+const extractText = (m) => {
+    let text = "";
+    if (m.message?.conversation) text = m.message.conversation;
+    else if (m.message?.[m.mtype]?.text) text = m.message?.[m.mtype]?.text;
+    else if (m.message?.[m.mtype]?.caption) text = m.message?.[m.mtype]?.caption;
+    else if (m.message?.[m.mtype]?.contentText) text = m.message?.[m.mtype]?.contentText;
+    else if (m.message?.[m.mtype]?.selectedDisplayText) text = m.message?.[m.mtype]?.selectedDisplayText;
+    else if (m.message?.[m.mtype]?.title) text = m.message?.[m.mtype]?.title;
+    else if (JSON.parse(m.message?.[m.mtype]?.nativeFlowResponseMessage?.paramsJson || "{}")?.id) text = JSON.parse(m.message?.[m.mtype]?.nativeFlowResponseMessage?.paramsJson || "{}")?.id || '';
+    return text;
 }
 
 const messageWrapper = (conn, m) => {
