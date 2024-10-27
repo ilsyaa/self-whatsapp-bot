@@ -10,11 +10,13 @@ module.exports = {
     cmd : ['help', 'menu'],
     run : async({ m, sock }) => {
         let text = ''
-        text += `*\`Hai ${m.db.user.name}\`*\n ${timer2()} \n\n`
+        let label = 'All Menu';
+        text += `*\`Hai ${m.db.user.name}\`*\nSelamat ${timer2()} \n\n`
         text += String.fromCharCode(8206).repeat(4001)
         if(m.body.arg) {
             let filterMenu = menuByLabel.get(m.body.arg)
             if(!filterMenu) return
+            label = m.body.arg.toUpperCase()
             text += `\`❖ ${m.body.arg.toUpperCase()}\`\n`
             filterMenu.forEach((v) => {
                 text += `▷  ${m.body.prefix + v.cmd[0]} _\`${v.example || ''}\`_\n`
@@ -36,7 +38,7 @@ module.exports = {
             contextInfo: {
                 externalAdReply: {
                     title: 'Nakiri Whatsapp BOT',
-                    body: '- All Menu -',
+                    body: `- ${label} -`,
                     mediaType: 2,
                     thumbnail: m.db.bot.icon,
                     sourceUrl: 'https://velixs.com',
