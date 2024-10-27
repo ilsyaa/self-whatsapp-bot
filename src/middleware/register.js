@@ -42,12 +42,12 @@ module.exports = {
 const msg = {
     id : {
         register : 'Silahkan lakukan registrasi terlebih dahulu.\nCaranya ketik {prefix}reg `nama`',
-        success : 'Hai {name} silahkan menggunakan bot dengan bijak.\nUntuk mengecek profile ketik `{prefix}id`\nUntuk menampilkan semua fitur bot ketik `{prefix}help`',
+        success : 'Hai {name} silahkan menggunakan bot dengan bijak.\n\nUntuk mengecek profile ketik `{prefix}id`\nUntuk menampilkan semua fitur bot ketik `{prefix}help`',
         min: 'Minimal 3 huruf.',
     },
     en : {
         register : 'Please register first.\nHow to register : {prefix}reg `name`',
-        success : 'Hi {name} please use the bot with caution.\nTo check profile type `{prefix}id`\nTo show all features type `{prefix}help`',
+        success : 'Hi {name} please use the bot with caution.\n\nTo check profile type `{prefix}id`\nTo show all features type `{prefix}help`',
         min: 'Minimal 3 character.',
     }
 }
