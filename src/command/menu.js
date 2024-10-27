@@ -10,17 +10,24 @@ module.exports = {
     cmd : ['help', 'menu'],
     run : async({ m, sock }) => {
         let text = ''
-        text += `*\`MENU BOT\`* ඞ\n ${timer2()} \n\n`
+        text += `*\`Hai ${m.db.user.name}\`*\n ${timer2()} \n\n`
         text += String.fromCharCode(8206).repeat(4001)
-        menuByLabel.forEach((val, key) => {
-            // first
-            text += `\`❖ ${key.toUpperCase()}\`\n`
-            val.forEach((v) => {
+        if(m.body.arg) {
+            let filterMenu = menuByLabel.get(m.body.arg)
+            if(!filterMenu) return
+            text += `\`❖ ${m.body.arg.toUpperCase()}\`\n`
+            filterMenu.forEach((v) => {
                 text += `▷  ${m.body.prefix + v.cmd[0]} _\`${v.example || ''}\`_\n`
             })
-            text += `\n\n`
-        })
-
+        } else {
+            menuByLabel.forEach((val, key) => {
+                text += `\`❖ ${key.toUpperCase()}\`\n`
+                val.forEach((v) => {
+                    text += `▷  ${m.body.prefix + v.cmd[0]} _\`${v.example || ''}\`_\n`
+                })
+                text += `\n\n`
+            })
+        }
         text += `\n`
         text += `_👑 author: Ilsya_\n`
 
@@ -29,7 +36,7 @@ module.exports = {
             contextInfo: {
                 externalAdReply: {
                     title: 'Nakiri Whatsapp BOT',
-                    body: '- Menu -',
+                    body: '- All Menu -',
                     mediaType: 2,
                     thumbnail: m.db.bot.icon,
                     sourceUrl: 'https://velixs.com',
