@@ -1,4 +1,5 @@
 const db = require("../../utils/db.js")
+const util = require('util')
 
 module.exports = {
     name : "bot-info",
@@ -12,16 +13,7 @@ module.exports = {
             text += `User*: ${db.user.getCount()} Registered\n\n*`
             text += String.fromCharCode(8206).repeat(4001)
             text += `Bot Settings*\n`
-            text += '{\n'
-            for (const [key, value] of Object.entries(m.db.bot)) {
-                if(key == 'icon') continue
-                if(typeof value == 'object') {
-                    text += `  ${key}: ${JSON.stringify(value)},\n`
-                } else {
-                    text += `  ${key}: ${value},\n`
-                }
-            }
-            text += '}'
+            text += util.format(m.db.bot)
             m._reply(text)
         } catch(error) {
             await m._reply(error.message)

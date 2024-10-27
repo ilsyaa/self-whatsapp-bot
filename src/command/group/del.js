@@ -12,7 +12,8 @@ module.exports = {
             if(!m.isGroup.botIsAdmin) return
             if(!m.isGroup.senderIsAdmin) return
             if(!m.quoted) return m._reply(m.lang(msg).ex)
-            m.quoted.delete()
+            // hapus pesan yang di reply
+            await sock.sendMessage(m.chat, { delete: m.quoted.key })
         } catch(error) {
             await m._reply(error.message)
         }

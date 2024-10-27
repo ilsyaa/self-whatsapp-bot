@@ -8,6 +8,7 @@ module.exports = {
         if(!m.body.full.match(`chat.whatsapp.com`)) return $next
         const currentGroupLink = (`https://chat.whatsapp.com/` + await sock.groupInviteCode(m.chat))
         if(m.body.full.match(currentGroupLink)) return $next
+        // hapus pesan
         await sock.sendMessage(m.chat, { delete: m.key })
         return $next;
     }

@@ -22,7 +22,7 @@ module.exports = {
         } else {
             id = m.sender
         }
-        const leaderboard = Object.entries(m.db?.group?.member_activity)
+        const leaderboard = Object.entries(m.db?.group?.member_activity || {})
             .sort(([, a], [, b]) => b - a)
             .slice(0, 10)
             .map(([member, activity], index) => ({
@@ -37,7 +37,7 @@ module.exports = {
             dbuser = db.user.get(id)
             if(!dbuser) return m._reply(m.lang(msg).userNotFound)
                 
-            timeoutGroup = m.isGroup ? Object.keys(m.db.group.timeouts).find(x => x == id) : null
+            timeoutGroup = Object.keys(m.db?.group?.timeouts || {}).find(x => x == id)
 
             let caption = `\`❖ PERSONAL\`\n`;
             caption += `▷ Plan : ${dbuser.plan.charAt(0).toUpperCase() + m.db.user.plan.slice(1)}\n`
@@ -49,7 +49,7 @@ module.exports = {
             if(m.isGroup) {
                 caption += `\`❖ GROUP ID\`\n`
                 caption += `▷ Timeout Group : ${timeoutGroup ? `${moment(m.db.group.timeouts[timeoutGroup]).diff(moment(), 'minutes')} minutes ${moment(m.db.group.timeouts[timeoutGroup]).diff(moment(), 'seconds') % 60} seconds` : '-'}\n`
-                caption += `▷ Leaderboard : ${leaderboard.find(({member}) => member == m.sender).rank} of ${m.isGroup.size}\n`
+                caption += `▷ Leaderboard : ${leaderboard.find(({member}) => member == id)?.rank || '-'} of ${m.isGroup.groupMetadata.size}\n`
                 caption += `\n`
             }
             caption += `▷ Last Online : ${moment(dbuser.updated_at).fromNow()}\n`

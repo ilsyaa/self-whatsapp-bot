@@ -71,7 +71,7 @@ const messageWrapper = (conn, m) => {
         await conn.presenceSubscribe(m.chat)
 		await delay(500)
 		await conn.sendPresenceUpdate('composing', m.chat)
-		await delay(1000)
+		await delay(500)
 		await conn.sendPresenceUpdate('paused', m.chat)
         
         return await conn.sendMessage(m.chat, typeof text === 'string' ? { text: text } : text, { quoted: m, ephemeralExpiration: m.ephemeral })
@@ -81,7 +81,7 @@ const messageWrapper = (conn, m) => {
         await conn.presenceSubscribe(jid)
 		await delay(500)
 		await conn.sendPresenceUpdate('composing', jid)
-		await delay(1000)
+		await delay(500)
 		await conn.sendPresenceUpdate('paused', jid)
 
         if (m.ephemeral) options = { ...options, ...{ ephemeralExpiration: m.ephemeral } };
@@ -122,17 +122,6 @@ const extractQuotedMessage = (conn, m) => {
     m.quoted.ephemeral = m.quoted?.contextInfo?.expiration || false;
     m.quoted.download = () => downloadMedia(m, true);
     m.quoted.saveMedia = (filePath) => saveMedia(m, filePath, true);
-    let vM = m.quoted.fakeObj = M.fromObject({
-        key: {
-            remoteJid: m.quoted.chat,
-            fromMe: m.quoted.fromMe,
-            id: m.quoted.id
-        },
-        // message: m.quoted,
-        ...(m.isGroup ? { participant: m.quoted.sender } : {})
-    })
-    m.quoted.delete = () => conn.sendMessage(m.quoted.chat, { delete: vM.key })
-
     return m.quoted;
 };
 

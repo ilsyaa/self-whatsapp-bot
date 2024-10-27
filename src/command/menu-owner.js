@@ -16,7 +16,6 @@ module.exports = {
         text += `▷ ${m.body.prefix}clear \n`
         text += `▷ ${m.body.prefix}block \n`
         text += `▷ ${m.body.prefix}unblock \n`
-        text += `▷ ${m.body.prefix}$ \n`
         text += `▷ ${m.body.prefix}iconmsg \n`
         text += `▷ ${m.body.prefix}setpp \n`
         text += `▷ ${m.body.prefix}join <link> \n`
@@ -26,6 +25,8 @@ module.exports = {
         text += `▷ ${m.body.prefix}prefix\n`
         text += `▷ ${m.body.prefix}owner\n`
         text += `▷ ${m.body.prefix}exif\n`
+        text += `▷ ${m.body.prefix}$\n`
+        text += `▷ ${m.body.prefix}#\n`
         text += `└────────────\n\n`
 
         text += `\n`

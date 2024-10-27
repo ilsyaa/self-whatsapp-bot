@@ -1,3 +1,5 @@
+const util = require('util');
+
 module.exports = {
     name : "group-info",
     description : "Show Group Info",
@@ -21,15 +23,7 @@ module.exports = {
             text += `*Participants*: ${m.isGroup.groupMetadata.participants.length} Members \n\n`
             text += String.fromCharCode(8206).repeat(4001)
             text += `*Info Settings Bot*: \n\n`
-            text += '{\n'
-            for (const [key, value] of Object.entries(m.db.group)) {
-                if(typeof value == 'object') {
-                    text += `  ${key}: ${JSON.stringify(value)},\n`
-                } else {
-                    text += `  ${key}: ${value},\n`
-                }
-            }
-            text += '}'
+            text += util.format(m.db.group)
             m._reply(text)
         } catch(error) {
             await m._reply(error.message)
