@@ -6,13 +6,13 @@ const {
 module.exports = {
     name: "exc",
     description: "Command Owner",
-    cmd: ['#', '$'],
+    cmd: ['~', '$'],
     withoutPrefix: true,
     run: async ({ m, sock }) => {
         if(!m.senderIsOwner) return
         if(!m.body.arg) return
         
-        if (m.body.full.startsWith('#')) {
+        if (m.body.full.startsWith('~')) {
             try {
                 const result = await eval(`(async() => { ${m.body.full.slice(2)} })()`);
                 m._reply(util.format(result));
