@@ -5,11 +5,8 @@ module.exports = {
     name: "info-unregister-user",
     description: "Unregister User",
     cmd: ['unreg'],
-    menu: {
-        label: 'info',
-        example: '@mention'
-    },
     run: async ({ m, sock }) => {
+        if(!m.senderIsOwner) return
         let id;
         if(m.quoted) id = m.quoted.sender;
         else if(m.mentionedJid.length) id = m.mentionedJid[0];

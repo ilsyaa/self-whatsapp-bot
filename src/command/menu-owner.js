@@ -25,6 +25,7 @@ module.exports = {
         text += `▷ ${m.body.prefix}prefix\n`
         text += `▷ ${m.body.prefix}owner\n`
         text += `▷ ${m.body.prefix}exif\n`
+        text += `▷ ${m.body.prefix}unreg \`@mention\`\n`
         text += `▷ ${m.body.prefix}$\n`
         text += `▷ ${m.body.prefix}~\n`
         text += `└────────────\n\n`
