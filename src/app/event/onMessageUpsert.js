@@ -22,13 +22,14 @@ module.exports = upsert = async (sock) => {
             await sock.readMessages([m.key])
             await updateAdminStatus(sock, m);
             m.db.group = await _dbGroupHandler(sock, m)
+            m.db.user = await db.user.get(m.sender) || null;
             m.lang = (msg) => _lang(msg, m);
             const command = Array.from(commands.values()).find((v) => v.cmd.find((x) => x.toLowerCase() == m.body.commandWithoutPrefix.toLowerCase()));
-            const $next = await _middleware(sock, m, middleware, command?.withoutMiddleware)
+            const $next = await _middleware(sock, m, middleware, command)
             if(!command) return
             if(typeof $next == 'object' && !$next.continueCommand) return
             if(!command?.withoutPrefix && !m.body.prefix) return
-            m.db.user = await _autoRegisterUser(sock, m)
+            _userOnlineHandler(sock, m)
             await command.run({m , sock})
             // console.log(m.db);
         } catch (error) {
@@ -37,14 +38,14 @@ module.exports = upsert = async (sock) => {
     })
 }
 
-const _middleware = async (sock, m, middlewares, withoutMiddleware) => {
+const _middleware = async (sock, m, middlewares, command) => {
     let $next = true
     for (let [key, middleware] of middlewares.entries()) {
         try {
-            if(!withoutMiddleware) {
-                await middleware.handler(sock, m, true)
-            } else if (!withoutMiddleware.includes(key)) {
-                await middleware.handler(sock, m, true)
+            if(!command?.withoutMiddleware) {
+                await middleware.handler(sock, m, true, command)
+            } else if (!command?.withoutMiddleware.includes(key)) {
+                await middleware.handler(sock, m, true, command)
             }
         } catch (error) {
             if(!error?.hideLogs) console.log(error);
@@ -55,18 +56,11 @@ const _middleware = async (sock, m, middlewares, withoutMiddleware) => {
     return $next
 }
 
-const _autoRegisterUser = async (sock, m) => {
-    let dbUserData = null;
-    dbUserData = await db.user.get(m.sender)
-    if(!dbUserData) {
-        await db.user.put(m.sender, config.DATABASE_SCHEMA.user)
-        dbUserData = await db.user.get(m.sender)
-    } else {
-        db.update(db.user, m.sender, {
-            updated_at: moment(),
-        })
-    }
-    return dbUserData
+const _userOnlineHandler = async (sock, m) => {
+    if(!m.db?.user) return
+    db.update(db.user, m.sender, {
+        updated_at: moment(),
+    })
 }
 
 const _dbGroupHandler = async (sock, m) => {

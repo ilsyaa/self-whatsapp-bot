@@ -40,6 +40,7 @@ module.exports = {
             timeoutGroup = Object.keys(m.db?.group?.timeouts || {}).find(x => x == id)
 
             let caption = `\`❖ PERSONAL\`\n`;
+            caption += `▷ Name : ${dbuser.name}\n`
             caption += `▷ Plan : ${dbuser.plan.charAt(0).toUpperCase() + m.db.user.plan.slice(1)}\n`
             if(m.db.user.plan != 'free') caption += `Expired : ${dbuser.plan_expire}\n`
             caption += `▷ Exp : ${dbuser.exp}\n`
@@ -59,7 +60,7 @@ module.exports = {
                 text : caption,
                 contextInfo: {
                     externalAdReply: {
-                        title: 'Profile User',
+                        title: m.db.user.name,
                         body: id,
                         mediaType: 2,
                         thumbnailUrl: avatar,
