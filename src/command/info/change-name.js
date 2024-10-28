@@ -4,7 +4,7 @@ const moment = require("../../utils/moment.js")
 module.exports = {
     name: "info-change-name",
     description: "Change name user",
-    cmd: ['cn', 'changename', 'cname', 'rename'],
+    cmd: ['changename', 'cn', 'cname', 'rename'],
     menu: {
         label: 'info',
         example: 'name'

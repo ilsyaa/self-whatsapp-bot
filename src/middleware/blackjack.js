@@ -4,7 +4,7 @@ const {
     formatHand,
     calculateHandValue,
     addReactions
-} = require('../utils/blackjack.js');
+} = require('../utils/games/blackjack.js');
 const currency = require('../utils/currency.js');
 
 module.exports = {
