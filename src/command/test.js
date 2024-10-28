@@ -14,10 +14,10 @@ module.exports = {
     run: async ({ m, sock }) => {
         if (!m.senderIsOwner) return;
 
-        for(let user of db.user.getRange()) {
-            const { coin, ...valueWithoutCoin } = user.value;
-            db.user.put(user.key, { ...valueWithoutCoin, balance: coin || 0 });
-        }
+        // for(let user of db.user.getRange()) {
+        //     const { coin, ...valueWithoutCoin } = user.value;
+        //     db.user.put(user.key, { ...valueWithoutCoin, balance: coin || 0 });
+        // }
 
         return;
         async function sendList(jid, title, text, buttonText, listSections, quoted, options = {}) {
