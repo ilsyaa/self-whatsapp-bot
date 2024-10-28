@@ -23,6 +23,7 @@ module.exports = {
         let bet = m.body.arg.replace(/[^0-9]/g, '');
         if(m.body.arg == 'all') bet = 250000;
         if(bet < 5000) return m._reply(m.lang(msg).minbet);
+        if(bet >= 250000) return m._reply(m.lang(msg).maxbet);
         if (currency.subtract(m.db.user.balance, bet) === false) return m._reply(m.lang(msg).balance);
         currency.updateBalanceUser(m.sender, currency.subtract(m.db.user.balance, bet));
 
@@ -54,6 +55,7 @@ const msg = {
         exist: 'Permainan Blackjack sebelumnya sedang berlangsung.',
         balance: 'Saldo kamu tidak cukup.',
         minbet: 'Minimal 5.000',
+        maxbet: 'Maximal 250.000',
         desc: '```Tipe``` *`hit`* ```untuk mengambil kartu lain atau``` *`stand`* ```untuk mempertahankan kartu Anda saat ini.```'
     },
     en: {
@@ -61,6 +63,7 @@ const msg = {
         exist: 'Blackjack game is already in progress.',
         balance: 'Your balance is not enough.',
         minbet: 'Minimal 5.000',
+        maxbet: 'Maximal 250.000',
         desc: '```Type``` *`hit`* ```to take another card or``` *`stand`* ```to keep your current hand.```'
     }
 }
