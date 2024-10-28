@@ -5,11 +5,11 @@ const db = require('../../utils/db.js')
 module.exports = {
     name: "owner-set-coin",
     description: "Set Balance",
-    cmd: ['setbalance', 'setcoin'],
+    cmd: ['setbalance', 'setcoin', 'setbalance'],
     run: async ({ m, sock }) => {
         if(!m.senderIsOwner) return
 
-        let ids = [], balance, nameText = '', balanceText;
+        let ids = [], balance, nameText = 0, balanceText;
 
         if(m.quoted) {
             ids = [ m.quoted.sender ]
@@ -33,10 +33,10 @@ module.exports = {
             if(ids.length == 1) {
                 nameText = user.name
             } else {
-                nameText += user.name + ' '
+                nameText = parseInt(nameText)+1
             }
         }
-
+        if (ids.length > 1) nameText = nameText + ' ' + m.lang(msg).users;
         await m._reply(m.lang(msg).success.replace('{name}', nameText).replace('{balance}', currency.format(balanceText)));
     }
 }
@@ -45,11 +45,13 @@ const msg = {
     id: {
         userNotFound: 'Pengguna tidak terdaftar.',
         success: 'Saldo `{name}` di set ke `{balance}`.',
-        ex: 'Penggunaan:\n▷ {prefix}setbalance `nominal` `<@mentions|all>`\n▷ Balas pesan dengan caption {prefix}setcoin `nominal`'
+        ex: 'Penggunaan:\n▷ {prefix}setbalance `nominal` `<@mentions|all>`\n▷ Balas pesan dengan caption {prefix}setcoin `nominal`',
+        users: 'pengguna',
     },
     en: {
         userNotFound: 'User not found.',
         success: 'Balance `{name}` has been set to `{balance}`.',
-        ex: 'Usage:\n▷ {prefix}setbalance `nominal` `<@mentions|all>`\n▷ Reply to a message with caption {prefix}setcoin `nominal`'
+        ex: 'Usage:\n▷ {prefix}setbalance `nominal` `<@mentions|all>`\n▷ Reply to a message with caption {prefix}setcoin `nominal`',
+        users: 'users'
     }   
 }
