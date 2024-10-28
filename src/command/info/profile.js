@@ -1,5 +1,6 @@
 const db = require('../../utils/db.js');
 const moment = require('../../utils/moment.js');
+const currency = require('../../utils/currency.js');
 
 module.exports = {
     name: "info-user",
@@ -44,7 +45,7 @@ module.exports = {
             caption += `▷ Plan : ${dbuser.plan.charAt(0).toUpperCase() + m.db.user.plan.slice(1)}\n`
             if(m.db.user.plan != 'free') caption += `Expired : ${dbuser.plan_expire}\n`
             caption += `▷ Exp : ${dbuser.exp}\n`
-            caption += `▷ Coin : ${dbuser.coin}\n`
+            caption += `▷ Balance : ${currency.format(dbuser.balance)}\n`
             caption += `▷ Limit : ${dbuser.limit || 'Unlimited'}\n`
             caption += `▷ Blacklist : ${dbuser.blacklist_reason || '-'}\n\n`
             if(m.isGroup) {
