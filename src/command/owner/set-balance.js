@@ -22,6 +22,9 @@ module.exports = {
                 ids = ids.concat(user.key)
             }
             balance = m.body.arg.split(' ')[0].replace(/[^0-9]/g, '')
+        } else if (m.body.arg.split(' ')[1]) {
+            balance = m.body.arg.split(' ')[0].replace(/[^0-9]/g, '')
+            ids = [ m.body.arg.split(' ')[1].replace(/[^0-9]/g, '')+'@s.whatsapp.net' ]
         } else return m._reply(m.lang(msg).ex)
         
         for(const id of ids) {
@@ -45,13 +48,13 @@ const msg = {
     id: {
         userNotFound: 'Pengguna tidak terdaftar.',
         success: 'Saldo `{name}` di set ke `{balance}`.',
-        ex: 'Penggunaan:\n▷ {prefix}setbalance `nominal` `<@mentions|all>`\n▷ Balas pesan dengan caption {prefix}setcoin `nominal`',
+        ex: 'Penggunaan:\n▷ {prefix}setbalance `nominal` `<@mentions|all>`\n▷ Balas pesan dengan caption {prefix}setbalance `nominal`',
         users: 'pengguna',
     },
     en: {
         userNotFound: 'User not found.',
         success: 'Balance `{name}` has been set to `{balance}`.',
-        ex: 'Usage:\n▷ {prefix}setbalance `nominal` `<@mentions|all>`\n▷ Reply to a message with caption {prefix}setcoin `nominal`',
+        ex: 'Usage:\n▷ {prefix}setbalance `nominal` `<@mentions|all>`\n▷ Reply to a message with caption {prefix}setbalance `nominal`',
         users: 'users'
     }   
 }

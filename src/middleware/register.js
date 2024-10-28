@@ -15,6 +15,7 @@ module.exports = {
             if(m.body.commandWithoutPrefix == 'reg' && m.body.arg) {
                 const name = m.body.arg.replace(/[^A-Za-z ]/g, '');
                 if(name.length < 3) return m._reply(m.lang(msg).min);
+                if(['admin', 'owner', 'nama', 'name', 'bot', 'asw'].includes(name)) return m._reply(m.lang(msg).tol);
                 console.log('Registering User : ' + name);
                 await db.user.put(m.sender, { name, ...config.DATABASE_SCHEMA.user})
                 intended.delete(m.sender);
@@ -42,12 +43,14 @@ module.exports = {
 const msg = {
     id : {
         register : 'Silahkan lakukan registrasi terlebih dahulu.\nCaranya ketik {prefix}reg `nama`',
-        success : 'Hai {name} silahkan menggunakan bot dengan bijak.\n\nUntuk mengecek profile ketik `{prefix}id`\nUntuk menampilkan semua fitur bot ketik `{prefix}help`',
+        success : 'Hai *{name}* silahkan menggunakan bot dengan bijak.\n\nUntuk mengecek profile ketik `{prefix}id`\nUntuk menampilkan semua fitur bot ketik `{prefix}help`',
         min: 'Minimal 3 huruf.',
+        tol: 'Yang bener napa bikin nama 🥱, cari nama lain le.'
     },
     en : {
         register : 'Please register first.\nHow to register : {prefix}reg `name`',
-        success : 'Hi {name} please use the bot with caution.\n\nTo check profile type `{prefix}id`\nTo show all features type `{prefix}help`',
+        success : 'Hi *{name}* please use the bot with caution.\n\nTo check profile type `{prefix}id`\nTo show all features type `{prefix}help`',
         min: 'Minimal 3 character.',
+        tol: 'Name cannot be used 🥱'
     }
 }
