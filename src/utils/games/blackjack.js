@@ -34,30 +34,6 @@ function getCardValue(card) {
     return parseInt(card.value);
 }
 
-// function calculateHandValue(hand) {
-//     let value = 0;
-//     let aces = 0;
-
-//     for (const card of hand) {
-//         if (card.value === 'A') {
-//             aces++;
-//         } else {
-//             value += getCardValue(card);
-//         }
-//     }
-
-//     // Add aces
-//     for (let i = 0; i < aces; i++) {
-//         if (value + 11 <= 21) {
-//             value += 11;
-//         } else {
-//             value += 1;
-//         }
-//     }
-
-//     return value;
-// }
-
 function calculateHandValue(hand) {
     let value = 0;
     let aces = 0;
