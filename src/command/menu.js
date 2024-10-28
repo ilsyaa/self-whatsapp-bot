@@ -19,13 +19,13 @@ module.exports = {
             label = m.body.arg.toUpperCase()
             text += `\`❖ ${m.body.arg.toUpperCase()}\`\n`
             filterMenu.forEach((v) => {
-                text += `▷  ${m.body.prefix + v.cmd[0]} _\`${v.example || ''}\`_\n`
+                text += `▷  ${m.body.prefix + v.cmd[0]} ${v?.example ? '_' + v.example + '_' : ''}\n`
             })
         } else {
             menuByLabel.forEach((val, key) => {
                 text += `\`❖ ${key.toUpperCase()}\`\n`
                 val.forEach((v) => {
-                    text += `▷  ${m.body.prefix + v.cmd[0]} _\`${v.example || ''}\`_\n`
+                    text += `▷  ${m.body.prefix + v.cmd[0]} ${v?.example ? '_' + v.example + '_' : ''}\n`
                 })
                 text += `\n\n`
             })

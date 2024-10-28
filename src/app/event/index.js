@@ -26,5 +26,9 @@ module.exports = async (sock) => {
                 updated_at: moment()
             })
         }
-    })
+    });
+
+    sock.ev.on('messages.reaction', async (reactions) => {
+        console.log(reactions);
+    });
 }

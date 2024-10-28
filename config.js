@@ -35,7 +35,7 @@ module.exports = {
             plan_expire: false, // false = unlimited
             limit: 20, // false -> unlimited
             exp: 0,
-            coin: 0,
+            coin: 1000000,
             blacklist: false, // false = not in blacklist, true = in blacklist permanently, timestamp = in blacklist for some time
             blacklist_reason: '', // reason for blacklist
             updated_at: moment(), // update every time using bot

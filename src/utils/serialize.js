@@ -99,6 +99,10 @@ const messageWrapper = (conn, m) => {
         if (m.ephemeral) options = { ...options, ...{ ephemeralExpiration: m.ephemeral } };
         return await conn.sendMessage(jid, content, options)
     }
+
+    m._react = async (chat, emoji) => {
+        
+    }
     return m;
 }
 
