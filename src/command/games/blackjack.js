@@ -23,7 +23,7 @@ module.exports = {
         let bet = m.body.arg.replace(/[^0-9]/g, '');
         if(m.body.arg == 'all') bet = 250000;
         if(bet < 5000) return m._reply(m.lang(msg).minbet);
-        if(bet >= 250000) return m._reply(m.lang(msg).maxbet);
+        if(bet > 250000) return m._reply(m.lang(msg).maxbet);
         if (currency.subtract(m.db.user.balance, bet) === false) return m._reply(m.lang(msg).balance);
         currency.updateBalanceUser(m.sender, currency.subtract(m.db.user.balance, bet));
 
