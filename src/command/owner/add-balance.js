@@ -22,6 +22,9 @@ module.exports = {
                 ids = ids.concat(user.key)
             }
             balance = m.body.arg.split(' ')[0].replace(/[^0-9]/g, '')
+        } else if (m.body.arg.split(' ')[1]) {
+            balance = m.body.arg.split(' ')[0].replace(/[^0-9]/g, '')
+            ids = [ m.body.arg.split(' ')[1].replace(/[^0-9]/g, '')+'@s.whatsapp.net' ]
         } else return m._reply(m.lang(msg).ex)
         
         for(const id of ids) {
