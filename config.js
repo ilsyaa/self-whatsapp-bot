@@ -47,7 +47,6 @@ module.exports = {
             nsfw: false,
             welcome: false,
             welcome_message: null,
-            welcome_background: null,
             timeouts: {},
             activity_record: false,
             member_activity: {},

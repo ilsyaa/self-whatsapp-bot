@@ -4,7 +4,7 @@ const moment = require('../../utils/moment.js')
 module.exports = {
     name : "group-welcome-message",
     description : "Manage Message Group Welcome",
-    cmd : ['set-welcome-msg', 'set-welcome-message'],
+    cmd : ['welcomemessage', 'setwelcome-message'],
     menu : {
         label : 'group',
         example : 'text'
@@ -30,10 +30,12 @@ module.exports = {
 
 const msg = {
     id: {
+        ex: 'penggunaan: {prefix}welcomemessage `text`\nContoh: {prefix}welcomemessage Selamat datang di group {group.name} {mention}.',
         custom: 'Berhasil mengganti pesan grup selamat datang.',
         default: 'Pesan grup selamat datang telah diatur ke default.'
     },
     en: {
+        ex: 'usage: {prefix}welcomemessage `text`\nExample: {prefix}welcomemessage Welcome to group {group.name} {mention}.',
         custom: 'Successfully changed the group welcome message.',
         default: 'Group welcome message has been reset to default.'
     }
