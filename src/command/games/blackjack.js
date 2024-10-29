@@ -7,6 +7,8 @@ const {
 } = require('../../utils/games/blackjack.js');
 const currency = require('../../utils/currency.js');
 
+const exp = require('../../utils/exp.js');
+
 module.exports = {
     name : "game-blackjack",
     description : "Game Blackjack",
@@ -37,7 +39,7 @@ module.exports = {
         response += m.lang(msg).desc;
 
         const sent = await m._sendMessage(m.chat, { text: response }, { quoted: m });
-
+        exp.add(m.sender, exp.random(1, 10));
         bjMap.set(m.sender, {
             deck,
             playerHand,

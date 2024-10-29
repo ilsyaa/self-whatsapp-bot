@@ -1,6 +1,7 @@
 const tic = require('../utils/games/tictactoe.js');
 const currency = require('../utils/currency.js');
 const db = require('../utils/db.js');
+const exp = require('../utils/exp.js');
 
 module.exports = {
     handler : async (sock, m, $next) => {
@@ -95,6 +96,8 @@ module.exports = {
             if (currency.subtract(m.db.user.balance, gameState.bet) === false) return m._reply(m.lang(msg).balance.replace('{name}', m.db.user.name));
             currency.updateBalanceUser(gameState.players.X, currency.subtract(dbp1.balance, gameState.bet));
             currency.updateBalanceUser(m.sender, currency.subtract(m.db.user.balance, gameState.bet));
+            exp.add(m.sender, exp.random(1, 10));
+            exp.add(gameState.players.X, exp.random(1, 10));
             await m._sendMessage(m.chat, { 
                 text: message,
                 mentions: [gameState.players.X, gameState.players.O]

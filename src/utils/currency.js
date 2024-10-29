@@ -21,7 +21,7 @@ module.exports = {
 
     updateBalanceUser(userId, balance) {
         balance = parseInt(balance);
-        if (!db.user.get(userId)) return;
+        if (!db.user.get(userId)) return false;
         db.update(db.user, userId, { balance });
     }
 };

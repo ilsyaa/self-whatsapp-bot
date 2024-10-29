@@ -29,6 +29,6 @@ module.exports = async (sock) => {
     });
 
     sock.ev.on('messages.reaction', async (reactions) => {
-        console.log(reactions);
+        // console.log(reactions);
     });
 }

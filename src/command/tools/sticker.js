@@ -1,6 +1,7 @@
 const { default: axios } = require("axios");
 const { imageToWebp, writeExifImg, videoToWebp, writeExifVid } = require("../../utils/stickerMaker");
 const validateUrl = require("../../utils/validate-url.js");
+const exp = require('../../utils/exp.js');
 
 module.exports = {
     name : "sticker",
@@ -30,10 +31,12 @@ module.exports = {
         if(image.mtype === 'imageMessage' || image.mtype === 'stickerMessage') {
             let sticker = await imageToWebp(image.buffer)
             sticker = await writeExifImg(sticker, { packname : m.db.bot.exif.pack || '-', author : m.db.bot.exif.author || '-' })
+            exp.add(m.sender, exp.random(1, 5))
             await m._sendMessage(m.chat, { sticker : sticker }, { quoted: m })
         } else if(image.mtype === 'videoMessage') {
             let sticker = await videoToWebp(image.buffer)
             sticker = await writeExifVid(sticker, { packname : m.db.bot.exif.pack || '-', author : m.db.bot.exif.author || '-' })
+            exp.add(m.sender, exp.random(1, 5))
             await m._sendMessage(m.chat, { sticker : sticker }, { quoted: m })
         } else {
             m._reply(m.lang(msg).req)

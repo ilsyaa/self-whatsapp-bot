@@ -1,6 +1,7 @@
 const tic = require('../../utils/games/tictactoe.js');
 const currency = require('../../utils/currency.js');
 const db = require('../../utils/db.js');
+const exp = require('../../utils/exp.js');
 
 module.exports = {
     name : "game-tictactoe",
@@ -29,6 +30,7 @@ module.exports = {
             if (currency.subtract(m.db.user.balance, bet) === false) return m._reply(m.lang(msg).balance.replace('{name}', ''));
             currency.updateBalanceUser(m.sender, currency.subtract(m.db.user.balance, bet));
             const gameState = tic.createGame(m.chat, player1, 'ai@tictactoe', true, bet);
+            exp.add(m.sender, exp.random(1, 10));
             await m._sendMessage(m.chat, { 
                 text: `TicTacToe Vs AI!\n\n${gameState.board}\n\n\@${player1.split('@')[0]} turn!`,
                 mentions: [player1]
