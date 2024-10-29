@@ -61,7 +61,7 @@ module.exports = {
                 text : caption,
                 contextInfo: {
                     externalAdReply: {
-                        title: m.db.user.name,
+                        title: dbuser.name,
                         body: id,
                         mediaType: 2,
                         thumbnailUrl: avatar,

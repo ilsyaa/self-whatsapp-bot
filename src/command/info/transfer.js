@@ -22,6 +22,10 @@ module.exports = {
             balance = m.body.arg.split(' ')[0].replace(/[^0-9]/g, '');
         } else return m._reply(m.lang(msg).ex);
 
+        if (balance.trim() == '' || !balance.trim()) return m._reply(m.lang(msg).ex);
+        if (!id) return m._reply(m.lang(msg).ex);
+        if (id === m.sender) return m._reply(m.lang(msg).lucu);
+
         const user = await db.user.get(id);
         if (!user) return m._reply(m.lang(msg).userNotFound);
 
@@ -39,11 +43,13 @@ const msg = {
         userNotFound: 'Pengguna tidak terdaftar.',
         saldoNotEnough: 'Saldo kamu tidak cukup.',
         success: 'Berhasil transfer ke `{name}` sebesar `{balance}`.',
+        lucu: 'Jangan lucu lah. ngirim ke diri sendiri.'
     },
     en: {
         ex: 'Usage:\n▷ {prefix}tf `nominal` `@mention`\n▷ Reply to a message with caption {prefix}tf `nominal`',
         userNotFound: 'User not found.',
         saldoNotEnough: 'Your balance is not enough.',
         success: 'Transfer to `{name}` with `{balance}`.',
+        lucu: 'Don\'t be funny. send to yourself.'
     }   
 }
