@@ -57,7 +57,7 @@ const msg = {
         exist: 'Permainan Blackjack sebelumnya sedang berlangsung.',
         balance: 'Saldo kamu tidak cukup.',
         minbet: 'Minimal 5.000',
-        maxbet: 'Maximal 250.000',
+        maxbet: 'Maximal 500.000',
         desc: '```Tipe``` *`hit`* ```untuk mengambil kartu lain atau``` *`stand`* ```untuk mempertahankan kartu Anda saat ini.```'
     },
     en: {
@@ -65,7 +65,7 @@ const msg = {
         exist: 'Blackjack game is already in progress.',
         balance: 'Your balance is not enough.',
         minbet: 'Minimal 5.000',
-        maxbet: 'Maximal 250.000',
+        maxbet: 'Maximal 500.000',
         desc: '```Type``` *`hit`* ```to take another card or``` *`stand`* ```to keep your current hand.```'
     }
 }
