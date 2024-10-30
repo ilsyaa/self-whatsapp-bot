@@ -14,11 +14,11 @@ module.exports = {
         const url = m.body.arg;
     
         try {
-            axios.get('https://api.nyxs.pw/dl/yt-direct?url='+ encodeURIComponent(url)).then((res) => {
-                if(!res?.data?.result?.urlVideo) throw new Error(m.lang(msg).failed)
+            axios.get('https://deliriussapi-oficial.vercel.app/download/ytmp4?url='+ encodeURIComponent(url)).then((res) => {
+                if(!res?.data) throw new Error(m.lang(msg).failed)
                 m._sendMessage(m.chat, {    
                     video: {
-                        url: res.data.result.urlVideo
+                        url: res.data.download.url
                     }
                 }, { quoted: m })
             })
