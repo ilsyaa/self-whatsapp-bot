@@ -16,9 +16,9 @@ module.exports = {
         try {
             axios.get('https://deliriussapi-oficial.vercel.app/download/ytmp4?url='+ encodeURIComponent(url)).then((res) => {
                 if(!res?.data) throw new Error(m.lang(msg).failed)
-                m._sendMessage(m.chat, {    
+                m._sendMessage(m.chat, {
                     video: {
-                        url: res.data.download.url
+                        url: res.data.data.download.url
                     }
                 }, { quoted: m })
             })
