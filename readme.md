@@ -1,5 +1,5 @@
 # Whangsaf Bot Open Source le
-Bot ini opensource silahkan di pakai, beberapa command seperti virtex, bug whatsapp saya jadikan kusus premium aja biar gak di salahgunakan, jika ingin bisa contact saya.
+Bot ini opensource silahkan di pakai. beberapa command seperti `virtex`, `bug whatsapp` saya jadikan kusus premium aja biar gak di salah gunakan, jika ingin bisa contact saya.
 
 ### Require
 - Node 20.x
