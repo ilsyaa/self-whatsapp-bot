@@ -6,7 +6,7 @@ const exp = require('../../utils/exp.js');
 module.exports = {
     name : "sticker",
     description : "Sticker Maker",
-    cmd : ['sticker', 's'],
+    cmd : ['sticker', 's', 'stiker'],
     menu : {
         label : 'tools',
     },

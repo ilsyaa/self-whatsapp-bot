@@ -123,10 +123,10 @@ async function writeExifImg(media, metadata) {
     }
 }
 
-async function writeExifVid(media, metadata) {
+async function writeExifVid(buffer, metadata) {
     const tmpFileIn = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.webp`)
     const tmpFileOut = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.webp`)
-    fs.writeFileSync(tmpFileIn, media)
+    fs.writeFileSync(tmpFileIn, buffer)
     if (metadata.packname || metadata.author) {
         const img = new webp.Image()
         const json = { "sticker-pack-id": `https://velixs.com`, "sticker-pack-name": metadata.packname, "sticker-pack-publisher": metadata.author, "emojis": metadata.categories ? metadata.categories : [""] }
