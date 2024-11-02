@@ -3,7 +3,6 @@ const { imageToWebp, writeExifImg, videoToWebp, writeExifVid } = require("../../
 const validateUrl = require("../../utils/validate-url.js");
 const exp = require('../../utils/exp.js');
 const uploader = require('../../utils/uploader.js');
-const fs = require("fs");
 
 module.exports = {
     name : "sticker-nobg",

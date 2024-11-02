@@ -1,7 +1,7 @@
 const { default: axios } = require("axios")
 
 module.exports = {
-    name: "info-gempa",
+    name: "internet-gempa",
     description: "Menampilkan informasi gempa dari bmkg",
     cmd: ['gempa'],
     menu: {
