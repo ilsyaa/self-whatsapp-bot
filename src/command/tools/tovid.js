@@ -13,10 +13,13 @@ module.exports = {
     run : async({ m, sock }) => {
         if(!['stickerMessage'].includes(m.quoted?.mtype)) return m._reply(m.lang(msg).ex);
         try {
+            m._react(m.key, '🧋')
             let media = await m.quoted.saveMedia(path.join(config.STORAGE_PATH, 'temp'))
             let video = await webpToVideo(media)
             await m._sendMessage(m.chat, { video }, { quoted: m })
+            m._react(m.key, '✅')
         } catch (error) {
+            m._react(m.key, '❌')
             await m._reply(m.lang(msg).failed)
         }
     }

@@ -100,8 +100,8 @@ const messageWrapper = (conn, m) => {
         return await conn.sendMessage(jid, content, options)
     }
 
-    m._react = async (chat, emoji) => {
-        
+    m._react = async (key, emoji) => {
+        return await conn.sendMessage(m.chat, { react: { text: emoji, key } }, { quoted: m })
     }
     return m;
 }

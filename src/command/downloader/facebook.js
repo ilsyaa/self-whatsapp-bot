@@ -14,14 +14,17 @@ module.exports = {
         const url = m.body.arg;
         if (!/^https?:\/\/(?:www\.)?(facebook|fb|instagram)\.com\/.+$/.test(url)) return m._reply(m.lang(msg).urlInvalid)
         try {
+            m._react(m.key, '🔍')
             const res = await fbdl(url);
             const bestQuality = res.data[0];
             const caption = `*Resolution*: ${bestQuality.resolution}`
-            m._sendMessage(m.chat, {
+            await m._sendMessage(m.chat, {
                 caption: caption,
                 video: { url: bestQuality.url }
             }, { quoted: m })
+            m._react(m.key, '✅')
         } catch (error) {
+            m._react(m.key, '❌')
             m._reply(m.lang(msg).failed)
         }
     }

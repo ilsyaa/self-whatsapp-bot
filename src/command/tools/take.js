@@ -13,16 +13,20 @@ module.exports = {
         if(!pack && !author) return m._reply(m.lang(msg).ex)
         try {
             let image = m.quoted ? await m.quoted.download() : await m.download();
+            m._react(m.key, '🧋')
             if(image.mtype === 'imageMessage' || image.mtype === 'stickerMessage') {
                 let sticker = await imageToWebp(image.buffer)
                 sticker = await writeExifImg(sticker, { packname : pack, author })
                 await m._sendMessage(m.chat, { sticker : sticker }, { quoted: m })
+                m._react(m.key, '✅')
             } else if(image.mtype === 'videoMessage') {
                 let sticker = await videoToWebp(image.buffer)
                 sticker = await writeExifVid(sticker, { packname : pack, author })
                 await m._sendMessage(m.chat, { sticker : sticker }, { quoted: m })
+                m._react(m.key, '✅')
             }
         } catch (error) {
+            m._react(m.key, '❌')
             await m._reply(m.lang(msg).failed)
         }
     }

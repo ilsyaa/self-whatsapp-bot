@@ -13,13 +13,16 @@ module.exports = {
             if(!m.body.arg) return m._reply(m.lang(msg).ex)
             if(!['imageMessage'].includes(m.quoted?.mtype || m.mtype)) return m._reply(m.lang(msg).req);
             const { buffer } = m.quoted ? await m.quoted.download() : await m.download()
+            m._react(m.key, '🔍')
             const response = await axios.post('https://luminai.my.id/', {
                 content: m.body.arg,
                 imageBuffer: buffer
             });
             
             await m._sendMessage(m.chat, { text: response.data.result }, { quoted: m })
+            m._react(m.key, '✅')
         } catch(error) {
+            m._react(m.key, '❌')
             await m._reply(error.message)
         }
     }

@@ -9,9 +9,12 @@ module.exports = {
     },
     run : async({ m, sock }) => {
         try {
+            m._react(m.key, '🔍')
             const res = await axios.get(`https://api.waifu.pics/sfw/neko`)
             await m._sendMessage(m.chat, { image : { url : res.data.url } }, { quoted: m })
+            m._react(m.key, '✅')
         } catch(error) {
+            m._react(m.key, '❌')
             await m._reply(error.message)
         }
     }

@@ -3,7 +3,7 @@ const { default: axios } = require('axios');
 module.exports = {
     name: "downloader-yt",
     description: "Youtube Downloader",
-    cmd: ['yt', 'ytdl'],
+    cmd: ['yt', 'ytdl', 'ytmp4'],
     menu: {
         label: 'downloader',
         example: 'url'
@@ -14,13 +14,18 @@ module.exports = {
         const url = m.body.arg;
     
         try {
-            axios.get('https://deliriussapi-oficial.vercel.app/download/ytmp4?url='+ encodeURIComponent(url)).then((res) => {
+            m._react(m.key, '🔍')
+            axios.get('https://deliriussapi-oficial.vercel.app/download/ytmp4?url='+ encodeURIComponent(url)).then(async(res) => {
                 if(!res?.data) throw new Error(m.lang(msg).failed)
-                m._sendMessage(m.chat, {
+                await m._sendMessage(m.chat, {
                     video: {
                         url: res.data.data.download.url
                     }
                 }, { quoted: m })
+                m._react(m.key, '✅')
+            }).catch((error) => {
+                m._react(m.key, '❌')
+                m._reply(m.lang(msg).failed)
             })
         }catch (error) {
             m._reply(error.message)

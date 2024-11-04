@@ -13,14 +13,16 @@ module.exports = {
         const url = m.body.arg;
         if (!/^https?:\/\/(?:[a-z]+\.)?(tiktok)\.com\/.+$/.test(url)) return m._reply(m.lang(msg).urlInvalid);
         try {
+            m._react(m.key, '🔍')
             const res = await ttdl(url);
             const caption = `*Title*: ${res.title}\n*Views*: ${res.views}\n*Like*: ${res.like}\n*Resolution*: HD No Watermark`
-            m._sendMessage(m.chat, {
+            await m._sendMessage(m.chat, {
                 caption: caption,
                 video: { url: res.video }
             }, { quoted: m })
+            m._react(m.key, '✅')
         } catch (error) {
-            console.log(error);
+            m._react(m.key, '❌')
             m._reply(m.lang(msg).failed)
         }
     }

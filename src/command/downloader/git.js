@@ -17,13 +17,16 @@ module.exports = {
         const repo = url.split('/').pop().split('.git')[0];
         if(!user || !repo) return m._reply(m.lang(msg).urlInvalid)
         
-        axios.get(`https://api.github.com/repos/${user}/${repo}/zipball`, { responseType: 'arraybuffer' }).then((res) => {
-            m._sendMessage(m.chat, { 
+        m._react(m.key, '🔍')
+        axios.get(`https://api.github.com/repos/${user}/${repo}/zipball`, { responseType: 'arraybuffer' }).then(async(res) => {
+            await m._sendMessage(m.chat, { 
                 document: res.data,
                 fileName: `${repo}.zip`,
                 mimetype: mime.lookup(`${repo}.zip`),
             }, { quoted: m })
+            m._react(m.key, '✅')
         }).catch(e => {
+            m._react(m.key, '❌')
             m._reply(e.message)
         })
     }

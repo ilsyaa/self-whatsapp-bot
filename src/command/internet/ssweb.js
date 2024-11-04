@@ -11,6 +11,7 @@ module.exports = {
     run : async({ m, sock }) => {
         if(!m.body.arg) return m._reply(m.lang(msg).ex)
         let res = null
+        m._react(m.key, '🔍')
         try {
             try {
                 res = await axios.get(`https://api.screenshotmachine.com/?key=f74eca&url=${m.body.arg}&dimension=1920x1080`, { responseType: 'arraybuffer' })
@@ -22,7 +23,9 @@ module.exports = {
                 }
             }
             await m._sendMessage(m.chat, { image : res.data }, { quoted : m })
+            m._react(m.key, '✅')
         } catch (error) {
+            m._react(m.key, '❌')
             await m._reply(error.message)
         }
     }

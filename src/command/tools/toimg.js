@@ -9,9 +9,12 @@ module.exports = {
     run : async({ m, sock }) => {
         if(!['stickerMessage'].includes(m.quoted?.mtype)) return m._reply(m.lang(msg).ex);
         try {
+            m._react(m.key, '🧋')
             let image = await m.quoted.download()
             await m._sendMessage(m.chat, { image: image.buffer }, { quoted: m })
+            m._react(m.key, '✅')
         } catch (error) {
+            m._react(m.key, '❌')
             await m._reply(m.lang(msg).failed)
         }
     }

@@ -8,6 +8,7 @@ module.exports = {
         label: 'internet'
     },
     run: async ({ m, sock }) => {
+        m._react(m.key, '🔍')
         const res = await axios.get("https://data.bmkg.go.id/DataMKG/TEWS/autogempa.json")
         const gempa = res.data.Infogempa.gempa;
         let caption = `*${gempa.Wilayah}*\n\n`
@@ -18,5 +19,6 @@ module.exports = {
 		caption += `Kedalaman : ${gempa.Kedalaman}\n`
 		caption += `Koordinat : ${gempa.Coordinates}${gempa.Dirasakan.length > 3 ? `\nDirasakan : ${gempa.Dirasakan}` : ''}`
         await m._sendMessage(m.chat, { image : { url : "https://data.bmkg.go.id/DataMKG/TEWS/"+gempa.Shakemap }, caption }, { quoted: m })
+        m._react(m.key, '✅')
     }
 }

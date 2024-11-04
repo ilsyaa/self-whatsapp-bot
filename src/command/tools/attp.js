@@ -14,11 +14,14 @@ module.exports = {
         if(!m.body.arg) return m._reply(m.lang(msg).ex)
             
         try {
+            m._react(m.key, '🧋')
             let sticker = await attp(m.body.arg)
             sticker = await writeExifVid(fs.readFileSync(sticker), { packname : m.db.bot.exif.pack || '-', author : m.db.bot.exif.author || '-' })
             exp.add(m.sender, exp.random(1, 5))
             await m._sendMessage(m.chat, { sticker : sticker }, { quoted: m })
+            m._react(m.key, '✅')
         } catch(error) {
+            m._react(m.key, '❌')
             await m._reply(error.message)
         }
     }

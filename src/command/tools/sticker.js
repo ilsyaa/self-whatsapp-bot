@@ -14,6 +14,7 @@ module.exports = {
         let url = validateUrl(m.body.arg) ? m.body.arg : false
         let image;
         if(!['imageMessage', 'stickerMessage', 'videoMessage'].includes(m.quoted?.mtype || m.mtype) && !url) return m._reply(m.lang(msg).ex);
+        m._react(m.key, '🧋')
         if(url) {
             try {
                 image = await axios.get(url, { responseType: 'arraybuffer' })
@@ -33,12 +34,15 @@ module.exports = {
             sticker = await writeExifImg(sticker, { packname : m.db.bot.exif.pack || '-', author : m.db.bot.exif.author || '-' })
             exp.add(m.sender, exp.random(1, 5))
             await m._sendMessage(m.chat, { sticker : sticker }, { quoted: m })
+            m._react(m.key, '✅')
         } else if(image.mtype === 'videoMessage') {
             let sticker = await videoToWebp(image.buffer)
             sticker = await writeExifVid(sticker, { packname : m.db.bot.exif.pack || '-', author : m.db.bot.exif.author || '-' })
             exp.add(m.sender, exp.random(1, 5))
             await m._sendMessage(m.chat, { sticker : sticker }, { quoted: m })
+            m._react(m.key, '✅')
         } else {
+            m._react(m.key, '❌')
             m._reply(m.lang(msg).req)
         }
     }

@@ -3,7 +3,7 @@ const { default: axios } = require('axios');
 module.exports = {
     name: "downloader-ytmp3",
     description: "Youtube Downloader Mp3",
-    cmd: ['ytmp3'],
+    cmd: ['ytmp3', 'play'],
     menu: {
         label: 'downloader',
         example: 'url'
@@ -14,16 +14,22 @@ module.exports = {
         const url = m.body.arg;
     
         try {
-            axios.get('https://api.nyxs.pw/dl/yt-direct?url='+ encodeURIComponent(url)).then((res) => {
-                if(!res?.data?.result?.urlAudio) throw new Error(m.lang(msg).failed)
-                m._sendMessage(m.chat, {    
+            m._react(m.key, '🔍')
+            axios.get('https://api.nyxs.pw/dl/yt-direct?url='+ encodeURIComponent(url)).then(async(res) => {
+                if(!res?.data?.result?.urlAudio) return m._reply(m.lang(msg).failed)
+                await m._sendMessage(m.chat, {    
                     audio: {
                         url: res.data.result.urlAudio
                     },
                     mimetype: 'audio/mp4'
                 }, { quoted: m })
+                m._react(m.key, '✅')
+            }).catch((error) => {
+                m._react(m.key, '❌')
+                m._reply(m.lang(msg).failed)
             })
         }catch (error) {
+            m._react(m.key, '❌')
             m._reply(error.message)
         }
 

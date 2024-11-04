@@ -11,13 +11,16 @@ module.exports = {
     run : async({ m, sock }) => {
         try {
             if(!m.body.arg) return m._reply(m.lang(msg).ex)
+            m._react(m.key, '🔍')
             const res = await axios.get(`https://api.jikan.moe/v4/anime?q=${encodeURIComponent(m.body.arg)}`)
             if(res.data.data.length == 0) return m._reply(m.lang(msg).notFound)
             let anime = res.data.data[0]
             let genreList = anime.genres.map((genre) => genre.name).join(', ');
             let caption = `*${anime.title}*\nJapan: ${anime.title_japanese}\nType: ${anime.type}\nGenres: ${genreList}\nScore: ${anime.score}\nStatus: ${anime.status}\n\n_${anime.url}_`
             await m._sendMessage(m.chat, { image : { url : res.data.data[0].images.jpg.image_url }, caption }, { quoted: m })
+            m._react(m.key, '✅')
         } catch(error) {
+            m._react(m.key, '❌')
             await m._reply(error.message)
         }
     }
