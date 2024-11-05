@@ -28,7 +28,7 @@ module.exports = {
                 val.forEach((v) => {
                     text += `▷  ${m.body.prefix + v.cmd[0]} ${v?.example ? '_' + v.example + '_' : ''}\n`
                 })
-                text += `\n\n`
+                text += `\n`
             })
         }
         text += `\n`
