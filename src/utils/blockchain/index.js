@@ -1,7 +1,6 @@
 const db = require('../db.js');
 const crypto = require('crypto');
 const moment = require('../moment.js');
-const currency = require('../currency.js');
 
 class Transaction {
     constructor(fromAddress, toAddress, amount) {

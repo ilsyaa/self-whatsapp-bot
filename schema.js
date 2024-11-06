@@ -55,7 +55,7 @@ module.exports = {
             maxSupply: 100000000000,// 1 miliar
             currentSupply: 0,
             blocksMined: 0,
-            blockRewardHalvingInterval: 10000000, // 50jt
+            blockRewardHalvingInterval: 10000000, // 10jt
             totalTransactions: 0
         }
     },
