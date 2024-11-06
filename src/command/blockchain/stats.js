@@ -2,6 +2,9 @@ const { BlockchainDB, Transaction } = require('../../utils/blockchain/index.js')
 const blockchain = new BlockchainDB();
 const currency = require('../../utils/currency.js');
 const moment = require('../../utils/moment.js');
+const config = require('../../../config.js');
+const fs = require('fs');
+const path = require('path');
 
 module.exports = {
     name: "blockchain-stats",
@@ -20,6 +23,19 @@ module.exports = {
         text += `▷ *Block Mined*: ${currency.format(stats.blocksMined)}\n`
         text += `▷ *Blocks Until Halving*: ${currency.format(stats.blocksUntilHalving)}\n\n`
         text += `▷ *Current Time*: ${moment().format('DD-MM-YYYY HH:mm:ss')}`
-        m._reply(text);
+        m._sendMessage(m.chat, {
+            text: text,
+            contextInfo: {
+                mentionedJid: [],
+                externalAdReply: {
+                    title: `❖ Stats Nakiri Coin`,
+                    body: `▷ Blockchain`,
+                    thumbnail: fs.readFileSync(path.join(config.STORAGE_PATH, 'media/coin.jpg')),
+                    sourceUrl: 'https://ilsya.my.id',
+                    mediaType: 1,
+                    // renderLargerThumbnail: true
+                }
+            }
+        }, { quoted: m, ephemeralExpiration: m.ephemeral })
     }
 }

@@ -1,5 +1,8 @@
 const db = require('../../utils/db.js');
 const moment = require('../../utils/moment.js');
+const config = require('../../../config.js');
+const fs = require('fs');
+const path = require('path');
 
 module.exports = {
     name: "blockchain-mine",
@@ -12,7 +15,20 @@ module.exports = {
         const intervalTime = getRandomInRange(3, 20); // minutes
         try {
             let mine = db.blockchain.mine.get(m.sender);
-            if (mine) return m._reply(m.lang(msg).userExists.replace('{time}', moment(mine.remaining).diff(moment(), 'minutes')));
+            if (mine) return m._sendMessage(m.chat, {
+                text: m.lang(msg).userExists.replace('{time}', moment(mine.remaining).diff(moment(), 'minutes')),
+                contextInfo: {
+                    mentionedJid: [],
+                    externalAdReply: {
+                        title: `❖ Mining In Progress`,
+                        body: `▷ Blockchain`,
+                        thumbnail: fs.readFileSync(path.join(config.STORAGE_PATH, 'media/coin.jpg')),
+                        sourceUrl: 'https://ilsya.my.id',
+                        mediaType: 1,
+                        // renderLargerThumbnail: true
+                    }
+                }
+            })
             let expire = moment().add(intervalTime, 'minutes').valueOf();
             db.blockchain.mine.put(m.sender, {
                 chat: m.chat,
@@ -20,7 +36,20 @@ module.exports = {
                 intervalTime,
                 remaining: expire
             });
-            m._reply(m.lang(msg).success.replace('{time}', intervalTime));
+            m._sendMessage(m.chat, {
+                text: m.lang(msg).success.replace('{time}', intervalTime),
+                contextInfo: {
+                    mentionedJid: [],
+                    externalAdReply: {
+                        title: `❖ Mining In Progress`,
+                        body: `▷ Blockchain`,
+                        thumbnail: fs.readFileSync(path.join(config.STORAGE_PATH, 'media/coin.jpg')),
+                        sourceUrl: 'https://ilsya.my.id',
+                        mediaType: 1,
+                        // renderLargerThumbnail: true
+                    }
+                }
+            }, { quoted: m, ephemeralExpiration: m.ephemeral })
         } catch(error){
             if(error.message == 'Maksimum supply tercapai!') return m._reply(m.lang(msg).maxSupply);
             m._reply(error.message);

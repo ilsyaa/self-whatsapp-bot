@@ -2,6 +2,9 @@ const { BlockchainDB, Transaction } = require('../../utils/blockchain/index.js')
 const blockchain = new BlockchainDB();
 const currency = require('../../utils/currency.js');
 const db = require('../../utils/db.js');
+const config = require('../../../config.js');
+const fs = require('fs');
+const path = require('path');
 
 module.exports = {
     name: "blockchain-holders",
@@ -23,7 +26,20 @@ module.exports = {
             return `▷ \`${index + 1}\` ${user?.name || 'Unknown'} ${address.split('@')[0]}: ${currency.format(balance)} coin\n`
         }).join('\n');
    
-        m._reply(text);
+        m._sendMessage(m.chat, {
+            text: text,
+            contextInfo: {
+                mentionedJid: [],
+                externalAdReply: {
+                    title: `❖ Top ${sortedHolders.length} Holders`,
+                    body: `▷ Blockchain`,
+                    thumbnail: fs.readFileSync(path.join(config.STORAGE_PATH, 'media/coin.jpg')),
+                    sourceUrl: 'https://ilsya.my.id',
+                    mediaType: 1,
+                    // renderLargerThumbnail: true
+                }
+            }
+        }, { quoted: m, ephemeralExpiration: m.ephemeral })
     }
 }
 

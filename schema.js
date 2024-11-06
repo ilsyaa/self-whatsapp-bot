@@ -1,4 +1,3 @@
-const { blockchain } = require('./src/utils/db.js')
 const moment = require('./src/utils/moment.js')
 
 module.exports = {
