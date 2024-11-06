@@ -1,3 +1,4 @@
+const { blockchain } = require('./src/utils/db.js')
 const moment = require('./src/utils/moment.js')
 
 module.exports = {
@@ -48,5 +49,14 @@ module.exports = {
             updated_at: moment(),
             created_at: moment(),
         },
+        blockchain: {
+            difficulty: 2,
+            miningReward: 1000000, // 1jt
+            maxSupply: 100000000000,// 1 miliar
+            currentSupply: 0,
+            blocksMined: 0,
+            blockRewardHalvingInterval: 10000000, // 50jt
+            totalTransactions: 0
+        }
     },
 }

@@ -3,6 +3,7 @@ const moment = require('../../utils/moment.js')
 
 module.exports = async (sock) => {
     sock.public = false
+    require('./interval.js')(sock)
     require('./onMessageUpsert.js')(sock)
     require('./onGroupParticipantUpdate.js')(sock)
 

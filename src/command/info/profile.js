@@ -1,6 +1,8 @@
 const db = require('../../utils/db.js');
 const moment = require('../../utils/moment.js');
 const currency = require('../../utils/currency.js');
+const { BlockchainDB } = require('../../utils/blockchain/index.js');
+const blockchain = new BlockchainDB();
 
 module.exports = {
     name: "info-user",
@@ -42,10 +44,12 @@ module.exports = {
 
             let caption = `\`❖ PERSONAL\`\n`;
             caption += `▷ Name : ${dbuser.name}\n`
-            caption += `▷ Plan : ${dbuser.plan.charAt(0).toUpperCase() + m.db.user.plan.slice(1)}\n`
+            if(dbuser.plan != 'free') {
+                caption += `▷ Plan : ${dbuser.plan.charAt(0).toUpperCase() + m.db.user.plan.slice(1)}\n`
+            }
             if(m.db.user.plan != 'free') caption += `Expired : ${dbuser.plan_expire}\n`
             caption += `▷ Exp : ${dbuser.exp}\n`
-            caption += `▷ Balance : ${currency.format(dbuser.balance)}\n`
+            caption += `▷ Balance \`Blockchain\` : ${currency.format(await blockchain.getBalance(id))}\n`
             caption += `▷ Limit : ${dbuser.limit || 'Unlimited'}\n`
             caption += `▷ Blacklist : ${dbuser.blacklist_reason || '-'}\n\n`
             if(m.isGroup) {
@@ -55,7 +59,8 @@ module.exports = {
                 caption += `\n`
             }
             caption += `▷ Last Online : ${moment(dbuser.updated_at).fromNow()}\n`
-            caption += `▷ Registered : ${moment(dbuser.created_at).fromNow()}\n`
+            caption += `▷ Registered : ${moment(dbuser.created_at).fromNow()}\n\n`
+            caption += `> For more information blockchain balance and history transaction send \`${m.body.prefix}getbalance\``
     
             await m._sendMessage(m.chat, {
                 text : caption,

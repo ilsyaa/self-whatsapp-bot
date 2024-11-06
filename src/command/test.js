@@ -6,6 +6,9 @@ const fs = require('fs');
 const path = require('path');
 const config = require('../../config');
 const { quax } = require('../utils/uploader.js')
+const { BlockchainDB, Transaction } = require('../utils/blockchain/index.js')
+const moment = require('../utils/moment.js')
+const blockchain = new BlockchainDB()
 
 module.exports = {
     name: "test",
@@ -16,6 +19,8 @@ module.exports = {
         if (!m.senderIsOwner) return;
 
         return;
+
+
         async function sendList(jid, title, text, buttonText, listSections, quoted, options = {}) {
             let img;
 

@@ -3,13 +3,22 @@ const { default: axios } = require('axios')
 const path = require('path');
 const { open } = require('lmdb');
 const log = require('./log.js')
-const moment = require('../utils/moment.js')
+const Block = require('./blockchain/block.js');
+const moment = require('./moment.js');
 
 class DatabaseManager {
     constructor() {
         this.user = null;
         this.group = null;
         this.bot = null;
+        this.blockchain = {
+            mine: null,
+            chain: null,
+            balances: null,
+            metadata: null,
+            pendingTx: null,
+            txHistory: null
+        };
     }
 
     async init() {
@@ -25,6 +34,37 @@ class DatabaseManager {
             this.bot = open({
                 path: path.join(config.STORAGE_DB, 'bot'),
             });
+
+            // blockchain ------------------------
+            this.blockchain.mine = open({
+                path: path.join(config.STORAGE_DB, 'blockchain/mine'),
+            });
+            this.blockchain.chain = open({
+                path: path.join(config.STORAGE_DB, 'blockchain/chain'),
+            });
+            this.blockchain.balances = open({
+                path: path.join(config.STORAGE_DB, 'blockchain/balances'),
+            });
+            this.blockchain.metadata = open({
+                path: path.join(config.STORAGE_DB, 'blockchain/metadata'),
+            });
+            this.blockchain.pendingTx = open({
+                path: path.join(config.STORAGE_DB, 'blockchain/pendingtx'),
+            });
+            this.blockchain.txHistory = open({
+                path: path.join(config.STORAGE_DB, 'blockchain/txhistory'),
+            });
+            
+            const metadata = await this.blockchain.metadata.get('blockchainInfo');
+            if (!metadata) {
+                // Inisialisasi blockchain baru
+                await this.blockchain.metadata.put('blockchainInfo', config.DATABASE_SCHEMA.blockchain);
+
+                // Buat genesis block
+                const genesisBlock = new Block(moment(), [], "0");
+                await this.blockchain.chain.put(0, genesisBlock);
+            }
+            // blockchain ------------------------
             
             if(!this.bot.get('settings')) {
                 const icon = await axios.get('https://i.pinimg.com/enabled_hi/1200x/6b/e2/b3/6be2b369fd5bca46e103af8f99263962.jpg', { responseType: 'arraybuffer' }).then(res => res.data)
