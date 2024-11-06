@@ -1,4 +1,5 @@
 const { default: axios } = require("axios");
+const db = require("../../utils/db.js");
 
 module.exports = {
     name : "ssweb",
@@ -8,6 +9,7 @@ module.exports = {
         label : 'internet',
         example : 'url'
     },
+    limit : 5,
     run : async({ m, sock }) => {
         if(!m.body.arg) return m._reply(m.lang(msg).ex)
         let res = null
@@ -24,6 +26,7 @@ module.exports = {
             }
             await m._sendMessage(m.chat, { image : res.data }, { quoted : m })
             m._react(m.key, '✅')
+            db.update(db.user, m.sender, { limit: (parseInt(m.db.user.limit) - parseInt(m.commandLimit)) });
         } catch (error) {
             m._react(m.key, '❌')
             await m._reply(error.message)

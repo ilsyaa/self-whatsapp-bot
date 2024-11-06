@@ -13,6 +13,7 @@ module.exports = {
     menu: {
         label: 'blockchain',
     },
+    limit: 5,
     run: async ({ m, sock }) => {
         try {
             let id, balance;
@@ -23,7 +24,7 @@ module.exports = {
                 id = m.mentionedJid[0];
                 balance = m.body.arg.split(' ')[0].replace(/[^0-9]/g, '');
             } else if (m.body.arg.split(' ')[1]) {
-                id = m.body.arg.split(' ')[1].replace(/[^0-9]/g, '')+'@s.whatsapp.net';
+                id = m.body.arg.split(' ')[1]+'@s.whatsapp.net';
                 balance = m.body.arg.split(' ')[0].replace(/[^0-9]/g, '');
             } else return m._reply(m.lang(msg).ex);
 
@@ -31,18 +32,23 @@ module.exports = {
             if (!Number(balance) || balance.trim() == '') return m._reply(m.lang(msg).ex);
             if (Number(balance) < 1) return m._reply(m.lang(msg).min);
             if (Number(balance) > 50000000) return m._reply(m.lang(msg).max);
-            const user = db.user.get(id);
-            if(!user) return m._reply(m.lang(msg).userNotFound);
+            
+            if (id != 'unknown@s.whatsapp.net') {
+                const user = db.user.get(id);
+                if(!user) return m._reply(m.lang(msg).userNotFound);
+            }
 
             const result = await blockchain.transfer(m.sender, id, Number(balance));
             let text = `*\`❖ Transfer Blockchain Success\`*\n\n`;
             text += `▷ *ID Transaction*: ${result.txId}\n`
             text += `▷ *Amount*: ${currency.format(result.amount)} coin\n`
-            text += `▷ *To*: ${result.to}`
+            text += `▷ *To*: ${id.split('@')[0] == 'unknown' ? 'Anonymous' : user.name }\n`
+            text += `▷ *Limit used*: ${m.commandLimit}`
+            db.update(db.user, m.sender, { limit: (parseInt(m.db.user.limit) - parseInt(m.commandLimit)) });
             m._sendMessage(m.chat, {
                 text: text,
                 contextInfo: {
-                    mentionedJid: [],
+                    mentionedJid: [ result.to ],
                     externalAdReply: {
                         title: `❖ Transfer Coin`,
                         body: `▷ Blockchain`,
@@ -52,14 +58,13 @@ module.exports = {
                         // renderLargerThumbnail: true
                     }
                 }
-            }, { quoted: m, ephemeralExpiration: m.ephemeral })
+            }, { quoted: m })
         } catch (error) {
             if(error.message == 'Saldo tidak cukup!') return m._reply(m.lang(msg).saldoNotEnough);
             m._reply(error.message);
         }
     }
 }
-
 
 const msg = {
     id: {

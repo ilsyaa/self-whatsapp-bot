@@ -12,7 +12,7 @@ module.exports = {
         let text = ''
         let label = 'All Menu';
         text += `*\`Hai ${m.db.user.name}\`*\nSelamat ${timer2()} \n\n`
-        text += `\`Keterangan Emoji\`\n> 🧋 Menunggu\n> 🔍 Mencari\n> ❌ Gagal\n> ✅ Selesai\n\n\n`
+        text += `\`Blockchain\`\n> Mata uang bot yang bisa kamu gunakan untuk membeli limit taruhan dan lain lain.\n\n\n`
         text += String.fromCharCode(8206).repeat(4001)
         if(m.body.arg) {
             let filterMenu = menuByLabel.get(m.body.arg)

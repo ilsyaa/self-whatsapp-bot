@@ -23,7 +23,9 @@ module.exports = {
         let text = `*\`❖ Top ${sortedHolders.length} Holders Blockchain\`*\n\n`;
         text += sortedHolders.map(([address, balance], index) => {
             const user = db.user.get(address);
-            return `▷ \`${index + 1}\` ${user?.name || 'Unknown'} ${address.split('@')[0]}: ${currency.format(balance)} coin\n`
+            if (user)  {
+                return `▷ \`${index + 1}\` ${user?.name || 'Unknown'} ${address.split('@')[0]}: ${currency.format(balance)} coin\n`
+            }
         }).join('\n');
    
         m._sendMessage(m.chat, {
@@ -39,7 +41,7 @@ module.exports = {
                     // renderLargerThumbnail: true
                 }
             }
-        }, { quoted: m, ephemeralExpiration: m.ephemeral })
+        }, { quoted: m })
     }
 }
 

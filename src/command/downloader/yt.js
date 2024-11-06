@@ -1,4 +1,5 @@
 const { default: axios } = require('axios');
+const db = require('../../utils/db.js');
 
 module.exports = {
     name: "downloader-yt",
@@ -8,6 +9,7 @@ module.exports = {
         label: 'downloader',
         example: 'url'
     },
+    limit: 5,
     run: async ({ m, sock }) => {
         if (!m.body.arg) return m._reply(m.lang(msg).ex)
         if (!/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=|embed\/|v\/|.+\?v=)?([^&\s]{11})/.test(m.body.arg)) return m._reply(m.lang(msg).urlInvalid)
@@ -23,6 +25,7 @@ module.exports = {
                     }
                 }, { quoted: m })
                 m._react(m.key, '✅')
+                db.update(db.user, m.sender, { limit: (parseInt(m.db.user.limit) - parseInt(m.commandLimit)) });
             }).catch((error) => {
                 m._react(m.key, '❌')
                 m._reply(m.lang(msg).failed)

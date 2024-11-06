@@ -30,6 +30,7 @@ module.exports = upsert = async (sock) => {
             if(typeof $next == 'object' && !$next.continueCommand) return
             if(!command?.withoutPrefix && !m.body.prefix) return
             _userOnlineHandler(sock, m)
+            m.commandLimit = command?.limit || 0
             await command.run({m , sock})
             // console.log(m.db);
         } catch (error) {

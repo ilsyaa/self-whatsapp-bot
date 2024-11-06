@@ -18,7 +18,7 @@ module.exports = {
             let text = `*\`❖ Mining Blockchain In Progress\`*\n\n`
             for (const mine of mines) {
                 if (moment().valueOf() > mine.value.remaining) {
-                    text += `▷ *${mine.value.address}*: Mining Success\n`
+                    text += `▷ *${mine.value.address.split('@')[0]}*: Mining Success\n`
                 } else {
                     text += `▷ *${mine.value.address.split('@')[0]}*: ${moment(mine.value.remaining).diff(moment(), 'minutes')} minutes\n`
                 }
@@ -37,7 +37,7 @@ module.exports = {
                         // renderLargerThumbnail: true
                     }
                 }
-            }, { quoted: m, ephemeralExpiration: m.ephemeral })
+            }, { quoted: m })
         } catch(error){
             m._reply(error.message);
         }

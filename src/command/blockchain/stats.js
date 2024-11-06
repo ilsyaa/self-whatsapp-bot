@@ -21,7 +21,8 @@ module.exports = {
         text += `▷ *Remaining Supply*: ${currency.format(stats.remainingSupply)}\n`
         text += `▷ *Current Reward Miner*: ${currency.format(stats.currentReward)}\n`
         text += `▷ *Block Mined*: ${currency.format(stats.blocksMined)}\n`
-        text += `▷ *Blocks Until Halving*: ${currency.format(stats.blocksUntilHalving)}\n\n`
+        text += `▷ *Blocks Until Halving*: ${currency.format(stats.blocksUntilHalving)}\n`
+        text += `▷ *Bank System Balance*: ${currency.format(await blockchain.getBalance('unknown@s.whatsapp.net'))}\n\n`
         text += `▷ *Current Time*: ${moment().format('DD-MM-YYYY HH:mm:ss')}`
         m._sendMessage(m.chat, {
             text: text,
@@ -36,6 +37,6 @@ module.exports = {
                     // renderLargerThumbnail: true
                 }
             }
-        }, { quoted: m, ephemeralExpiration: m.ephemeral })
+        }, { quoted: m })
     }
 }

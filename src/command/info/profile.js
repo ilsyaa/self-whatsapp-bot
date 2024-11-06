@@ -50,15 +50,15 @@ module.exports = {
             if(m.db.user.plan != 'free') caption += `Expired : ${dbuser.plan_expire}\n`
             caption += `▷ Exp : ${dbuser.exp}\n`
             caption += `▷ Balance \`Blockchain\` : ${currency.format(await blockchain.getBalance(id))}\n`
-            caption += `▷ Poin : ${currency.format(dbuser.balance)}\n`
-            caption += `▷ Limit : ${dbuser.limit || 'Unlimited'}\n`
-            caption += `▷ Blacklist : ${dbuser.blacklist_reason || '-'}\n\n`
+            caption += `▷ Point : ${currency.format(dbuser.balance)}\n`
+            caption += `▷ Limit : ${dbuser.limit == 'unlimited' ? 'Unlimited' : dbuser.limit}\n\n`
             if(m.isGroup) {
                 caption += `\`❖ GROUP ID\`\n`
                 caption += `▷ Timeout Group : ${timeoutGroup ? `${moment(m.db.group.timeouts[timeoutGroup]).diff(moment(), 'minutes')} minutes ${moment(m.db.group.timeouts[timeoutGroup]).diff(moment(), 'seconds') % 60} seconds` : '-'}\n`
                 caption += `▷ Leaderboard : ${leaderboard.find(({member}) => member == id)?.rank || '-'} of ${m.isGroup.groupMetadata.size}\n`
-                caption += `\n`
+                caption += `\n\n`
             }
+            caption += `▷ Blacklist : ${dbuser.blacklist_reason || '-'}\n`
             caption += `▷ Last Online : ${moment(dbuser.updated_at).fromNow()}\n`
             caption += `▷ Registered : ${moment(dbuser.created_at).fromNow()}\n\n`
             caption += `> For more information blockchain balance and history transaction type \`${m.body.prefix}getbalance\``
