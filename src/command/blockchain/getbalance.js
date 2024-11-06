@@ -39,7 +39,7 @@ module.exports = {
             `▷ ${new moment(tx.timestamp).toLocaleString()}\n` +
             `▷ ${tx.type === 'mining_reward' ? 'Mining Reward' : 'Transfer'}\n` +
             `▷ ${tx.from === m.sender ? 'To: ' + tx.to : 'From: ' + tx.from}\n` +
-            `▷ Total: ${tx.amount} coin\n`
+            `▷ Total: ${currency.format(tx.amount)} coin\n`
         ).join('\n');
    
         m._sendMessage(m.chat, {

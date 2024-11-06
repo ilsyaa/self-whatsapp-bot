@@ -23,8 +23,8 @@ module.exports = async (sock) => {
                 let text = `*\`❖ Mining Blockchain Success\`*\n\n`;
                 text += `▷ *Address*: ${mine.value.address.split('@')[0]}\n`
                 text += `▷ *Reward*: ${currency.format(result.reward)}\n`
-                text += `▷ *Remaining Supply*: ${result.remainingSupply}\n`
-                text += `▷ *Blocks Until Halving*: ${result.blocksUntilHalving}\n\n`
+                text += `▷ *Remaining Supply*: ${currency.format(result.remainingSupply)}\n`
+                text += `▷ *Blocks Until Halving*: ${currency.format(result.blocksUntilHalving)}\n\n`
                 text += `▷ *Current Time*: ${moment().format('DD-MM-YYYY HH:mm:ss')}`
                 sock.sendMessage(mine.value.chat, {
                     text: text,
