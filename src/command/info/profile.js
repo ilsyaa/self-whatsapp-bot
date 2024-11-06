@@ -50,6 +50,7 @@ module.exports = {
             if(m.db.user.plan != 'free') caption += `Expired : ${dbuser.plan_expire}\n`
             caption += `▷ Exp : ${dbuser.exp}\n`
             caption += `▷ Balance \`Blockchain\` : ${currency.format(await blockchain.getBalance(id))}\n`
+            caption += `▷ Poin : ${currency.format(dbuser.balance)}\n`
             caption += `▷ Limit : ${dbuser.limit || 'Unlimited'}\n`
             caption += `▷ Blacklist : ${dbuser.blacklist_reason || '-'}\n\n`
             if(m.isGroup) {
@@ -60,7 +61,7 @@ module.exports = {
             }
             caption += `▷ Last Online : ${moment(dbuser.updated_at).fromNow()}\n`
             caption += `▷ Registered : ${moment(dbuser.created_at).fromNow()}\n\n`
-            caption += `> For more information blockchain balance and history transaction send \`${m.body.prefix}getbalance\``
+            caption += `> For more information blockchain balance and history transaction type \`${m.body.prefix}getbalance\``
     
             await m._sendMessage(m.chat, {
                 text : caption,
