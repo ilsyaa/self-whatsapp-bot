@@ -62,7 +62,7 @@ const startSocket = async () => {
             }
             if (connection === "close") {
                 const code = lastDisconnect?.error?.output?.statusCode || lastDisconnect?.error?.output?.payload?.statusCode
-
+                sock.connected = false
                 let retryAttempt = retryCount;
                 let shouldRetry;
                 if (code != DisconnectReason.loggedOut && retryAttempt < 20) {
@@ -82,6 +82,7 @@ const startSocket = async () => {
             }
             if (connection == "open") {
                 log.info(`SESSION : Connected.`)
+                sock.connected = true
                 retryCount = 0
             }
         })

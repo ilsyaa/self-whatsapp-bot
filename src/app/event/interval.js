@@ -8,11 +8,10 @@ const fs = require('fs')
 const path = require('path')
 
 module.exports = async (sock) => {
-    sendBlockchain()
-
     setInterval(async () => {
+        if(!sock?.connected) return
         sendBlockchain()
-    }, 60000); // 1 minute
+    }, 30000); // 1 minute
 
     async function sendBlockchain() {
         const minepending = await db.blockchain.mine.getRange();
