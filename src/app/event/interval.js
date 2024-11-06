@@ -24,7 +24,7 @@ module.exports = async (sock) => {
                 text += `▷ *Reward*: ${currency.format(result.reward)}\n`
                 text += `▷ *Remaining Supply*: ${currency.format(result.remainingSupply)}\n`
                 text += `▷ *Blocks Until Halving*: ${currency.format(result.blocksUntilHalving)}\n\n`
-                text += `▷ *Limit used*: ${mine.value.limit}\n\n`
+                text += `▷ *Limit used*: ${mine.value.limit}\n`
                 text += `▷ *Current Time*: ${moment().format('DD-MM-YYYY HH:mm:ss')}`
                 _sendMessage(mine.value.m.chat, {
                     text: text,
