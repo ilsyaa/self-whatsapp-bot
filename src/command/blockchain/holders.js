@@ -25,6 +25,8 @@ module.exports = {
             const user = db.user.get(address);
             if (user)  {
                 return `▷ \`${index + 1}\` ${user?.name || 'Unknown'} ${address.split('@')[0]}: ${currency.format(balance)} coin\n`
+            } else if (address === 'unknown@s.whatsapp.net') {
+                return `▷ \`${index + 1}\` ~Bank System~: ${currency.format(balance)} coin\n`
             }
         }).join('\n');
    
