@@ -1,4 +1,5 @@
 const { default: axios } = require('axios');
+const db = require('../../utils/db.js');
 
 module.exports = {
     name: "downloader-ytmp3",
@@ -8,6 +9,7 @@ module.exports = {
         label: 'downloader',
         example: 'url'
     },
+    limit: 1,
     run: async ({ m, sock }) => {
         if (!m.body.arg) return m._reply(m.lang(msg).ex)
         if (!/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=|embed\/|v\/|.+\?v=)?([^&\s]{11})/.test(m.body.arg)) return m._reply(m.lang(msg).urlInvalid)
@@ -23,6 +25,7 @@ module.exports = {
                     },
                     mimetype: 'audio/mp4'
                 }, { quoted: m })
+                db.update(db.user, m.sender, { limit: (parseInt(m.db.user.limit) - parseInt(m.commandLimit)) });
                 m._react(m.key, '✅')
             }).catch((error) => {
                 m._react(m.key, '❌')

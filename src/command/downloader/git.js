@@ -1,5 +1,6 @@
 const { default: axios } = require('axios');
 const mime = require('mime-types');
+const db = require('../../utils/db.js');
 
 module.exports = {
     name: "downloader-gitclone",
@@ -9,6 +10,7 @@ module.exports = {
         label: 'downloader',
         example: 'url'
     },
+    limit: 1,
     run: async ({ m, sock }) => {
         if (!m.body.arg) return m._reply(m.lang(msg).ex)
 
@@ -24,6 +26,7 @@ module.exports = {
                 fileName: `${repo}.zip`,
                 mimetype: mime.lookup(`${repo}.zip`),
             }, { quoted: m })
+            db.update(db.user, m.sender, { limit: (parseInt(m.db.user.limit) - parseInt(m.commandLimit)) });
             m._react(m.key, '✅')
         }).catch(e => {
             m._react(m.key, '❌')

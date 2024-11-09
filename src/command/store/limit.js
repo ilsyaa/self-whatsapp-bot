@@ -16,10 +16,11 @@ module.exports = {
     run: async ({ m, sock }) => {
         let list = '*\`❖ List Limit For Sale\`* \n'
         list += `> Purchase uses Blockchain\n\n`
-        list += `*\`1\`* 5 Limit \`100.000 Coin\`\n`
-        list += `*\`2\`* 15 Limit \`250.000 Coin\`\n`
+        list += `*\`1\`* 10 Limit \`100.000 Coin\`\n`
+        list += `*\`2\`* 25 Limit \`200.000 Coin\`\n`
         list += `*\`3\`* 50 Limit \`450.000 Coin\`\n`
         list += `*\`4\`* 100 Limit \`800.000 Coin\`\n`
+        list += `*\`5\`* 150 Limit \`1.000.000 Coin\`\n`
         list += `\n`
         list += `> If you want to buy limit, please use command ${m.body.prefix}buylimit \`number\``
         if(!m.body.arg.trim()) {
@@ -43,12 +44,12 @@ module.exports = {
         let limit = 0, coin = 0;
         switch (Number(number)) {
             case 1:
-                limit = 5
+                limit = 10
                 coin = 100000
                 break;
             case 2:
-                limit = 15
-                coin = 250000
+                limit = 25
+                coin = 200000
                 break;
             case 3:
                 limit = 50
@@ -57,6 +58,10 @@ module.exports = {
             case 4:
                 limit = 100
                 coin = 800000
+                break;
+            case 5:
+                limit = 150
+                coin = 1000000
                 break;
             default:
                 return m._reply(m.lang(msg).notFound)

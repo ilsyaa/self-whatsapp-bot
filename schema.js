@@ -33,6 +33,7 @@ module.exports = {
             balance: 1000000, // poin
             blacklist: false, // false = not in blacklist, true = in blacklist permanently, timestamp = in blacklist for some time
             blacklist_reason: '', // reason for blacklist
+            daily: null,
             updated_at: moment(), // update every time using bot
             created_at: moment(), // create time
         },

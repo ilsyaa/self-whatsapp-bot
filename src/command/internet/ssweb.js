@@ -9,7 +9,7 @@ module.exports = {
         label : 'internet',
         example : 'url'
     },
-    limit : 5,
+    limit : 1,
     run : async({ m, sock }) => {
         if(!m.body.arg) return m._reply(m.lang(msg).ex)
         let res = null

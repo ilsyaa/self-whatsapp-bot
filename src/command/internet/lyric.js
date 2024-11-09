@@ -8,7 +8,7 @@ module.exports = {
     menu: {
         label: 'internet'
     },
-    limit: 5,
+    limit: 1,
     run: async ({ m, sock }) => {
         m._react(m.key, '🔍')
         const res = await axios.get("https://api.nyxs.pw/tools/lirik?title="+m.body.arg)

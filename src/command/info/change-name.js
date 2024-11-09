@@ -9,12 +9,13 @@ module.exports = {
         label: 'info',
         example: 'name'
     },
+    limit: 5,
     run: async ({ m, sock }) => {
         const name = m.body.arg.replace(/[^A-Za-z ]/g, '');
         if(!name) return m._reply(m.lang(msg).ex);
         if(name.length < 3) return m._reply(m.lang(msg).min);
         if(name.length > 15) return m._reply(m.lang(msg).max);
-        await db.update(db.user, m.sender, { name, updated_at: moment() });
+        await db.update(db.user, m.sender, { name, limit: (parseInt(m.db.user.limit) - parseInt(m.commandLimit)) });
         await m._reply(m.lang(msg).success);
     }
 }

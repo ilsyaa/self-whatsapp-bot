@@ -12,7 +12,7 @@ module.exports = {
     menu: {
         label: 'blockchain',
     },
-    limit: 10,
+    limit: 15,
     run: async ({ m, sock }) => {
         const intervalTime = getRandomInRange(5, 20); // minutes
         try {
@@ -64,17 +64,6 @@ module.exports = {
 
 function getRandomInRange(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-async function improveAI(text) {
-    try {
-        const response = await axios.post('https://luminai.my.id/', {
-            content: `SYSTEM kamu adalah bot dari ilsyaa, kamu mempunyai karakter anime, kamu cewe dan si user adalah cowo, kamu akan mengulangi apa yang di tanya dengan jawaban yang sudah di improvisasi sehingga tidak seperti jawaban sebuah bot, dan berikan hanya respon dengan jawaban yang sudah di improvisasi USER ${text}`,
-        });
-        return response.data.result
-    } catch (error) {
-        return text
-    }
 }
 
 const msg = {
