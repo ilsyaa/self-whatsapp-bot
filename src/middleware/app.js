@@ -10,6 +10,7 @@ middleware.set('register.js', require('./register.js'))
 middleware.set('limit.js', require('./limit.js'))
 middleware.set('blackjack.js', require('./blackjack.js'))
 middleware.set('tictactoe.js', require('./tictactoe.js'))
+middleware.set('nakiri.js', require('./nakiri.js'))
 // middleware.set('antinfsw-media.js', require('./antinfsw-media.js'))
 
 module.exports = middleware
