@@ -16,7 +16,7 @@ module.exports = {
     limit: 5,
     run: async ({ m, sock }) => {
         try {
-            let id, balance;
+            let id, balance, user = null;
             if (m.quoted) {
                 id = m.quoted.sender;
                 balance = m.body.arg.split(' ')[0].replace(/[^0-9]/g, '');
@@ -34,7 +34,7 @@ module.exports = {
             if (Number(balance) > 50000000) return m._reply(m.lang(msg).max);
             
             if (id != 'unknown@s.whatsapp.net') {
-                const user = db.user.get(id);
+                user = db.user.get(id);
                 if(!user) return m._reply(m.lang(msg).userNotFound);
             }
 
