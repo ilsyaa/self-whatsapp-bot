@@ -24,3 +24,5 @@ npm run start
 ```bash
 npm run dev
 ```
+
+[![Star History Chart](https://api.star-history.com/svg?repos=ilsyaa/lazy-whatsapp-bot&type=Date)](https://star-history.com/#ilsyaa/lazy-whatsapp-bot&Date)
